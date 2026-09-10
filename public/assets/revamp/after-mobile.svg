@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390 844" width="390" height="844" role="img" aria-label="Your Business website concept, mobile view">
+  <rect width="390" height="844" fill="#FAF8F4"/>
+  <text x="24" y="46" font-family="Manrope, Inter, Segoe UI, Helvetica, Arial, sans-serif" font-size="18" font-weight="800" fill="#16150F" letter-spacing="-0.4" text-anchor="start">Your Business</text>
+  <rect x="342" y="31" width="24" height="2.5" rx="1.25" fill="#16150F" opacity="0.85"/>
+  <rect x="342" y="39" width="24" height="2.5" rx="1.25" fill="#16150F" opacity="0.85"/>
+  <rect x="342" y="47" width="16" height="2.5" rx="1.25" fill="#16150F" opacity="0.85"/>
+  <line x1="0" y1="72" x2="390" y2="72" stroke="#E4DED2"/>
+
+  <text x="24" y="128" font-family="Inter, Segoe UI, Helvetica, Arial, sans-serif" font-size="10" font-weight="600" fill="#C15F3C" letter-spacing="2.2" text-anchor="start">CAPE TOWN</text>
+  <text x="24" y="180" font-family="Manrope, Inter, Segoe UI, Helvetica, Arial, sans-serif" font-size="34" font-weight="800" fill="#16150F" letter-spacing="-1.3" text-anchor="start">Trusted work,</text>
+  <text x="24" y="220" font-family="Manrope, Inter, Segoe UI, Helvetica, Arial, sans-serif" font-size="34" font-weight="800" fill="#16150F" letter-spacing="-1.3" text-anchor="start">done properly.</text>
+  <rect x="24" y="248" width="230" height="8" rx="4" fill="#16150F" opacity="0.2"/>
+  <rect x="24" y="266" width="180" height="8" rx="4" fill="#16150F" opacity="0.2"/>
+  <rect x="24" y="298" width="342" height="52" rx="26" fill="#C15F3C"/>
+  <text x="195" y="330" font-family="Inter, Segoe UI, Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#ffffff" letter-spacing="0" text-anchor="middle">Request a quote</text>
+  <rect x="24" y="362" width="342" height="52" rx="26" fill="none" stroke="#16150F" stroke-opacity="0.3"/>
+  <text x="195" y="394" font-family="Inter, Segoe UI, Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#16150F" letter-spacing="0" text-anchor="middle">WhatsApp us</text>
+
+  <g><clipPath id="c2-24-440"><rect x="24" y="440" width="342" height="196" rx="10"/></clipPath>
+  <g clip-path="url(#c2-24-440)"><rect x="24" y="440" width="342" height="196" fill="#EDE7DB"/><circle cx="195" cy="538" r="58.8" fill="#C15F3C"/>
+     <rect x="24" y="581.12" width="342" height="54.88" fill="#16150F" opacity="0.88"/></g></g>
+
+  <text x="24" y="686" font-family="Inter, Segoe UI, Helvetica, Arial, sans-serif" font-size="10" font-weight="600" fill="#C15F3C" letter-spacing="2.2" text-anchor="start">WHAT WE DO</text>
+  <rect x="24" y="702" width="342" height="56" rx="10" fill="#ffffff" stroke="#E4DED2"/>
+  <text x="40" y="736" font-family="Manrope, Inter, Segoe UI, Helvetica, Arial, sans-serif" font-size="16" font-weight="700" fill="#16150F" letter-spacing="0" text-anchor="start">Our services</text>
+  <rect x="24" y="770" width="342" height="56" rx="10" fill="#ffffff" stroke="#E4DED2"/>
+  <text x="40" y="804" font-family="Manrope, Inter, Segoe UI, Helvetica, Arial, sans-serif" font-size="16" font-weight="700" fill="#16150F" letter-spacing="0" text-anchor="start">Recent work</text>
+</svg>

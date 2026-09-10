@@ -1,0 +1,2210 @@
+/* ==========================================================================
+   AutoHaus Cape Town — website concept by Made Digital
+
+   A self-contained design system. EVERY selector is scoped under `.ah`, so it
+   cannot leak into the Made Digital site or into the other four concepts, and
+   so Made Digital's globals are overridden inside this concept.
+
+   The structural idea: an instrument panel. The site is dark by default rather
+   than light, everything is squared off at 4px, and structure comes from
+   hairline seams — grids built from 1px gaps over a rule colour, so cells meet
+   like machined parts instead of floating as cards. A monospace carries every
+   index, label and readout; DM Sans carries the statements. No other concept
+   in the portfolio uses a monospace at all, and none of them is dark-first.
+
+   Photography is static everywhere. No zoom, no pan, no parallax, no Ken
+   Burns, no video, no sliders. Hover changes a ground colour or the opacity of
+   an already-static photograph, and nothing else.
+   ========================================================================== */
+
+.ah {
+  /* Charcoal and graphite — the site's default state is dark */
+  --ah-black: #0e1013;
+  --ah-char: #15181c;
+  --ah-graphite: #1c2025;
+  --ah-steel: #262b31;
+  --ah-slate: #394048;
+
+  /* Warm white and soft silver */
+  --ah-paper: #f1f0ed;
+  --ah-paper-2: #e7e5e0;
+  --ah-ink: #14171a;
+  --ah-body: #474f57;
+  --ah-mute: #5d666e;
+  /* The same role on the dark grounds, where --ah-mute is far too dim. */
+  --ah-d-mute: #8d959d;
+
+  --ah-line: #d3d0c9;
+  --ah-line-d: rgba(236, 238, 240, 0.16);
+
+  /* One accent: a muted steel blue. Nothing here is red, and nothing glows. */
+  --ah-blue: #6b96c1;
+  --ah-blue-d: #2c5f8c;
+  --ah-blue-hi: #37729f;
+
+  /* On dark grounds */
+  --ah-d-text: #eceef0;
+  --ah-d-muted: #a4adb6;
+
+  --ah-display: 'DM Sans', ui-sans-serif, system-ui, 'Segoe UI', Helvetica,
+    Arial, sans-serif;
+  --ah-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas,
+    monospace;
+  --ah-body-font: 'Inter', ui-sans-serif, system-ui, 'Segoe UI', Helvetica,
+    Arial, sans-serif;
+
+  /* The hero sits in a 36%-wide panel, so its headline is scaled to that
+     column rather than to the page. */
+  --ah-h1: clamp(2.25rem, 2.2vw + 1.25rem, 3.5rem);
+  --ah-h2: clamp(1.875rem, 2.6vw + 1rem, 3.25rem);
+  --ah-h2-big: clamp(2.125rem, 3.4vw + 1rem, 4rem);
+  --ah-h3: clamp(1.0625rem, 0.5vw + 0.95rem, 1.25rem);
+
+  /* Machined, not rounded. Nothing on this site is a pill. */
+  --ah-r: 4px;
+  --ah-r-sm: 2px;
+
+  --ah-nav-h: 4.5rem;
+  --ah-gutter: clamp(1.25rem, 3.5vw, 3.5rem);
+  --ah-max: 1400px;
+  --ah-section: clamp(3.75rem, 6.5vw, 7rem);
+  --ah-ease: cubic-bezier(0.2, 0.6, 0.35, 1);
+
+  /* Themes the shared concept notice */
+  --notice-bg: #05070a;
+  --notice-fg: var(--ah-d-text);
+  --notice-fg-muted: rgba(236, 238, 240, 0.7);
+  --notice-rule: rgba(236, 238, 240, 0.34);
+  --notice-max: var(--ah-max);
+  --notice-gutter: var(--ah-gutter);
+
+  font-family: var(--ah-body-font);
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--ah-d-muted);
+  background: var(--ah-char);
+  min-height: 100vh;
+  overflow-x: clip;
+}
+
+/* ---- Base typography ----------------------------------------------------
+   :where() keeps these at (0,1,0) so any component class below can win — the
+   footer column headings and the job card both depend on that. Base heading
+   rules stay above component rules in this file. */
+
+.ah :where(h1, h2, h3, h4) {
+  font-family: var(--ah-display);
+  font-weight: 700;
+  color: var(--ah-d-text);
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  text-transform: none;
+}
+
+.ah :where(h1) {
+  font-size: var(--ah-h1);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.ah :where(h2) {
+  font-size: var(--ah-h2);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1.05;
+}
+
+.ah :where(h3) {
+  font-size: var(--ah-h3);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+
+.ah :where(p) {
+  margin: 0;
+}
+
+.ah :focus-visible {
+  outline: 2px solid var(--ah-blue);
+  outline-offset: 2px;
+}
+
+.ah ::selection {
+  background: var(--ah-blue-d);
+  color: var(--ah-paper);
+}
+
+.ah-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.ah-skip {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 200;
+  background: var(--ah-blue-d);
+  color: var(--ah-paper);
+  padding: 0.75rem 1.25rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.ah-skip:focus {
+  left: 0;
+}
+
+/* The technical voice: indices, labels, readouts. Used for small text only —
+   never for body copy, and never as a decorative caption on every section. */
+.ah-mono {
+  font-family: var(--ah-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ---- Layout -------------------------------------------------------------- */
+
+.ah-container {
+  width: 100%;
+  max-width: calc(var(--ah-max) + var(--ah-gutter) * 2);
+  margin-inline: auto;
+  padding-inline: var(--ah-gutter);
+}
+
+.ah-section {
+  padding-block: var(--ah-section);
+}
+
+/* Lets a full-bleed band finish flush with the bottom of its section. */
+.ah-section--flush {
+  padding-bottom: 0;
+}
+
+.ah-char {
+  background: var(--ah-char);
+}
+
+.ah-graphite {
+  background: var(--ah-graphite);
+}
+
+.ah-black {
+  background: var(--ah-black);
+}
+
+/* The two light grounds flip every colour that matters. */
+.ah-paper,
+.ah-paper-2,
+.ah-section:not(.ah-char):not(.ah-graphite):not(.ah-black) {
+  background: var(--ah-paper);
+  color: var(--ah-body);
+}
+
+.ah-paper-2 {
+  background: var(--ah-paper-2);
+}
+
+.ah-paper :where(h1, h2, h3, h4),
+.ah-paper-2 :where(h1, h2, h3, h4),
+.ah-section:not(.ah-char):not(.ah-graphite):not(.ah-black)
+  :where(h1, h2, h3, h4) {
+  color: var(--ah-ink);
+}
+
+.ah-lede {
+  font-size: clamp(1rem, 0.3vw + 0.95rem, 1.125rem);
+  line-height: 1.65;
+  color: var(--ah-d-muted);
+  max-width: 46ch;
+}
+
+.ah-paper .ah-lede,
+.ah-paper-2 .ah-lede,
+.ah-section:not(.ah-char):not(.ah-graphite):not(.ah-black) .ah-lede {
+  color: var(--ah-body);
+}
+
+.ah-note {
+  font-family: var(--ah-mono);
+  font-size: 0.75rem;
+  line-height: 1.6;
+  color: var(--ah-d-mute);
+}
+
+.ah-head {
+  display: grid;
+  gap: 1.125rem;
+  margin-bottom: clamp(2rem, 3.5vw, 3.25rem);
+}
+
+.ah-head__big {
+  font-size: var(--ah-h2-big);
+}
+
+.ah-head h2 span {
+  display: block;
+  color: var(--ah-blue);
+}
+
+.ah-paper .ah-head h2 span,
+.ah-paper-2 .ah-head h2 span,
+.ah-section:not(.ah-char):not(.ah-graphite):not(.ah-black) .ah-head h2 span {
+  color: var(--ah-blue-d);
+}
+
+@media (min-width: 900px) {
+  .ah-head--split {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: clamp(2rem, 4vw, 4rem);
+    align-items: end;
+  }
+}
+
+/* A single small label, used on the two sections that genuinely need one. */
+.ah-tag {
+  display: inline-block;
+  color: var(--ah-blue-d);
+  border-left: 2px solid var(--ah-blue-d);
+  padding-left: 0.625rem;
+}
+
+.ah-tag--light {
+  color: var(--ah-blue);
+  border-left-color: var(--ah-blue);
+}
+
+/* ---- Buttons -------------------------------------------------------------
+   Square-shouldered, 4px, sentence case. Nothing on the other four concepts
+   is shaped like this: not Clean & Co.'s pills, not Cape Build's uppercase
+   slabs, not the plumbing site's rounded chips. */
+
+.ah-btn {
+  --b-bg: var(--ah-blue-d);
+  --b-fg: var(--ah-paper);
+  --b-bd: var(--ah-blue-d);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  padding: 0.8rem 1.3rem;
+  border: 1px solid var(--b-bd);
+  border-radius: var(--ah-r);
+  background: var(--b-bg);
+  color: var(--b-fg);
+  font-family: var(--ah-display);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.005em;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color 0.2s var(--ah-ease),
+    border-color 0.2s var(--ah-ease),
+    color 0.2s var(--ah-ease);
+}
+
+.ah-btn:hover {
+  --b-bg: var(--ah-blue-hi);
+  --b-bd: var(--ah-blue-hi);
+}
+
+.ah-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.ah-btn--ghost {
+  --b-bg: transparent;
+  --b-fg: var(--ah-d-text);
+  --b-bd: var(--ah-line-d);
+}
+
+.ah-btn--ghost:hover {
+  --b-bg: rgba(236, 238, 240, 0.08);
+  --b-bd: rgba(236, 238, 240, 0.4);
+  --b-fg: var(--ah-d-text);
+}
+
+.ah-paper .ah-btn--ghost,
+.ah-paper-2 .ah-btn--ghost,
+.ah-section:not(.ah-char):not(.ah-graphite):not(.ah-black) .ah-btn--ghost {
+  --b-fg: var(--ah-ink);
+  --b-bd: var(--ah-line);
+}
+
+.ah-paper .ah-btn--ghost:hover,
+.ah-paper-2 .ah-btn--ghost:hover,
+.ah-section:not(.ah-char):not(.ah-graphite):not(.ah-black)
+  .ah-btn--ghost:hover {
+  --b-bg: rgba(20, 23, 26, 0.06);
+  --b-bd: var(--ah-mute);
+}
+
+.ah-btn--lg {
+  padding: 1rem 1.6rem;
+  font-size: 1rem;
+}
+
+.ah-btn--sm {
+  padding: 0.55rem 0.95rem;
+  font-size: 0.875rem;
+}
+
+.ah-btn--block {
+  width: 100%;
+}
+
+.ah-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+/* ---- Navigation ---------------------------------------------------------- */
+
+.ah-nav {
+  position: sticky;
+  top: 0;
+  z-index: 90;
+  background: var(--ah-black);
+  border-bottom: 1px solid var(--ah-line-d);
+}
+
+.ah-nav__inner {
+  min-height: var(--ah-nav-h);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  position: relative;
+  z-index: 100;
+}
+
+.ah-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--ah-display);
+  font-size: clamp(1rem, 1vw + 0.8rem, 1.1875rem);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: var(--ah-d-text);
+  text-decoration: none;
+  white-space: nowrap;
+  margin-right: auto;
+}
+
+.ah-logo__mark {
+  width: 0.5rem;
+  height: 1.5rem;
+  background: var(--ah-blue);
+  flex: none;
+}
+
+.ah-logo__sub {
+  display: none;
+  font-family: var(--ah-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ah-d-muted);
+  padding-left: 0.5rem;
+  border-left: 1px solid var(--ah-line-d);
+}
+
+@media (min-width: 500px) {
+  .ah-logo__sub {
+    display: inline;
+  }
+}
+
+.ah-nav__links {
+  display: none;
+  align-items: center;
+  gap: clamp(1rem, 1.8vw, 2rem);
+}
+
+.ah-nav__link {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--ah-d-muted);
+  text-decoration: none;
+  padding-block: 0.4rem;
+  border-bottom: 2px solid transparent;
+  transition:
+    color 0.2s var(--ah-ease),
+    border-color 0.2s var(--ah-ease);
+}
+
+.ah-nav__link:hover {
+  color: var(--ah-d-text);
+  border-bottom-color: var(--ah-blue);
+}
+
+.ah-nav__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+}
+
+/* The bar has to survive 320px: the wordmark's suffix and the CTA's second
+   half both drop out before anything can be pushed off the right edge. */
+.ah-nav__cta {
+  white-space: nowrap;
+  padding-inline: 0.75rem;
+}
+
+.ah-nav__cta-rest {
+  display: none;
+}
+
+@media (min-width: 420px) {
+  .ah-nav__cta-rest {
+    display: inline;
+  }
+  .ah-nav__cta {
+    padding-inline: 0.95rem;
+  }
+}
+
+.ah-nav__tel {
+  display: none;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--ah-mono);
+  font-size: 0.8125rem;
+  color: var(--ah-d-muted);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.ah-nav__tel:hover {
+  color: var(--ah-d-text);
+}
+
+/* A labelled control, in keeping with the rest of the concept. */
+.ah-menubtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 0.8rem;
+  border: 1px solid var(--ah-line-d);
+  border-radius: var(--ah-r);
+  background: transparent;
+  color: var(--ah-d-text);
+  font-family: var(--ah-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.ah-menubtn__bars {
+  display: grid;
+  gap: 4px;
+}
+
+.ah-menubtn__bars i {
+  display: block;
+  width: 1rem;
+  height: 1.5px;
+  background: currentColor;
+}
+
+/* Anchored to the header rather than to the viewport. Positioning it from the
+   bottom of the screen instead put its top edge underneath the bar whenever
+   the concept notice was still on screen, and the bar — which is deliberately
+   painted above it — then swallowed clicks on the first link. */
+.ah-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  height: calc(100dvh - var(--ah-nav-h));
+  background: var(--ah-black);
+  border-top: 1px solid var(--ah-line-d);
+  padding: 0 var(--ah-gutter) 2rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.ah-menu__nav {
+  display: grid;
+}
+
+.ah-menu__link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-block: 1.125rem;
+  border-bottom: 1px solid var(--ah-line-d);
+  font-family: var(--ah-display);
+  font-size: 1.375rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--ah-d-text);
+  text-decoration: none;
+}
+
+.ah-menu__link svg {
+  color: var(--ah-blue);
+}
+
+.ah-menu__foot {
+  display: grid;
+  gap: 0.625rem;
+}
+
+.ah-menu__meta {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0.75rem 0 0;
+}
+
+.ah-menu__meta > div {
+  display: grid;
+  grid-template-columns: 5rem 1fr;
+  gap: 0.75rem;
+  font-size: 0.875rem;
+}
+
+.ah-menu__meta dt {
+  font-family: var(--ah-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ah-d-mute);
+}
+
+.ah-menu__meta dd {
+  margin: 0;
+  color: var(--ah-d-muted);
+}
+
+.ah-menu__meta a {
+  color: var(--ah-d-text);
+  text-decoration: none;
+}
+
+/* The phone number is the first thing to go: below this the bar cannot hold
+   the wordmark, a number, a CTA and the menu control at once. */
+@media (min-width: 820px) {
+  .ah-nav__tel {
+    display: inline-flex;
+  }
+}
+
+@media (min-width: 1040px) {
+  .ah-nav__links {
+    display: flex;
+  }
+  .ah-menubtn,
+  .ah-menu {
+    display: none;
+  }
+}
+
+/* ---- Floating WhatsApp (phones only) ------------------------------------- */
+
+.ah-float {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 80;
+  width: 3.25rem;
+  height: 3.25rem;
+  display: grid;
+  place-items: center;
+  border-radius: var(--ah-r);
+  background: var(--ah-blue-d);
+  color: var(--ah-paper);
+  border: 1px solid var(--ah-blue-hi);
+  box-shadow: 0 12px 28px -12px rgba(0, 0, 0, 0.9);
+}
+
+.ah-float:hover {
+  background: var(--ah-blue-hi);
+}
+
+@media (min-width: 900px) {
+  .ah-float {
+    display: none;
+  }
+}
+
+/* ---- Hero ----------------------------------------------------------------
+   A hard split: a charcoal panel against a photograph, meeting on a seam with
+   no gap and no overlap, and a strip of labels running across both. */
+
+.ah-hero {
+  background: var(--ah-char);
+}
+
+.ah-hero__split {
+  display: grid;
+}
+
+.ah-hero__panel {
+  padding: clamp(2.25rem, 4.5vw, 4.25rem) var(--ah-gutter)
+    clamp(2.25rem, 4vw, 3.5rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(1.25rem, 2vw, 1.75rem);
+  align-items: flex-start;
+  order: 2;
+}
+
+.ah-hero__eyebrow {
+  color: var(--ah-blue);
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  letter-spacing: 0.16em;
+}
+
+.ah-hero__eyebrow span {
+  color: var(--ah-d-muted);
+  padding-left: 0.625rem;
+  border-left: 1px solid var(--ah-line-d);
+}
+
+.ah-hero h1 span {
+  display: block;
+  color: var(--ah-blue);
+}
+
+.ah-hero__lede {
+  font-size: clamp(1rem, 0.35vw + 0.95rem, 1.1875rem);
+  color: var(--ah-d-muted);
+  max-width: 34ch;
+}
+
+.ah-hero__foot {
+  color: var(--ah-d-mute);
+  letter-spacing: 0.1em;
+}
+
+/* Two buttons of different widths stacked read as ragged on a narrow screen. */
+@media (max-width: 559px) {
+  .ah-hero .ah-btns,
+  .ah-close .ah-btns {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    width: 100%;
+  }
+}
+
+.ah-hero__shot {
+  margin: 0;
+  order: 1;
+}
+
+.ah-hero__shot img {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+}
+
+@media (min-width: 1000px) {
+  .ah-hero__split {
+    grid-template-columns: 36fr 64fr;
+    min-height: min(78vh, 720px);
+  }
+  .ah-hero__panel {
+    order: 1;
+    padding-inline: clamp(2rem, 3.5vw, 4rem);
+  }
+  .ah-hero__shot {
+    order: 2;
+  }
+  .ah-hero__shot img {
+    aspect-ratio: auto;
+    min-height: 100%;
+  }
+}
+
+/* The strip crossing the seam. */
+.ah-strip {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--ah-line-d);
+  border-top: 1px solid var(--ah-line-d);
+}
+
+.ah-strip li {
+  background: var(--ah-graphite);
+  padding: 0.875rem clamp(0.75rem, 2vw, 1.5rem);
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-family: var(--ah-display);
+  font-size: clamp(0.8125rem, 0.5vw + 0.7rem, 1rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ah-d-text);
+}
+
+.ah-strip li .ah-mono {
+  color: var(--ah-blue);
+  font-size: 0.6875rem;
+}
+
+.ah-strip__end {
+  display: none !important;
+}
+
+.ah-strip__end a {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--ah-mono);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--ah-d-muted);
+  text-decoration: none;
+}
+
+.ah-strip__end a:hover {
+  color: var(--ah-d-text);
+}
+
+@media (min-width: 900px) {
+  .ah-strip {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) minmax(0, 1.2fr);
+  }
+  .ah-strip__end {
+    display: flex !important;
+    justify-content: flex-end;
+  }
+}
+
+/* ---- Quick service access ------------------------------------------------
+   Six cells in one continuous strip, hairline seams, no boxes. Hovering a
+   cell brings its photograph up behind the label — the picture is already
+   there at full size and only its opacity changes. */
+
+.ah-quick {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--ah-line-d);
+  border-top: 1px solid var(--ah-line-d);
+}
+
+.ah-quick__cell {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: var(--ah-graphite);
+  border: 0;
+  border-top: 2px solid transparent;
+  padding: 1.25rem clamp(1rem, 2vw, 1.5rem) 1.5rem;
+  min-height: 10.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  text-align: left;
+  color: var(--ah-d-text);
+  font-family: inherit;
+  cursor: pointer;
+  transition:
+    background-color 0.2s var(--ah-ease),
+    border-color 0.2s var(--ah-ease);
+}
+
+.ah-quick__cell:hover,
+.ah-quick__cell:focus-visible {
+  background: var(--ah-steel);
+  border-top-color: var(--ah-blue);
+}
+
+.ah-quick__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  color: var(--ah-blue);
+}
+
+.ah-quick__index {
+  font-family: var(--ah-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  color: var(--ah-d-muted);
+}
+
+.ah-quick__label {
+  font-family: var(--ah-display);
+  font-size: clamp(1.0625rem, 0.8vw + 0.9rem, 1.3125rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.ah-quick__desc {
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--ah-d-muted);
+  margin-top: auto;
+}
+
+.ah-quick__shot {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.25s var(--ah-ease);
+}
+
+.ah-quick__shot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* The scrim that keeps the label legible once the photograph is showing. */
+.ah-quick__shot::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(14, 16, 19, 0.74) 0%,
+    rgba(14, 16, 19, 0.86) 100%
+  );
+}
+
+@media (min-width: 640px) {
+  .ah-quick {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1040px) {
+  .ah-quick {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+  .ah-quick__cell:hover .ah-quick__shot,
+  .ah-quick__cell:focus-visible .ah-quick__shot {
+    opacity: 1;
+  }
+}
+
+/* ---- The workshop: a spec table, not three cards ------------------------- */
+
+.ah-principles {
+  display: grid;
+  gap: 0;
+  border-top: 2px solid var(--ah-ink);
+}
+
+.ah-principle {
+  padding-block: 1.5rem;
+  border-bottom: 1px solid var(--ah-line);
+}
+
+.ah-principle__head {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  font-size: 0.875rem;
+  letter-spacing: 0.1em;
+  color: var(--ah-ink);
+  margin-bottom: 0.625rem;
+}
+
+.ah-principle__head span {
+  color: var(--ah-blue-d);
+}
+
+.ah-principle__body {
+  font-size: 0.9375rem;
+  color: var(--ah-body);
+  max-width: 34ch;
+}
+
+@media (min-width: 800px) {
+  .ah-principles {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .ah-principle {
+    padding: 1.75rem clamp(1.25rem, 2.5vw, 2.5rem) 0;
+    border-bottom: 0;
+    border-left: 1px solid var(--ah-line);
+  }
+  .ah-principle:first-child {
+    padding-left: 0;
+    border-left: 0;
+  }
+}
+
+/* ---- Service directory --------------------------------------------------- */
+
+.ah-index {
+  display: grid;
+  gap: 1px;
+  background: var(--ah-line);
+  border: 1px solid var(--ah-line);
+}
+
+.ah-index__cell {
+  position: relative;
+  background: var(--ah-paper);
+  border: 0;
+  border-left: 3px solid transparent;
+  padding: 1.125rem clamp(0.875rem, 1.6vw, 1.25rem);
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: clamp(0.75rem, 1.4vw, 1.125rem);
+  text-align: left;
+  font-family: inherit;
+  color: var(--ah-body);
+  cursor: pointer;
+  transition:
+    background-color 0.2s var(--ah-ease),
+    border-color 0.2s var(--ah-ease),
+    color 0.2s var(--ah-ease);
+}
+
+.ah-index__cell:hover {
+  background: var(--ah-paper-2);
+}
+
+.ah-index__cell.is-active {
+  background: var(--ah-char);
+  border-left-color: var(--ah-blue);
+  color: var(--ah-d-muted);
+}
+
+.ah-index__num {
+  font-family: var(--ah-mono);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--ah-mute);
+}
+
+.ah-index__cell.is-active .ah-index__num {
+  color: var(--ah-blue);
+}
+
+.ah-index__text {
+  display: grid;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.ah-index__name {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-family: var(--ah-display);
+  font-size: clamp(0.9375rem, 0.6vw + 0.85rem, 1.125rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ah-ink);
+}
+
+.ah-index__name svg {
+  flex: none;
+  color: var(--ah-blue-d);
+}
+
+.ah-index__cell.is-active .ah-index__name {
+  color: var(--ah-d-text);
+}
+
+.ah-index__cell.is-active .ah-index__name svg {
+  color: var(--ah-blue);
+}
+
+.ah-index__short {
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+
+/* Revealed on hover and while selected. Reserved at its final size, so the
+   row never reflows, and only opacity changes. */
+.ah-index__shot {
+  display: none;
+  width: 4.5rem;
+  flex: none;
+  opacity: 0;
+  transition: opacity 0.25s var(--ah-ease);
+}
+
+.ah-index__shot img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--ah-r-sm);
+  display: block;
+}
+
+.ah-index__mark {
+  display: flex;
+  color: var(--ah-mute);
+}
+
+.ah-index__cell.is-active .ah-index__mark {
+  color: var(--ah-blue);
+}
+
+@media (min-width: 860px) {
+  .ah-index {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .ah-index__shot {
+    display: block;
+  }
+  .ah-index__cell:hover .ah-index__shot,
+  .ah-index__cell:focus-visible .ah-index__shot,
+  .ah-index__cell.is-active .ah-index__shot {
+    opacity: 1;
+  }
+}
+
+/* The job card. */
+.ah-job {
+  margin-top: 1.25rem;
+  border: 1px solid var(--ah-line);
+  background: var(--ah-paper);
+}
+
+.ah-job:focus {
+  outline: none;
+}
+
+.ah-job__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.125rem clamp(1rem, 2vw, 1.75rem);
+  border-bottom: 1px solid var(--ah-line);
+}
+
+.ah-job__title {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  font-size: clamp(1.125rem, 1vw + 0.9rem, 1.5rem);
+  margin: 0;
+}
+
+.ah-job__title .ah-mono {
+  color: var(--ah-blue-d);
+  font-size: 0.8125rem;
+}
+
+.ah-job__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.ah-job__body {
+  display: grid;
+}
+
+.ah-job__shot {
+  margin: 0;
+}
+
+.ah-job__shot img {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+}
+
+.ah-job__col {
+  padding: clamp(1.25rem, 2vw, 1.75rem);
+  display: grid;
+  gap: 0.75rem;
+  align-content: start;
+  border-top: 1px solid var(--ah-line);
+}
+
+.ah-job__lede {
+  font-size: 1rem;
+  color: var(--ah-ink);
+  max-width: 40ch;
+}
+
+.ah-job__label {
+  color: var(--ah-mute);
+  margin: 0.5rem 0 0;
+  font-size: 0.6875rem;
+}
+
+.ah-speclist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+}
+
+.ah-speclist li {
+  position: relative;
+  padding: 0.4rem 0 0.4rem 1rem;
+  font-size: 0.9375rem;
+  color: var(--ah-body);
+  border-bottom: 1px solid var(--ah-line);
+}
+
+.ah-speclist li:last-child {
+  border-bottom: 0;
+}
+
+.ah-speclist li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 1rem;
+  width: 4px;
+  height: 4px;
+  background: var(--ah-blue-d);
+}
+
+.ah-job__who {
+  font-size: 0.9375rem;
+  color: var(--ah-body);
+  max-width: 40ch;
+}
+
+@media (min-width: 900px) {
+  .ah-job__body {
+    grid-template-columns: minmax(0, 30fr) minmax(0, 35fr) minmax(0, 35fr);
+  }
+  .ah-job__col {
+    border-top: 0;
+    border-left: 1px solid var(--ah-line);
+  }
+  .ah-job__shot img {
+    aspect-ratio: auto;
+    min-height: 100%;
+  }
+}
+
+/* ---- Diagnostics --------------------------------------------------------- */
+
+.ah-diag__title {
+  font-size: var(--ah-h2-big);
+  margin-bottom: clamp(2rem, 3.5vw, 3rem);
+  max-width: 14ch;
+}
+
+.ah-diag__title span {
+  display: block;
+  color: var(--ah-blue);
+}
+
+.ah-diag {
+  display: grid;
+  gap: clamp(1.25rem, 2.5vw, 2rem);
+}
+
+.ah-diag__shot {
+  margin: 0;
+}
+
+.ah-diag__shot img {
+  width: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: var(--ah-r-sm);
+}
+
+.ah-diag__shot--a img {
+  aspect-ratio: 3 / 4;
+}
+
+.ah-diag__shot--b img {
+  aspect-ratio: 4 / 3;
+}
+
+.ah-diag__panel {
+  border: 1px solid var(--ah-line-d);
+  background: var(--ah-char);
+  padding: clamp(1.25rem, 2.5vw, 2rem);
+  display: grid;
+  gap: 1.25rem;
+  align-content: start;
+}
+
+.ah-diag__lede {
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--ah-d-muted);
+}
+
+.ah-readout {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  border-top: 1px solid var(--ah-line-d);
+}
+
+.ah-readout > div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-block: 0.625rem;
+  border-bottom: 1px solid var(--ah-line-d);
+}
+
+.ah-readout dt {
+  color: var(--ah-d-mute);
+  font-size: 0.6875rem;
+}
+
+.ah-readout dd {
+  margin: 0;
+  color: var(--ah-blue);
+  font-size: 0.6875rem;
+  text-align: right;
+}
+
+@media (min-width: 980px) {
+  .ah-diag {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: start;
+  }
+  /* The offsets are what make this a composition rather than three columns. */
+  .ah-diag__panel {
+    margin-top: 2.5rem;
+  }
+  .ah-diag__shot--b {
+    margin-top: 4.5rem;
+  }
+}
+
+/* ---- Vehicle types ------------------------------------------------------- */
+
+.ah-vehicles {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--ah-line-d);
+  border-top: 1px solid var(--ah-line-d);
+}
+
+.ah-vehicle {
+  position: relative;
+  margin: 0;
+  isolation: isolate;
+  background: var(--ah-black);
+}
+
+.ah-vehicle img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  display: block;
+}
+
+.ah-vehicle::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(14, 16, 19, 0.15) 30%,
+    rgba(14, 16, 19, 0.9) 100%
+  );
+}
+
+.ah-vehicle figcaption {
+  position: absolute;
+  inset: auto 0 0 0;
+  z-index: 1;
+  padding: clamp(1rem, 2vw, 1.75rem);
+  display: grid;
+  gap: 0.3rem;
+}
+
+.ah-vehicle figcaption h3 {
+  font-size: clamp(1.125rem, 1.2vw + 0.85rem, 1.625rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--ah-d-text);
+}
+
+.ah-vehicle figcaption p {
+  font-size: 0.8125rem;
+  color: var(--ah-d-muted);
+}
+
+@media (min-width: 1000px) {
+  .ah-vehicles {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* Stated plainly under the vehicle band: categories are not badges, and
+   nothing on this site claims a manufacturer relationship. */
+.ah-vehicles__note {
+  margin: 1.25rem 0 0;
+  color: var(--ah-d-mute);
+  font-size: 0.6875rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ---- Why AutoHaus: four ruled rows --------------------------------------- */
+
+.ah-statements {
+  border-top: 2px solid var(--ah-ink);
+}
+
+.ah-statement {
+  display: grid;
+  gap: 0.5rem;
+  padding-block: clamp(1.5rem, 2.5vw, 2.25rem);
+  border-bottom: 1px solid var(--ah-line);
+}
+
+.ah-statement__num {
+  color: var(--ah-blue-d);
+  font-size: 0.75rem;
+}
+
+.ah-statement h3 {
+  font-size: clamp(1.5rem, 2.2vw + 0.9rem, 2.5rem);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1.05;
+}
+
+.ah-statement__body {
+  font-size: 0.9375rem;
+  color: var(--ah-body);
+  max-width: 44ch;
+}
+
+@media (min-width: 900px) {
+  .ah-statement {
+    grid-template-columns: 4rem minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: clamp(1.5rem, 3vw, 3rem);
+    align-items: baseline;
+  }
+  .ah-statement__num {
+    padding-top: 0.5rem;
+  }
+}
+
+/* ---- The workshop plate -------------------------------------------------- */
+
+.ah-plate {
+  position: relative;
+  background: var(--ah-black);
+}
+
+.ah-plate > img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  max-height: 70vh;
+  object-fit: cover;
+  display: block;
+}
+
+.ah-plate__panel {
+  background: var(--ah-black);
+  border: 1px solid var(--ah-line-d);
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  display: grid;
+  gap: 1rem;
+  justify-items: start;
+}
+
+.ah-plate__panel .ah-mono {
+  color: var(--ah-blue);
+}
+
+.ah-plate__panel h2 {
+  font-size: clamp(1.375rem, 1.6vw + 1rem, 2.125rem);
+  max-width: 20ch;
+}
+
+@media (min-width: 900px) {
+  .ah-plate__panel {
+    position: absolute;
+    left: var(--ah-gutter);
+    bottom: clamp(1.5rem, 4vw, 3rem);
+    max-width: 30rem;
+  }
+}
+
+/* ---- Pre-purchase inspection --------------------------------------------- */
+
+.ah-inspection {
+  display: grid;
+  gap: clamp(2rem, 4vw, 3rem);
+}
+
+.ah-inspection__text {
+  display: grid;
+  gap: 1.25rem;
+  justify-items: start;
+  align-content: start;
+}
+
+.ah-inspection__shot {
+  margin: 0.75rem 0 0;
+  width: 100%;
+}
+
+.ah-inspection__shot img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--ah-r-sm);
+  display: block;
+}
+
+.ah-sheet {
+  border: 1px solid var(--ah-line-d);
+  background: var(--ah-char);
+  align-self: start;
+}
+
+.ah-sheet__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.875rem 1.25rem;
+  border-bottom: 1px solid var(--ah-line-d);
+  color: var(--ah-blue);
+}
+
+.ah-sheet__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1px;
+  background: var(--ah-line-d);
+}
+
+.ah-sheet__list li {
+  background: var(--ah-char);
+  padding: 0.875rem 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.9375rem;
+  color: var(--ah-d-text);
+}
+
+.ah-sheet__list .ah-mono {
+  color: var(--ah-d-mute);
+  font-size: 0.6875rem;
+}
+
+.ah-sheet__list svg {
+  margin-left: auto;
+  color: var(--ah-blue);
+}
+
+.ah-sheet__foot {
+  padding: 0.875rem 1.25rem;
+  border-top: 1px solid var(--ah-line-d);
+  font-size: 0.8125rem;
+  color: var(--ah-d-muted);
+}
+
+@media (min-width: 560px) {
+  .ah-sheet__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 950px) {
+  .ah-inspection {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(2rem, 4vw, 4rem);
+    align-items: start;
+  }
+}
+
+/* ---- Example feedback ---------------------------------------------------- */
+
+.ah-quotes {
+  display: grid;
+  gap: 1.75rem;
+}
+
+.ah-quote {
+  margin: 0;
+  display: grid;
+  gap: 1rem;
+  align-content: start;
+  border-top: 2px solid var(--ah-blue-d);
+  padding-top: 1.25rem;
+}
+
+.ah-quote blockquote {
+  margin: 0;
+}
+
+.ah-quote blockquote p {
+  font-family: var(--ah-display);
+  font-size: clamp(1.0625rem, 0.7vw + 0.95rem, 1.25rem);
+  font-weight: 500;
+  line-height: 1.45;
+  letter-spacing: -0.02em;
+  color: var(--ah-ink);
+}
+
+.ah-quote figcaption {
+  color: var(--ah-mute);
+  font-size: 0.6875rem;
+}
+
+@media (min-width: 880px) {
+  .ah-quotes {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+  }
+}
+
+/* ---- Cape Town ----------------------------------------------------------- */
+
+.ah-city {
+  display: grid;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.ah-city__lead {
+  display: grid;
+  gap: 1.25rem;
+  align-content: start;
+}
+
+/* The serviced areas, set as a ruled index rather than a map. A fictional
+   business has no premises to pin, and the area name is what a driver
+   actually checks themselves against. */
+.ah-areas {
+  margin-top: 0.25rem;
+}
+
+.ah-areas__head {
+  color: var(--ah-blue-d);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin: 0 0 0.75rem;
+}
+
+.ah-areas__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--ah-line);
+}
+
+.ah-areas__list li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.875rem;
+  padding: 0.6875rem 0;
+  border-bottom: 1px solid var(--ah-line);
+  color: var(--ah-ink);
+  font-weight: 500;
+}
+
+.ah-areas__list span {
+  color: var(--ah-mute);
+  font-size: 0.75rem;
+  flex: none;
+}
+
+.ah-areas__note {
+  margin: 0.875rem 0 0;
+  color: var(--ah-body);
+  font-size: 0.875rem;
+  max-width: 26rem;
+}
+
+.ah-city__detail {
+  margin: 0.5rem 0 0;
+}
+
+.ah-city__detail img {
+  width: 100%;
+  max-width: 20rem;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: var(--ah-r-sm);
+  display: block;
+}
+
+.ah-city__stack {
+  display: grid;
+  gap: clamp(1rem, 2vw, 1.5rem);
+}
+
+.ah-city__road,
+.ah-city__workshop {
+  margin: 0;
+}
+
+.ah-city__road img,
+.ah-city__workshop img {
+  width: 100%;
+  object-fit: cover;
+  border-radius: var(--ah-r-sm);
+  display: block;
+}
+
+.ah-city__road img {
+  aspect-ratio: 3 / 2;
+}
+
+.ah-city__workshop img {
+  aspect-ratio: 4 / 3;
+}
+
+@media (min-width: 950px) {
+  .ah-city {
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    gap: clamp(2rem, 4vw, 4rem);
+    align-items: start;
+  }
+  /* Offsetting the lower plate is what stops this reading as a tidy 2x2. */
+  .ah-city__workshop {
+    width: 72%;
+    margin-left: auto;
+  }
+}
+
+/* ---- Booking console ----------------------------------------------------- */
+
+.ah-console {
+  border: 1px solid var(--ah-line-d);
+  background: var(--ah-graphite);
+  /* Makes the native date picker render dark rather than white. */
+  color-scheme: dark;
+}
+
+.ah-console__head {
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  border-bottom: 1px solid var(--ah-line-d);
+  display: grid;
+  gap: 1.25rem;
+}
+
+.ah-console__body {
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.ah-console__foot {
+  display: grid;
+  gap: 1px;
+  background: var(--ah-line-d);
+  border-top: 1px solid var(--ah-line-d);
+}
+
+.ah-console__foot > * {
+  background: var(--ah-graphite);
+  padding: 1rem clamp(1.5rem, 3vw, 2.5rem);
+  display: grid;
+  gap: 0.25rem;
+  font-size: 0.9375rem;
+  color: var(--ah-d-text);
+  text-decoration: none;
+}
+
+.ah-console__foot .ah-mono {
+  color: var(--ah-d-mute);
+  font-size: 0.6875rem;
+}
+
+.ah-console__foot a:hover {
+  background: var(--ah-steel);
+}
+
+@media (min-width: 900px) {
+  .ah-console__head {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(1.5rem, 3vw, 3rem);
+    align-items: end;
+  }
+}
+
+@media (min-width: 760px) {
+  .ah-console__foot {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* ---- Forms --------------------------------------------------------------- */
+
+.ah-form {
+  display: grid;
+  gap: 1.125rem;
+}
+
+.ah-form__grid {
+  display: grid;
+  gap: 1.125rem;
+}
+
+/* Make, model and year read as one vehicle row. Stacked on a phone, three up
+   once there is room, and always spanning the full width of the grid. */
+.ah-form__vehicle {
+  display: grid;
+  gap: 1.125rem;
+}
+
+@media (min-width: 640px) {
+  .ah-form__vehicle {
+    grid-column: 1 / -1;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 0.6fr);
+  }
+}
+
+/* Full width on a phone, sized to its label once there is room. */
+@media (min-width: 640px) {
+  .ah-form > .ah-btn--block {
+    width: auto;
+    justify-self: start;
+  }
+}
+
+@media (min-width: 640px) {
+  .ah-form__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.ah-field {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.ah-field label {
+  color: var(--ah-d-muted);
+  font-size: 0.6875rem;
+}
+
+.ah-field label span {
+  color: var(--ah-d-mute);
+  text-transform: none;
+  letter-spacing: 0.04em;
+}
+
+.ah-input,
+.ah-select,
+.ah-textarea {
+  width: 100%;
+  font-family: var(--ah-body-font);
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--ah-d-text);
+  background: var(--ah-char);
+  border: 1px solid var(--ah-line-d);
+  border-radius: var(--ah-r);
+  padding: 0.75rem 0.9rem;
+  transition:
+    border-color 0.2s var(--ah-ease),
+    background-color 0.2s var(--ah-ease);
+}
+
+.ah-textarea {
+  min-height: 6.5rem;
+  resize: vertical;
+}
+
+.ah-select {
+  appearance: none;
+  padding-right: 2.5rem;
+  background-image: linear-gradient(45deg, transparent 50%, currentColor 50%),
+    linear-gradient(135deg, currentColor 50%, transparent 50%);
+  background-position:
+    calc(100% - 1.15rem) 1.3rem,
+    calc(100% - 0.85rem) 1.3rem;
+  background-size:
+    6px 6px,
+    6px 6px;
+  background-repeat: no-repeat;
+}
+
+.ah-input::placeholder,
+.ah-textarea::placeholder {
+  color: var(--ah-d-mute);
+}
+
+.ah-input:hover,
+.ah-select:hover,
+.ah-textarea:hover {
+  border-color: rgba(236, 238, 240, 0.32);
+}
+
+.ah-input:focus,
+.ah-select:focus,
+.ah-textarea:focus {
+  border-color: var(--ah-blue);
+  background: var(--ah-black);
+}
+
+.ah-input[aria-invalid='true'],
+.ah-textarea[aria-invalid='true'] {
+  border-color: #c9744e;
+}
+
+.ah-error {
+  font-family: var(--ah-mono);
+  font-size: 0.75rem;
+  color: #e09a76;
+}
+
+.ah-alert {
+  padding: 0.875rem 1rem;
+  border: 1px solid rgba(224, 154, 118, 0.4);
+  background: rgba(224, 154, 118, 0.1);
+  border-radius: var(--ah-r);
+  color: #e6a882;
+  font-size: 0.9375rem;
+}
+
+/* Parked off-screen, not display:none — a bot needs to be able to fill it. */
+.ah-hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.ah-success {
+  display: grid;
+  gap: 1rem;
+  justify-items: start;
+}
+
+.ah-success__mark {
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: var(--ah-r);
+  background: var(--ah-blue-d);
+  color: var(--ah-paper);
+}
+
+.ah-success h3 {
+  font-size: clamp(1.375rem, 1.6vw + 1rem, 1.875rem);
+}
+
+.ah-success p {
+  color: var(--ah-d-muted);
+  max-width: 46ch;
+}
+
+/* ---- FAQ ----------------------------------------------------------------- */
+
+.ah-faq {
+  border-top: 2px solid var(--ah-ink);
+}
+
+.ah-faq__item {
+  border-bottom: 1px solid var(--ah-line);
+}
+
+.ah-faq__item h3 {
+  margin: 0;
+  font-size: inherit;
+}
+
+.ah-faq__q {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: clamp(0.75rem, 2vw, 1.5rem);
+  padding: 1.125rem 0;
+  border: 0;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+}
+
+.ah-faq__num {
+  color: var(--ah-mute);
+  font-size: 0.75rem;
+}
+
+.ah-faq__text {
+  font-family: var(--ah-display);
+  font-size: clamp(1rem, 0.6vw + 0.9rem, 1.1875rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ah-ink);
+}
+
+.ah-faq__sign {
+  position: relative;
+  flex: none;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 1px solid var(--ah-line);
+  border-radius: var(--ah-r-sm);
+}
+
+.ah-faq__sign::before,
+.ah-faq__sign::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0.625rem;
+  height: 1.5px;
+  background: var(--ah-blue-d);
+  transform: translate(-50%, -50%);
+  transition: opacity 0.2s var(--ah-ease);
+}
+
+.ah-faq__sign::after {
+  width: 1.5px;
+  height: 0.625rem;
+}
+
+.ah-faq__item[data-open='true'] .ah-faq__sign::after {
+  opacity: 0;
+}
+
+.ah-faq__a {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s var(--ah-ease);
+}
+
+.ah-faq__item[data-open='true'] .ah-faq__a {
+  grid-template-rows: 1fr;
+}
+
+.ah-faq__a > div {
+  overflow: hidden;
+}
+
+.ah-faq__a p {
+  padding: 0 0 1.25rem calc(2.25rem + 2vw);
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: var(--ah-body);
+  max-width: 74ch;
+}
+
+/* ---- Closing ------------------------------------------------------------- */
+
+.ah-close {
+  background: var(--ah-black);
+  padding-top: var(--ah-section);
+}
+
+.ah-close__inner {
+  display: grid;
+  gap: 1.5rem;
+  justify-items: start;
+  max-width: 44rem;
+  padding-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+
+.ah-close__inner h2 {
+  font-size: var(--ah-h2-big);
+}
+
+.ah-close__strip {
+  width: 100%;
+  aspect-ratio: 10 / 3;
+  max-height: 260px;
+  object-fit: cover;
+  display: block;
+  border-top: 1px solid var(--ah-line-d);
+}
+
+/* ---- Footer -------------------------------------------------------------- */
+
+.ah-footer {
+  background: var(--ah-black);
+  color: var(--ah-d-muted);
+}
+
+.ah-footer__bar {
+  border-block: 1px solid var(--ah-line-d);
+  background: var(--ah-char);
+}
+
+.ah-footer__bar-inner {
+  display: grid;
+  gap: 1rem;
+  padding-block: 1.25rem;
+}
+
+.ah-logo--footer {
+  color: var(--ah-d-text);
+}
+
+.ah-footer__tagline {
+  font-family: var(--ah-display);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--ah-blue);
+}
+
+.ah-footer__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.625rem 1rem;
+}
+
+.ah-footer__tel {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--ah-mono);
+  font-size: 0.8125rem;
+  color: var(--ah-d-muted);
+  text-decoration: none;
+}
+
+.ah-footer__tel:hover {
+  color: var(--ah-d-text);
+}
+
+.ah-footer__cols {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2rem 1.5rem;
+  padding-block: clamp(2rem, 4vw, 3.5rem);
+}
+
+.ah-footer__head {
+  color: var(--ah-blue);
+  margin: 0 0 0.875rem;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+}
+
+.ah-footer__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.ah-footer__list a {
+  color: var(--ah-d-muted);
+  text-decoration: none;
+  transition: color 0.2s var(--ah-ease);
+}
+
+.ah-footer__list a:hover {
+  color: var(--ah-d-text);
+}
+
+.ah-footer__bottom {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem 1.5rem;
+  padding-block: 1.25rem;
+  border-top: 1px solid var(--ah-line-d);
+  font-size: 0.8125rem;
+}
+
+.ah-footer__credit a {
+  color: var(--ah-d-text);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+@media (min-width: 760px) {
+  .ah-footer__cols {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 900px) {
+  .ah-footer__bar-inner {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 2rem;
+  }
+  .ah-footer__actions {
+    justify-content: flex-end;
+  }
+}
+
+/* ---- The reveal is a fade, and only a fade --------------------------------
+   Made Digital's shared <Reveal> lifts its children 22px as they fade in. On
+   this concept a reveal frequently wraps a photograph — the diagnostics
+   composition, the vehicle band, the Cape Town mosaic — and the brief rules
+   out photographic movement of every kind. So the translate is dropped and the
+   transition narrowed to opacity: no image on this site ever changes position.
+
+   Loaded after the studio stylesheets (the concept is lazy-imported), so this
+   wins on order at equal specificity. */
+
+.ah .reveal {
+  transform: none;
+  transition: opacity 0.6s var(--ah-ease);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity;
+}
+
+.ah .reveal.is-visible {
+  transform: none;
+}
+
+/* ---- Reduced motion -------------------------------------------------------
+   Every photograph is static already, so all that is left to disable is the
+   fade and the accordion's height transition. */
+
+@media (prefers-reduced-motion: reduce) {
+  .ah *,
+  .ah *::before,
+  .ah *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "name": "Made Digital",
+  "short_name": "Made Digital",
+  "description": "Websites that bring you business.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FAF8F4",
+  "theme_color": "#16150F",
+  "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
+}

@@ -1,0 +1,2052 @@
+/* ==========================================================================
+   Clean & Co. — website concept by Made Digital
+
+   A self-contained design system. EVERY selector is scoped under `.cc`, so it
+   cannot leak into the Made Digital site or into the other three concepts, and
+   so Made Digital's globals are overridden inside this concept.
+
+   The structural idea: bright, generous and rounded. Where Cape Build Co. is
+   square, monumental and photographic, Clean & Co. is soft-cornered, warm and
+   typographic — deep eucalyptus on warm cream, large friendly headlines set in
+   Bricolage Grotesque, pill controls, and photographs set into rounded plates
+   rather than bled to the edges of the screen.
+
+   Photography is static everywhere. No zoom, no pan, no parallax, no Ken
+   Burns, no cross-fade, no sliders. The only thing hover ever changes is the
+   opacity of an already-static image, or a colour.
+   ========================================================================== */
+
+.cc {
+  /* Deep eucalyptus — the brand. Kept dark and slightly blue-green so it reads
+     as considered rather than as a generic "eco cleaning" green. */
+  --cc-forest: #1d3c33;
+  --cc-forest-hi: #2a5749;
+  --cc-forest-deep: #14291f;
+  --cc-sage: #9db3a4;
+
+  /* Charcoal and warm neutrals */
+  --cc-ink: #171d1a;
+  --cc-char: #2a322d;
+  --cc-slate: #515b55;
+  --cc-mute: #616a64;
+
+  /* Grounds — the lightest is a warm cream, never white */
+  --cc-cream: #f7f4ed;
+  /* Only ever a hover lift on a cream button — never a surface. */
+  --cc-cream-hi: #fffdf7;
+  --cc-sand: #efe9dd;
+  --cc-field: #f1ebdf;
+  --cc-line: #ddd5c5;
+  --cc-line-soft: #e6dfd2;
+
+  /* One restrained warm accent, used only as a mark */
+  --cc-clay: #b8663f;
+
+  /* On dark grounds */
+  --cc-d-text: #f4f1e9;
+  --cc-d-muted: #b4bdb5;
+  --cc-d-line: rgba(244, 241, 233, 0.18);
+
+  --cc-display: 'Bricolage Grotesque', ui-sans-serif, system-ui, 'Segoe UI',
+    Helvetica, Arial, sans-serif;
+  --cc-body: 'Inter', ui-sans-serif, system-ui, 'Segoe UI', Helvetica, Arial,
+    sans-serif;
+
+  --cc-h1: clamp(2.75rem, 7.4vw + 0.4rem, 6.25rem);
+  --cc-h2: clamp(2rem, 3.4vw + 1rem, 3.5rem);
+  --cc-h2-big: clamp(2.25rem, 4.4vw + 1rem, 4.25rem);
+  --cc-h3: clamp(1.125rem, 0.6vw + 1rem, 1.375rem);
+
+  /* Rounding is the signature. Nothing on this site has a square corner. */
+  --cc-r-xl: 34px;
+  --cc-r-lg: 24px;
+  --cc-r-md: 16px;
+  --cc-r-sm: 10px;
+
+  --cc-nav-h: 4.25rem;
+  --cc-gutter: clamp(1.25rem, 3.6vw, 3.5rem);
+  --cc-max: 1360px;
+  --cc-section: clamp(3.75rem, 7vw, 7.5rem);
+  --cc-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+
+  /* Themes the shared concept notice */
+  --notice-bg: var(--cc-forest-deep);
+  --notice-fg: var(--cc-d-text);
+  --notice-fg-muted: rgba(244, 241, 233, 0.72);
+  --notice-rule: rgba(244, 241, 233, 0.34);
+  --notice-max: var(--cc-max);
+  --notice-gutter: var(--cc-gutter);
+
+  font-family: var(--cc-body);
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--cc-slate);
+  background: var(--cc-cream);
+  min-height: 100vh;
+  /* Lets hero and inset images sit past the content column without ever
+     widening the document. */
+  overflow-x: clip;
+}
+
+/* ---- Base typography ----------------------------------------------------
+   :where() keeps these at (0,1,0) so any component class below can win — the
+   footer column headings and the service rows both depend on that. Base
+   heading rules stay above component rules in this file. */
+
+.cc :where(h1, h2, h3, h4) {
+  font-family: var(--cc-display);
+  font-weight: 700;
+  color: var(--cc-ink);
+  letter-spacing: -0.025em;
+  line-height: 1.08;
+  text-transform: none;
+}
+
+.cc :where(h1) {
+  font-size: var(--cc-h1);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+}
+
+.cc :where(h2) {
+  font-size: var(--cc-h2);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1.06;
+}
+
+.cc :where(h3) {
+  font-size: var(--cc-h3);
+  letter-spacing: -0.015em;
+}
+
+.cc :where(p) {
+  margin: 0;
+}
+
+.cc :focus-visible {
+  outline: 2px solid var(--cc-forest);
+  outline-offset: 3px;
+}
+
+.cc-ink :focus-visible,
+.cc-green :focus-visible,
+.cc-footer :focus-visible,
+.cc-city :focus-visible {
+  outline-color: var(--cc-sage);
+}
+
+.cc ::selection {
+  background: var(--cc-forest);
+  color: var(--cc-cream);
+}
+
+.cc-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.cc-skip {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 200;
+  background: var(--cc-forest);
+  color: var(--cc-cream);
+  padding: 0.75rem 1.25rem;
+  border-radius: 0 0 var(--cc-r-sm) 0;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.cc-skip:focus {
+  left: 0;
+}
+
+/* ---- Layout -------------------------------------------------------------- */
+
+.cc-container {
+  width: 100%;
+  max-width: calc(var(--cc-max) + var(--cc-gutter) * 2);
+  margin-inline: auto;
+  padding-inline: var(--cc-gutter);
+}
+
+.cc-section {
+  padding-block: var(--cc-section);
+}
+
+.cc-sand {
+  background: var(--cc-sand);
+}
+
+.cc-green {
+  background: var(--cc-forest);
+  color: var(--cc-d-muted);
+}
+
+.cc-ink {
+  background: var(--cc-ink);
+  color: var(--cc-d-muted);
+}
+
+.cc-green :where(h2, h3, h4),
+.cc-ink :where(h2, h3, h4) {
+  color: var(--cc-d-text);
+}
+
+.cc-lede {
+  font-size: clamp(1.0625rem, 0.4vw + 1rem, 1.25rem);
+  line-height: 1.6;
+  color: var(--cc-slate);
+  max-width: 48ch;
+}
+
+.cc-green .cc-lede,
+.cc-ink .cc-lede {
+  color: var(--cc-d-muted);
+}
+
+.cc-note {
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  color: var(--cc-mute);
+}
+
+/* Section heads. Used sparingly and never with an eyebrow above every one —
+   the headings are large enough to do the work on their own. */
+.cc-head {
+  display: grid;
+  gap: 1.125rem;
+  margin-bottom: clamp(2.25rem, 4vw, 3.5rem);
+}
+
+.cc-head__big {
+  font-size: var(--cc-h2-big);
+}
+
+@media (min-width: 900px) {
+  .cc-head--split {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    gap: clamp(2rem, 4vw, 4rem);
+    align-items: end;
+  }
+}
+
+/* ---- Pills, dots and ticks ---------------------------------------------- */
+
+.cc-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid var(--cc-line);
+  background: var(--cc-cream);
+  color: var(--cc-char);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  width: max-content;
+  max-width: 100%;
+}
+
+.cc-pill--light {
+  background: rgba(244, 241, 233, 0.08);
+  border-color: var(--cc-d-line);
+  color: var(--cc-d-text);
+}
+
+.cc-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--cc-clay);
+  flex: none;
+}
+
+.cc-ticks {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.625rem;
+}
+
+.cc-ticks li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.625rem;
+  font-size: 0.9375rem;
+  color: var(--cc-slate);
+}
+
+.cc-ticks svg {
+  flex: none;
+  margin-top: 0.2rem;
+  color: var(--cc-forest);
+}
+
+.cc-ticks--lg li {
+  font-size: 1.0625rem;
+  padding-block: 0.625rem;
+  border-bottom: 1px solid var(--cc-line-soft);
+}
+
+.cc-green .cc-ticks li,
+.cc-ink .cc-ticks li {
+  color: var(--cc-d-muted);
+}
+
+.cc-green .cc-ticks svg,
+.cc-ink .cc-ticks svg {
+  color: var(--cc-sage);
+}
+
+/* ---- Buttons -------------------------------------------------------------
+   Pill-shaped, sentence case, with the label and an arrow. Nothing on the
+   other three concepts is shaped like this. */
+
+.cc-btn {
+  --b-bg: var(--cc-forest);
+  --b-fg: var(--cc-cream);
+  --b-bd: var(--cc-forest);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  padding: 0.8rem 1.4rem;
+  border: 1px solid var(--b-bd);
+  border-radius: 999px;
+  background: var(--b-bg);
+  color: var(--b-fg);
+  font-family: var(--cc-display);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color 0.25s var(--cc-ease),
+    border-color 0.25s var(--cc-ease),
+    color 0.25s var(--cc-ease);
+}
+
+.cc-btn:hover {
+  --b-bg: var(--cc-forest-hi);
+  --b-bd: var(--cc-forest-hi);
+}
+
+.cc-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.cc-btn--ghost {
+  --b-bg: transparent;
+  --b-fg: var(--cc-forest);
+  --b-bd: var(--cc-line);
+}
+
+.cc-btn--ghost:hover {
+  --b-bg: rgba(29, 60, 51, 0.06);
+  --b-bd: var(--cc-forest);
+  --b-fg: var(--cc-forest);
+}
+
+.cc-green .cc-btn--ghost,
+.cc-ink .cc-btn--ghost,
+.cc-footer .cc-btn--ghost {
+  --b-fg: var(--cc-d-text);
+  --b-bd: var(--cc-d-line);
+}
+
+.cc-green .cc-btn--ghost:hover,
+.cc-ink .cc-btn--ghost:hover,
+.cc-footer .cc-btn--ghost:hover {
+  --b-bg: rgba(244, 241, 233, 0.1);
+  --b-bd: var(--cc-sage);
+  --b-fg: var(--cc-d-text);
+}
+
+.cc-btn--light {
+  --b-bg: var(--cc-cream);
+  --b-fg: var(--cc-forest);
+  --b-bd: var(--cc-cream);
+}
+
+.cc-btn--light:hover {
+  --b-bg: var(--cc-cream-hi);
+  --b-bd: var(--cc-cream-hi);
+  --b-fg: var(--cc-forest);
+}
+
+.cc-btn--lg {
+  padding: 1rem 1.7rem;
+  font-size: 1rem;
+}
+
+.cc-btn--sm {
+  padding: 0.55rem 1rem;
+  font-size: 0.875rem;
+}
+
+.cc-btn--block {
+  width: 100%;
+}
+
+.cc-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+/* ---- Navigation ---------------------------------------------------------- */
+
+.cc-nav {
+  position: sticky;
+  top: 0;
+  z-index: 90;
+  background: var(--cc-cream);
+  border-bottom: 1px solid transparent;
+  transition:
+    border-color 0.25s var(--cc-ease),
+    box-shadow 0.25s var(--cc-ease);
+}
+
+.cc-nav.is-lifted {
+  border-bottom-color: var(--cc-line-soft);
+  box-shadow: 0 10px 30px -24px rgba(23, 29, 26, 0.6);
+}
+
+.cc-nav__inner {
+  min-height: var(--cc-nav-h);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  position: relative;
+  z-index: 100;
+}
+
+.cc-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: var(--cc-display);
+  font-size: clamp(1rem, 1.1vw + 0.75rem, 1.1875rem);
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  color: var(--cc-ink);
+  text-decoration: none;
+  white-space: nowrap;
+  margin-right: auto;
+}
+
+.cc-logo__mark {
+  width: 1.35rem;
+  height: 1.35rem;
+  border-radius: 8px 8px 8px 2px;
+  background: var(--cc-forest);
+  flex: none;
+}
+
+.cc-nav__links {
+  display: none;
+  align-items: center;
+  gap: clamp(1rem, 1.8vw, 2rem);
+}
+
+.cc-nav__link {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--cc-char);
+  text-decoration: none;
+  padding-block: 0.35rem;
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.2s var(--cc-ease);
+}
+
+.cc-nav__link:hover {
+  border-bottom-color: var(--cc-forest);
+}
+
+.cc-nav__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.cc-nav__wa {
+  display: none;
+}
+
+.cc-burger {
+  width: 2.75rem;
+  height: 2.75rem;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 5px;
+  padding: 0;
+  border: 1px solid var(--cc-line);
+  border-radius: 999px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.cc-burger span {
+  display: block;
+  width: 1rem;
+  height: 1.5px;
+  background: var(--cc-ink);
+  border-radius: 2px;
+}
+
+.cc-drawer {
+  position: absolute;
+  inset-inline: 0;
+  top: 100%;
+  background: var(--cc-cream);
+  border-bottom: 1px solid var(--cc-line);
+  border-radius: 0 0 var(--cc-r-lg) var(--cc-r-lg);
+  padding: 1.25rem var(--cc-gutter) 1.75rem;
+  display: grid;
+  gap: 1.5rem;
+  box-shadow: 0 30px 60px -40px rgba(23, 29, 26, 0.7);
+  max-height: calc(100dvh - var(--cc-nav-h));
+  overflow-y: auto;
+}
+
+.cc-drawer__nav {
+  display: grid;
+}
+
+.cc-drawer__link {
+  font-family: var(--cc-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--cc-ink);
+  text-decoration: none;
+  padding-block: 0.75rem;
+  border-bottom: 1px solid var(--cc-line-soft);
+}
+
+.cc-drawer__foot {
+  display: grid;
+  gap: 0.625rem;
+}
+
+.cc-drawer__meta {
+  display: grid;
+  gap: 0.2rem;
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--cc-mute);
+}
+
+.cc-drawer__meta a {
+  color: var(--cc-char);
+  text-decoration: none;
+}
+
+@media (min-width: 560px) {
+  .cc-nav__wa {
+    display: inline-flex;
+  }
+}
+
+@media (min-width: 1000px) {
+  .cc-nav__links {
+    display: flex;
+  }
+  .cc-burger,
+  .cc-drawer {
+    display: none;
+  }
+  .cc-nav__actions {
+    gap: 0.625rem;
+  }
+}
+
+/* ---- Floating WhatsApp (phones only) ------------------------------------- */
+
+.cc-float {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 80;
+  width: 3.5rem;
+  height: 3.5rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--cc-forest);
+  color: var(--cc-cream);
+  box-shadow: 0 14px 30px -12px rgba(20, 41, 31, 0.75);
+}
+
+.cc-float:hover {
+  background: var(--cc-forest-hi);
+}
+
+@media (min-width: 900px) {
+  .cc-float {
+    display: none;
+  }
+}
+
+/* ---- Hero ----------------------------------------------------------------
+   A bright canvas. The headline runs the full measure at the top; the
+   photography is set into rounded plates below it, offset and overlapping,
+   with a card breaking the corner of the large one. Nothing is bled behind
+   text, and nothing moves. */
+
+.cc-hero {
+  padding-block: clamp(2.25rem, 5vw, 4rem) clamp(3rem, 6vw, 5.5rem);
+}
+
+.cc-hero__pill {
+  margin-bottom: clamp(1.25rem, 2.5vw, 1.75rem);
+}
+
+.cc-hero h1 {
+  max-width: 15ch;
+}
+
+.cc-hero__line2 {
+  display: block;
+  color: var(--cc-forest);
+}
+
+.cc-hero__grid {
+  display: grid;
+  gap: clamp(1.75rem, 4vw, 2.5rem);
+  margin-top: clamp(1.75rem, 4vw, 3rem);
+}
+
+/* Copy at the top, the small plate at the bottom: on wide screens the column
+   is stretched to the height of the large plate beside it, and spreading the
+   two apart is what stops the hero opening with an empty quarter. */
+.cc-hero__left {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.cc-hero__lede {
+  font-size: clamp(1.0625rem, 0.5vw + 1rem, 1.3125rem);
+  line-height: 1.55;
+  color: var(--cc-slate);
+  max-width: 32ch;
+}
+
+.cc-hero__detail {
+  display: none;
+  margin: 0;
+}
+
+.cc-hero__detail img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: var(--cc-r-lg);
+  display: block;
+}
+
+.cc-hero__stage {
+  position: relative;
+}
+
+.cc-hero__shot {
+  margin: 0;
+}
+
+.cc-hero__shot img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--cc-r-xl);
+  display: block;
+}
+
+.cc-hero__card {
+  background: var(--cc-cream);
+  border: 1px solid var(--cc-line-soft);
+  border-radius: var(--cc-r-lg);
+  padding: 1.25rem;
+  display: grid;
+  gap: 0.75rem;
+  margin-top: -2rem;
+  margin-inline: 0.75rem;
+  position: relative;
+  box-shadow: 0 24px 48px -34px rgba(23, 29, 26, 0.55);
+}
+
+.cc-hero__card-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--cc-display);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--cc-forest);
+}
+
+.cc-hero__card-body {
+  font-size: 0.9375rem;
+  color: var(--cc-slate);
+}
+
+.cc-hero__chips {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.cc-hero__chips li {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--cc-char);
+  background: var(--cc-sand);
+  border-radius: 999px;
+  padding: 0.3rem 0.7rem;
+}
+
+/* Two pills of different widths stacked read as ragged on a narrow screen, so
+   below the first breakpoint the hero's calls to action match each other. */
+@media (max-width: 559px) {
+  .cc-hero .cc-btns {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (min-width: 900px) {
+  .cc-hero__detail {
+    display: block;
+    max-width: 15rem;
+  }
+}
+
+@media (min-width: 1000px) {
+  .cc-hero__grid {
+    grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
+    gap: clamp(2rem, 4vw, 4rem);
+    align-items: stretch;
+  }
+
+  .cc-hero__detail {
+    max-width: none;
+  }
+
+  /* The plate runs past the content column into the page gutter — the site's
+     one deliberate break out of the grid. */
+  .cc-hero__stage {
+    margin-right: calc(var(--cc-gutter) * -1);
+  }
+
+  .cc-hero__shot img {
+    aspect-ratio: 16 / 11;
+  }
+
+  .cc-hero__card {
+    position: absolute;
+    left: -2.5rem;
+    bottom: -2rem;
+    width: min(22rem, 60%);
+    margin: 0;
+    padding: 1.5rem;
+  }
+}
+
+/* ---- Quick service selector ---------------------------------------------- */
+
+.cc-picker__tabs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.625rem;
+}
+
+.cc-picker__tab {
+  display: grid;
+  gap: 0.25rem;
+  justify-items: start;
+  text-align: left;
+  padding: 1rem;
+  border: 1px solid var(--cc-line);
+  border-radius: var(--cc-r-md);
+  background: var(--cc-cream);
+  color: var(--cc-char);
+  font-family: var(--cc-body);
+  cursor: pointer;
+  transition:
+    background-color 0.2s var(--cc-ease),
+    border-color 0.2s var(--cc-ease),
+    color 0.2s var(--cc-ease);
+}
+
+.cc-picker__tab svg {
+  color: var(--cc-forest);
+  margin-bottom: 0.35rem;
+  transition: color 0.2s var(--cc-ease);
+}
+
+.cc-picker__tab:hover {
+  border-color: var(--cc-forest);
+}
+
+.cc-picker__tab.is-active {
+  background: var(--cc-forest);
+  border-color: var(--cc-forest);
+  color: var(--cc-d-text);
+}
+
+.cc-picker__tab.is-active svg {
+  color: var(--cc-sage);
+}
+
+.cc-picker__label {
+  font-family: var(--cc-display);
+  font-size: 1.0625rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.cc-picker__hint {
+  font-size: 0.75rem;
+  color: var(--cc-mute);
+}
+
+.cc-picker__tab.is-active .cc-picker__hint {
+  color: var(--cc-sage);
+}
+
+.cc-picker__tab:last-child {
+  grid-column: 1 / -1;
+}
+
+.cc-picker__panel {
+  margin-top: 0.625rem;
+  background: var(--cc-cream);
+  border: 1px solid var(--cc-line-soft);
+  border-radius: var(--cc-r-lg);
+  padding: clamp(1.25rem, 3vw, 2.25rem);
+  display: grid;
+  gap: 1.5rem;
+}
+
+.cc-picker__panel:focus {
+  outline: none;
+}
+
+.cc-picker__text {
+  display: grid;
+  gap: 1.125rem;
+  align-content: start;
+}
+
+.cc-picker__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--cc-display);
+  font-size: 1.375rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--cc-ink);
+}
+
+.cc-picker__eyebrow svg {
+  color: var(--cc-forest);
+}
+
+.cc-picker__body {
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--cc-slate);
+  max-width: 42ch;
+}
+
+.cc-picker__shot {
+  margin: 0;
+}
+
+.cc-picker__shot img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--cc-r-md);
+  display: block;
+}
+
+@media (min-width: 700px) {
+  .cc-picker__tabs {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+  .cc-picker__tab:last-child {
+    grid-column: auto;
+  }
+  .cc-picker__tab {
+    padding: 1.125rem;
+  }
+}
+
+@media (min-width: 900px) {
+  .cc-picker__panel {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(1.5rem, 3vw, 3rem);
+    align-items: center;
+  }
+}
+
+/* ---- Value proposition --------------------------------------------------- */
+
+.cc-value__head h2 {
+  font-size: var(--cc-h2-big);
+  max-width: 18ch;
+}
+
+.cc-value__head h2 span {
+  display: block;
+  color: var(--cc-sage);
+}
+
+.cc-value {
+  display: grid;
+  gap: 0;
+  margin-top: clamp(2.25rem, 4vw, 3.5rem);
+  border-top: 1px solid var(--cc-d-line);
+}
+
+.cc-value__item {
+  padding-block: 1.5rem;
+  border-bottom: 1px solid var(--cc-d-line);
+}
+
+.cc-value__item h3 {
+  font-size: clamp(1.5rem, 2.4vw + 0.8rem, 2.375rem);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  margin-bottom: 0.5rem;
+}
+
+.cc-value__item p {
+  color: var(--cc-d-muted);
+  max-width: 34ch;
+}
+
+@media (min-width: 800px) {
+  .cc-value {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(1.5rem, 3vw, 3rem);
+  }
+  .cc-value__item {
+    padding-block: 2rem 0;
+    border-bottom: 0;
+  }
+}
+
+/* ---- Service menu --------------------------------------------------------
+   A ruled list, not a grid of cards. The photograph appears on the row you
+   are pointing at — an opacity change on a static image, nothing more. */
+
+.cc-menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--cc-line);
+}
+
+.cc-menu__row {
+  position: relative;
+  border-bottom: 1px solid var(--cc-line);
+  padding-block: 1.5rem;
+  display: grid;
+  grid-template-columns: 2.75rem minmax(0, 1fr) auto;
+  grid-template-areas:
+    'num  text  text'
+    'num  price cta';
+  gap: 0.75rem 0.5rem;
+  align-items: center;
+  transition: background-color 0.2s var(--cc-ease);
+}
+
+.cc-menu__num {
+  grid-area: num;
+  align-self: start;
+  font-family: var(--cc-display);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--cc-mute);
+  padding-top: 0.35rem;
+}
+
+.cc-menu__text {
+  grid-area: text;
+}
+
+.cc-menu__title {
+  font-family: var(--cc-display);
+  font-size: clamp(1.25rem, 1.4vw + 1rem, 1.875rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  color: var(--cc-ink);
+  margin: 0 0 0.35rem;
+}
+
+/* The stretched link: one tab stop for the whole row. The focus ring is on
+   the ::after, so a computed-style check on the anchor reports no outline. */
+.cc-menu__link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.cc-menu__link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--cc-r-sm);
+}
+
+.cc-menu__link:focus-visible {
+  outline: none;
+}
+
+.cc-menu__link:focus-visible::after {
+  outline: 2px solid var(--cc-forest);
+  outline-offset: -2px;
+}
+
+.cc-menu__body {
+  font-size: 0.9375rem;
+  color: var(--cc-slate);
+  max-width: 44ch;
+}
+
+.cc-menu__shot {
+  grid-area: shot;
+  margin: 0;
+  display: none;
+}
+
+.cc-menu__shot img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--cc-r-sm);
+  display: block;
+}
+
+.cc-menu__price {
+  grid-area: price;
+  font-family: var(--cc-display);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--cc-forest);
+  white-space: nowrap;
+}
+
+.cc-menu__cta {
+  grid-area: cta;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--cc-display);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--cc-forest);
+  white-space: nowrap;
+}
+
+@media (min-width: 900px) {
+  .cc-menu__row {
+    grid-template-columns: 3rem minmax(0, 1fr) 9rem 8rem 8.5rem;
+    grid-template-areas: 'num text shot price cta';
+    gap: 1.5rem;
+    padding-block: 1.25rem;
+  }
+
+  .cc-menu__num {
+    align-self: center;
+    padding-top: 0;
+  }
+
+  .cc-menu__shot {
+    display: block;
+    opacity: 0;
+    transition: opacity 0.25s var(--cc-ease);
+  }
+
+  .cc-menu__row:hover,
+  .cc-menu__row:focus-within {
+    background: var(--cc-sand);
+  }
+
+  .cc-menu__row:hover .cc-menu__shot,
+  .cc-menu__row:focus-within .cc-menu__shot {
+    opacity: 1;
+  }
+
+  .cc-menu__price {
+    text-align: right;
+  }
+
+  .cc-menu__cta {
+    justify-content: flex-end;
+  }
+}
+
+/* ---- Before & after ------------------------------------------------------
+   Two static photographs in one frame. No slider, no handle, no motion — the
+   comparison reads identically in a screenshot and with animation disabled. */
+
+.cc-ba-grid {
+  display: grid;
+  gap: clamp(1.75rem, 3.5vw, 2.75rem);
+}
+
+.cc-ba {
+  margin: 0;
+}
+
+.cc-ba__pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3px;
+  background: var(--cc-d-line);
+  border-radius: var(--cc-r-lg);
+  overflow: hidden;
+}
+
+.cc-ba__half {
+  position: relative;
+}
+
+.cc-ba__half img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+}
+
+.cc-ba__tag {
+  position: absolute;
+  left: 0.625rem;
+  bottom: 0.625rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  font-family: var(--cc-display);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.cc-ba__tag--before {
+  background: var(--cc-cream);
+  color: var(--cc-ink);
+}
+
+.cc-ba__tag--after {
+  background: var(--cc-forest);
+  color: var(--cc-d-text);
+}
+
+.cc-ba__caption {
+  display: grid;
+  gap: 0.35rem;
+  margin-top: 1rem;
+}
+
+.cc-ba__caption h3 {
+  color: var(--cc-d-text);
+}
+
+.cc-ba__caption p {
+  font-size: 0.9375rem;
+  color: var(--cc-d-muted);
+  max-width: 46ch;
+}
+
+@media (min-width: 900px) {
+  .cc-ba-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* ---- How it works --------------------------------------------------------
+   A stepped progression: each step hangs from its own rule, and on wide
+   screens each one starts lower than the last, so the four read as a descent
+   rather than as four boxes. */
+
+.cc-steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 2rem;
+}
+
+.cc-step {
+  position: relative;
+  border-top: 1px solid var(--cc-line);
+  padding-top: 1.25rem;
+}
+
+.cc-step::before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: 0;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--cc-forest);
+}
+
+.cc-step__num {
+  display: block;
+  font-family: var(--cc-display);
+  font-size: clamp(2.25rem, 3.4vw + 1rem, 3.5rem);
+  font-weight: 800;
+  letter-spacing: -0.05em;
+  line-height: 1;
+  color: var(--cc-forest);
+  margin-bottom: 0.75rem;
+}
+
+.cc-step h3 {
+  text-transform: uppercase;
+  font-size: 0.9375rem;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.5rem;
+}
+
+.cc-step p {
+  font-size: 0.9375rem;
+  color: var(--cc-slate);
+  max-width: 32ch;
+}
+
+@media (min-width: 900px) {
+  .cc-steps {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: clamp(1.25rem, 2.5vw, 2.5rem);
+    align-items: start;
+  }
+  .cc-step {
+    margin-top: calc(var(--i, 0) * 2.25rem);
+  }
+}
+
+/* ---- Statements ---------------------------------------------------------- */
+
+.cc-statements {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--cc-line);
+}
+
+.cc-statement {
+  padding-block: 1.5rem;
+  border-bottom: 1px solid var(--cc-line);
+}
+
+.cc-statement h3 {
+  font-size: clamp(1.375rem, 1.8vw + 0.9rem, 2rem);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  margin-bottom: 0.5rem;
+}
+
+.cc-statement p {
+  font-size: 0.9375rem;
+  color: var(--cc-slate);
+  max-width: 42ch;
+}
+
+@media (min-width: 800px) {
+  .cc-statements {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: clamp(2rem, 4vw, 4rem);
+  }
+  .cc-statement {
+    padding-block: 2rem;
+  }
+  .cc-statement:nth-last-child(-n + 2) {
+    border-bottom: 0;
+  }
+}
+
+/* ---- Residential duo ------------------------------------------------------ */
+
+.cc-duo {
+  display: grid;
+  gap: clamp(2.5rem, 5vw, 3rem);
+}
+
+.cc-frame {
+  margin: 0;
+}
+
+.cc-frame img {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+  border-radius: var(--cc-r-xl);
+}
+
+.cc-frame--wide img {
+  aspect-ratio: 16 / 9;
+  border-radius: var(--cc-r-xl);
+}
+
+.cc-duo__media {
+  position: relative;
+}
+
+.cc-duo__media > .cc-frame:first-child img {
+  aspect-ratio: 4 / 5;
+}
+
+.cc-duo__inset {
+  position: absolute;
+  right: -0.5rem;
+  bottom: -1.25rem;
+  width: 38%;
+  max-width: 11rem;
+}
+
+.cc-duo__inset img {
+  aspect-ratio: 1;
+  border-radius: var(--cc-r-lg);
+  border: 6px solid var(--cc-cream);
+}
+
+.cc-duo__text {
+  display: grid;
+  gap: 1.5rem;
+  align-content: center;
+  justify-items: start;
+}
+
+@media (min-width: 950px) {
+  .cc-duo {
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+    gap: clamp(3rem, 6vw, 6rem);
+    align-items: center;
+  }
+  .cc-duo__inset {
+    right: -2rem;
+    bottom: -2rem;
+    max-width: 13rem;
+  }
+}
+
+/* ---- Business tags -------------------------------------------------------- */
+
+.cc-tags {
+  list-style: none;
+  margin: 0 0 clamp(1.75rem, 3vw, 2.5rem);
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.cc-tags li {
+  font-family: var(--cc-display);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--cc-d-text);
+  border: 1px solid var(--cc-d-line);
+  border-radius: 999px;
+  padding: 0.5rem 1.05rem;
+}
+
+/* ---- Example feedback ----------------------------------------------------- */
+
+.cc-quotes {
+  display: grid;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.cc-quote {
+  margin: 0;
+  border-top: 2px solid var(--cc-forest);
+  padding-top: 1.25rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.cc-quote blockquote {
+  margin: 0;
+}
+
+.cc-quote blockquote p {
+  font-family: var(--cc-display);
+  font-size: clamp(1.125rem, 0.9vw + 1rem, 1.375rem);
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: -0.02em;
+  color: var(--cc-ink);
+}
+
+.cc-quote figcaption {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--cc-mute);
+}
+
+@media (min-width: 850px) {
+  .cc-quotes {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* ---- FAQ ------------------------------------------------------------------ */
+
+.cc-faq-layout {
+  display: grid;
+  gap: clamp(2rem, 4vw, 3rem);
+}
+
+.cc-faq {
+  border-top: 1px solid var(--cc-line);
+}
+
+.cc-faq__item {
+  border-bottom: 1px solid var(--cc-line);
+}
+
+.cc-faq__item h3 {
+  margin: 0;
+  font-size: inherit;
+}
+
+.cc-faq__q {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  padding: 1.125rem 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--cc-display);
+  font-size: clamp(1.0625rem, 0.6vw + 0.95rem, 1.25rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--cc-ink);
+}
+
+.cc-faq__sign {
+  position: relative;
+  flex: none;
+  width: 1.75rem;
+  height: 1.75rem;
+  border: 1px solid var(--cc-line);
+  border-radius: 50%;
+}
+
+.cc-faq__sign::before,
+.cc-faq__sign::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0.625rem;
+  height: 1.5px;
+  background: var(--cc-forest);
+  transform: translate(-50%, -50%);
+  transition: opacity 0.2s var(--cc-ease);
+}
+
+.cc-faq__sign::after {
+  width: 1.5px;
+  height: 0.625rem;
+}
+
+.cc-faq__item[data-open='true'] .cc-faq__sign::after {
+  opacity: 0;
+}
+
+.cc-faq__a {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s var(--cc-ease);
+}
+
+.cc-faq__item[data-open='true'] .cc-faq__a {
+  grid-template-rows: 1fr;
+}
+
+.cc-faq__a > div {
+  overflow: hidden;
+}
+
+.cc-faq__a p {
+  padding-bottom: 1.25rem;
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: var(--cc-slate);
+  max-width: 62ch;
+}
+
+@media (min-width: 900px) {
+  .cc-faq-layout {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: clamp(2.5rem, 5vw, 5rem);
+    align-items: start;
+  }
+  .cc-faq-layout > :first-child {
+    position: sticky;
+    top: calc(var(--cc-nav-h) + 2rem);
+  }
+}
+
+/* ---- Cape Town ------------------------------------------------------------
+   A typographic treatment over one static photograph. No map, no motion. */
+
+.cc-city {
+  position: relative;
+  border-radius: var(--cc-r-xl);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.cc-city__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+}
+
+.cc-city::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    100deg,
+    rgba(15, 33, 26, 0.94) 0%,
+    rgba(15, 33, 26, 0.84) 45%,
+    rgba(15, 33, 26, 0.58) 100%
+  );
+}
+
+.cc-city__inner {
+  padding: clamp(2.25rem, 5vw, 4.5rem);
+  display: grid;
+  gap: 1.5rem;
+  align-content: center;
+  min-height: clamp(20rem, 34vw, 26rem);
+}
+
+.cc-city__inner h2 {
+  color: var(--cc-d-text);
+  max-width: 16ch;
+}
+
+.cc-city__areas {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 1.25rem;
+  max-width: 40ch;
+}
+
+.cc-city__areas li {
+  font-family: var(--cc-display);
+  font-size: clamp(1.125rem, 1.4vw + 0.85rem, 1.75rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--cc-d-text);
+  display: flex;
+  align-items: baseline;
+  gap: 1.25rem;
+}
+
+.cc-city__areas li:not(:last-child)::after {
+  content: '/';
+  color: var(--cc-sage);
+  font-weight: 400;
+}
+
+.cc-city__note {
+  font-size: 0.9375rem;
+  color: var(--cc-d-muted);
+  max-width: 40ch;
+}
+
+/* ---- Quote ---------------------------------------------------------------- */
+
+.cc-getquote {
+  display: grid;
+  gap: clamp(2rem, 4vw, 3.5rem);
+}
+
+.cc-getquote__aside {
+  display: grid;
+  gap: 1.25rem;
+  align-content: start;
+}
+
+.cc-getquote__aside h2 {
+  max-width: 14ch;
+}
+
+.cc-details {
+  display: grid;
+  gap: 0;
+  margin: 0.75rem 0 0;
+  border-top: 1px solid var(--cc-line);
+}
+
+.cc-details > div {
+  display: grid;
+  grid-template-columns: 6.5rem minmax(0, 1fr);
+  gap: 1rem;
+  padding-block: 0.875rem;
+  border-bottom: 1px solid var(--cc-line);
+}
+
+.cc-details dt {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--cc-mute);
+}
+
+.cc-details dd {
+  margin: 0;
+  font-size: 0.9375rem;
+  color: var(--cc-char);
+  display: grid;
+  gap: 0.15rem;
+}
+
+.cc-details a {
+  color: var(--cc-char);
+  text-decoration: none;
+  border-bottom: 1px solid var(--cc-line);
+}
+
+.cc-details a:hover {
+  color: var(--cc-forest);
+  border-bottom-color: var(--cc-forest);
+}
+
+.cc-getquote__panel {
+  background: var(--cc-cream);
+  border: 1px solid var(--cc-line-soft);
+  border-radius: var(--cc-r-xl);
+  padding: clamp(1.25rem, 3vw, 2.5rem);
+}
+
+@media (min-width: 1000px) {
+  .cc-getquote {
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    gap: clamp(2.5rem, 5vw, 5rem);
+    align-items: start;
+  }
+}
+
+/* ---- Forms ---------------------------------------------------------------- */
+
+.cc-form {
+  display: grid;
+  gap: 1.125rem;
+}
+
+.cc-form__row {
+  display: grid;
+  gap: 1.125rem;
+}
+
+@media (min-width: 560px) {
+  .cc-form__row--2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.cc-field {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.cc-field label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--cc-char);
+}
+
+.cc-field label span {
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--cc-mute);
+}
+
+.cc-input,
+.cc-select,
+.cc-textarea {
+  width: 100%;
+  font-family: var(--cc-body);
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--cc-ink);
+  background: var(--cc-field);
+  border: 1px solid var(--cc-line);
+  border-radius: var(--cc-r-md);
+  padding: 0.8rem 1rem;
+  transition:
+    border-color 0.2s var(--cc-ease),
+    background-color 0.2s var(--cc-ease);
+}
+
+.cc-textarea {
+  min-height: 7rem;
+  resize: vertical;
+}
+
+.cc-select {
+  appearance: none;
+  padding-right: 2.5rem;
+  background-image: linear-gradient(45deg, transparent 50%, currentColor 50%),
+    linear-gradient(135deg, currentColor 50%, transparent 50%);
+  background-position:
+    calc(100% - 1.15rem) 1.35rem,
+    calc(100% - 0.85rem) 1.35rem;
+  background-size:
+    6px 6px,
+    6px 6px;
+  background-repeat: no-repeat;
+}
+
+.cc-input:hover,
+.cc-select:hover,
+.cc-textarea:hover {
+  border-color: var(--cc-mute);
+}
+
+.cc-input:focus,
+.cc-select:focus,
+.cc-textarea:focus {
+  border-color: var(--cc-forest);
+}
+
+.cc-input[aria-invalid='true'],
+.cc-textarea[aria-invalid='true'] {
+  border-color: var(--cc-clay);
+}
+
+.cc-error {
+  font-size: 0.8125rem;
+  color: var(--cc-clay);
+}
+
+.cc-chips {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.cc-chips legend {
+  padding: 0;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--cc-char);
+}
+
+.cc-chips__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.cc-chip {
+  position: relative;
+  display: inline-flex;
+}
+
+.cc-chip input {
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  cursor: pointer;
+}
+
+.cc-chip span {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.55rem 1rem;
+  border: 1px solid var(--cc-line);
+  border-radius: 999px;
+  background: var(--cc-field);
+  font-size: 0.9375rem;
+  color: var(--cc-char);
+  transition:
+    background-color 0.2s var(--cc-ease),
+    border-color 0.2s var(--cc-ease),
+    color 0.2s var(--cc-ease);
+}
+
+.cc-chip:hover span {
+  border-color: var(--cc-forest);
+}
+
+.cc-chip input:checked + span {
+  background: var(--cc-forest);
+  border-color: var(--cc-forest);
+  color: var(--cc-d-text);
+}
+
+.cc-chip input:focus-visible + span {
+  outline: 2px solid var(--cc-forest);
+  outline-offset: 3px;
+}
+
+.cc-alert {
+  padding: 0.875rem 1rem;
+  border-radius: var(--cc-r-md);
+  background: rgba(184, 102, 63, 0.1);
+  border: 1px solid rgba(184, 102, 63, 0.35);
+  color: #8f4a2a;
+  font-size: 0.9375rem;
+}
+
+.cc-form__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1rem;
+  font-size: 0.875rem;
+  color: var(--cc-mute);
+}
+
+/* Parked off-screen, not display:none — a bot needs to be able to fill it. */
+.cc-hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.cc-success {
+  display: grid;
+  gap: 1rem;
+  justify-items: start;
+}
+
+.cc-success__mark {
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: var(--cc-forest);
+  color: var(--cc-cream);
+}
+
+.cc-success h3 {
+  font-size: clamp(1.375rem, 2vw + 1rem, 1.875rem);
+}
+
+.cc-success p {
+  color: var(--cc-slate);
+  max-width: 46ch;
+}
+
+/* ---- Footer --------------------------------------------------------------- */
+
+.cc-footer {
+  background: var(--cc-forest-deep);
+  color: var(--cc-d-muted);
+  border-radius: var(--cc-r-xl) var(--cc-r-xl) 0 0;
+  padding-block: clamp(2.75rem, 5vw, 4.5rem) clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.cc-footer__inner {
+  display: grid;
+  gap: clamp(2.25rem, 4vw, 3.5rem);
+}
+
+.cc-footer__brand {
+  display: grid;
+  gap: 1rem;
+  justify-items: start;
+}
+
+.cc-logo--footer {
+  color: var(--cc-d-text);
+  font-size: 1.375rem;
+}
+
+.cc-logo--footer .cc-logo__mark {
+  background: var(--cc-sage);
+}
+
+.cc-footer__tagline {
+  font-family: var(--cc-display);
+  font-size: 1.125rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--cc-sage);
+  max-width: 22ch;
+}
+
+.cc-footer__wa {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9375rem;
+  color: var(--cc-d-muted);
+  text-decoration: none;
+}
+
+.cc-footer__wa:hover {
+  color: var(--cc-d-text);
+}
+
+.cc-footer__cols {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2rem 1.5rem;
+}
+
+.cc-footer__head {
+  font-family: var(--cc-display);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--cc-sage);
+  margin: 0 0 0.875rem;
+}
+
+.cc-footer__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.5rem;
+  font-size: 0.9375rem;
+}
+
+.cc-footer__list a {
+  color: var(--cc-d-muted);
+  text-decoration: none;
+  transition: color 0.2s var(--cc-ease);
+}
+
+.cc-footer__list a:hover {
+  color: var(--cc-d-text);
+}
+
+.cc-footer__bottom {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--cc-d-line);
+  font-size: 0.8125rem;
+}
+
+.cc-footer__credit a {
+  color: var(--cc-d-text);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+@media (min-width: 700px) {
+  .cc-footer__cols {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1000px) {
+  .cc-footer__inner {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 2.2fr);
+    column-gap: clamp(2.5rem, 5vw, 5rem);
+  }
+  .cc-footer__bottom {
+    grid-column: 1 / -1;
+  }
+}
+
+/* ---- The reveal is a fade, and only a fade --------------------------------
+   Made Digital's shared <Reveal> lifts its children 22px as they fade in.
+   That is fine on the studio site, but on this concept a reveal frequently
+   wraps a photograph — the before/after pairs, the workplace plate — and the
+   brief for Clean & Co. rules out photographic movement of every kind. So the
+   translate is dropped here and the transition is narrowed to opacity: the
+   component still works, and no image on this site ever changes position.
+
+   Loaded after the studio stylesheets (the concept is lazy-imported), so this
+   wins on order at equal specificity. */
+
+.cc .reveal {
+  transform: none;
+  transition: opacity 0.7s var(--cc-ease);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity;
+}
+
+.cc .reveal.is-visible {
+  transform: none;
+}
+
+/* ---- Reduced motion -------------------------------------------------------
+   The site is designed to be complete with animation switched off: every
+   photograph is static already, so all that is left to disable is the fade
+   and the accordion's height transition. */
+
+@media (prefers-reduced-motion: reduce) {
+  .cc *,
+  .cc *::before,
+  .cc *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

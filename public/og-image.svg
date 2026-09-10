@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Made Digital — Websites that bring you business.">
+  <rect width="1200" height="630" fill="#16150F"/>
+  <g fill="none" stroke="#2C2A22" stroke-width="1">
+    <path d="M0 160h1200M0 470h1200M300 0v630M900 0v630"/>
+  </g>
+  <text x="90" y="150" font-family="Manrope, Inter, Segoe UI, sans-serif" font-size="26" font-weight="700" letter-spacing="6" fill="#8A8478">MADE DIGITAL</text>
+  <text x="90" y="330" font-family="Manrope, Inter, Segoe UI, sans-serif" font-size="92" font-weight="800" letter-spacing="-3" fill="#FAF8F4">Websites that bring</text>
+  <text x="90" y="428" font-family="Manrope, Inter, Segoe UI, sans-serif" font-size="92" font-weight="800" letter-spacing="-3" fill="#FAF8F4">you <tspan fill="#C15F3C">business.</tspan></text>
+  <text x="90" y="545" font-family="Inter, Segoe UI, sans-serif" font-size="30" fill="#B3ADA1">Web design for Cape Town businesses</text>
+</svg>

@@ -1,0 +1,51 @@
+/* ==========================================================================
+   Shared chrome for Made Digital concept sites.
+
+   The only styles that live outside a concept's own scoped stylesheet. Each
+   concept themes the bar by setting these custom properties on its root
+   element, so the notice always belongs to the design it sits above.
+   ========================================================================== */
+
+.mdc-notice {
+  background: var(--notice-bg, #16150f);
+  color: var(--notice-fg-muted, rgba(255, 255, 255, 0.72));
+  font-family: inherit;
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+
+.mdc-notice__inner {
+  width: 100%;
+  max-width: calc(var(--notice-max, 1200px) + var(--notice-gutter, 1.5rem) * 2);
+  margin-inline: auto;
+  padding-inline: var(--notice-gutter, 1.5rem);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.35rem 1rem;
+  min-height: 2.25rem;
+  padding-block: 0.4rem;
+}
+
+.mdc-notice p {
+  margin: 0;
+}
+
+.mdc-notice strong {
+  color: var(--notice-fg, #fff);
+  font-weight: 600;
+}
+
+.mdc-notice a {
+  color: var(--notice-fg, #fff);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: var(--notice-rule, rgba(255, 255, 255, 0.3));
+  white-space: nowrap;
+  transition: text-decoration-color 0.25s ease;
+}
+
+.mdc-notice a:hover {
+  text-decoration-color: currentColor;
+}

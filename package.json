@@ -1,0 +1,23 @@
+{
+  "name": "made-digital",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Made Digital — websites that bring you business. Cape Town web design studio.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "mockups": "node scripts/generate-mockups.mjs",
+    "shots": "node scripts/capture-demo-shots.mjs"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.26.2"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.1",
+    "vite": "^5.4.8"
+  }
+}

@@ -1,0 +1,1629 @@
+/* ==========================================================================
+   Studio Olive Beauty — website concept by Made Digital
+
+   A self-contained design system. EVERY selector is scoped under `.so`, so it
+   cannot leak into the Made Digital site or into the other concepts, and so
+   Made Digital's globals (display font on headings, pill buttons, clay accent)
+   are overridden inside this concept.
+
+   The structural idea: no bordered cards. Structure comes from whitespace,
+   blocks of tone, arch-topped imagery and overlap — so it reads as a boutique
+   brand rather than a set of UI components.
+   ========================================================================== */
+
+.so {
+  --so-ivory: #fbf7ef;
+  --so-cream: #f2e9d8;
+  --so-sand: #e7d8bf;
+  --so-clay: #d9c1a2;
+  --so-blush: #e2cbbb;
+  --so-taupe: #bca68a;
+  --so-stone: #a3907a;
+  --so-mocha: #7e6b57;
+  --so-sage: #93a07e;
+  --so-olive: #66754f;
+  --so-deep: #414b34;
+  --so-bark: #33301f;
+  --so-ink: #26241e;
+
+  --so-body: #5b5347;
+  --so-muted: #6b6052;
+  --so-rule: #e3d8c5;
+
+  /* On the deep olive band */
+  --so-d-text: #f6f1e6;
+  --so-d-muted: #c5c9b6;
+  --so-d-rule: rgba(246, 241, 230, 0.22);
+
+  --so-display: 'Fraunces', 'Iowan Old Style', Georgia, 'Times New Roman',
+    serif;
+  --so-ui: 'Inter', ui-sans-serif, system-ui, 'Segoe UI', Helvetica, Arial,
+    sans-serif;
+
+  --so-h1: clamp(2.9rem, 6.4vw + 0.9rem, 6rem);
+  --so-h2: clamp(2.05rem, 3.2vw + 1.1rem, 3.6rem);
+  --so-h3: clamp(1.25rem, 0.7vw + 1.05rem, 1.6rem);
+  --so-lede: clamp(1.0625rem, 0.4vw + 1rem, 1.25rem);
+
+  --so-gutter: clamp(1.25rem, 4vw, 3.5rem);
+  --so-max: 1240px;
+  --so-section: clamp(4rem, 8vw, 9rem);
+  --so-arch: 50% 50% 6px 6px / 26% 26% 1% 1%;
+  --so-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+
+  /* Themes the shared concept notice */
+  --notice-bg: var(--so-bark);
+  --notice-fg: var(--so-ivory);
+  --notice-fg-muted: rgba(246, 241, 230, 0.68);
+  --notice-rule: rgba(246, 241, 230, 0.3);
+  --notice-max: var(--so-max);
+  --notice-gutter: var(--so-gutter);
+
+  font-family: var(--so-ui);
+  font-size: 1rem;
+  line-height: 1.68;
+  color: var(--so-body);
+  background: var(--so-ivory);
+  min-height: 100vh;
+  overflow-x: clip;
+}
+
+/* `:where()` keeps these at single-class specificity, so they still beat Made
+   Digital's global heading rules but lose to any component class below —
+   otherwise `.so h2` would silently override things like .so-footer__head. */
+.so :where(h1, h2, h3, h4) {
+  font-family: var(--so-display);
+  font-weight: 400;
+  font-variation-settings: 'SOFT' 30, 'WONK' 0;
+  color: var(--so-ink);
+  letter-spacing: -0.015em;
+  line-height: 1.1;
+}
+
+.so :where(h1) {
+  font-size: var(--so-h1);
+  line-height: 0.98;
+  letter-spacing: -0.028em;
+}
+.so :where(h2) {
+  font-size: var(--so-h2);
+  line-height: 1.02;
+  letter-spacing: -0.022em;
+}
+.so :where(h3) {
+  font-size: var(--so-h3);
+}
+
+.so :focus-visible {
+  outline: 2px solid var(--so-olive);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.so-dark :focus-visible {
+  outline-color: var(--so-sand);
+}
+
+.so ::selection {
+  background: var(--so-olive);
+  color: var(--so-ivory);
+}
+
+/* ---- Layout -------------------------------------------------------------- */
+
+.so-container {
+  width: 100%;
+  max-width: calc(var(--so-max) + var(--so-gutter) * 2);
+  margin-inline: auto;
+  padding-inline: var(--so-gutter);
+}
+
+.so-narrow {
+  max-width: 54rem;
+}
+
+.so-section {
+  padding-block: var(--so-section);
+}
+
+.so-section--tight {
+  padding-block: clamp(3rem, 5vw, 5.5rem);
+}
+
+.so-cream {
+  background: var(--so-cream);
+}
+
+.so-dark {
+  background: var(--so-deep);
+  color: var(--so-d-muted);
+}
+
+.so-dark h2,
+.so-dark h3 {
+  color: var(--so-d-text);
+}
+
+/* Small caps label. Used sparingly — it is the only uppercase on the site. */
+.so-label {
+  display: inline-block;
+  font-family: var(--so-ui);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--so-olive);
+  margin: 0 0 1.5rem;
+}
+
+.so-dark .so-label {
+  color: var(--so-sage);
+}
+
+.so-lede {
+  font-size: var(--so-lede);
+  line-height: 1.66;
+  max-width: 52ch;
+}
+
+.so-dark .so-lede {
+  color: var(--so-d-muted);
+}
+
+/* The olive sprig used as a section divider. */
+.so-sprig {
+  display: block;
+  width: 2.75rem;
+  height: auto;
+  color: var(--so-olive);
+  margin-bottom: 1.75rem;
+}
+
+.so-dark .so-sprig {
+  color: var(--so-sage);
+}
+
+/* ---- Buttons ------------------------------------------------------------- */
+
+.so-btn {
+  --b-bg: var(--so-deep);
+  --b-fg: var(--so-ivory);
+  --b-bd: var(--so-deep);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6em;
+  padding: 1rem 1.9rem;
+  min-height: 3.25rem;
+  border: 1px solid var(--b-bd);
+  border-radius: 2px;
+  background: var(--b-bg);
+  color: var(--b-fg);
+  font-family: var(--so-ui);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  text-align: center;
+  cursor: pointer;
+  transition:
+    background-color 0.4s var(--so-ease),
+    color 0.4s var(--so-ease),
+    border-color 0.4s var(--so-ease);
+}
+
+.so-btn:hover {
+  --b-bg: var(--so-olive);
+  --b-bd: var(--so-olive);
+}
+
+.so-btn svg {
+  flex: none;
+}
+
+.so-btn--outline {
+  --b-bg: transparent;
+  --b-fg: var(--so-ink);
+  --b-bd: var(--so-taupe);
+}
+.so-btn--outline:hover {
+  --b-bg: transparent;
+  --b-fg: var(--so-olive);
+  --b-bd: var(--so-olive);
+}
+
+.so-btn--light {
+  --b-bg: var(--so-ivory);
+  --b-fg: var(--so-ink);
+  --b-bd: var(--so-ivory);
+}
+.so-btn--light:hover {
+  --b-bg: var(--so-sand);
+  --b-bd: var(--so-sand);
+  --b-fg: var(--so-ink);
+}
+
+.so-btn--outline-light {
+  --b-bg: transparent;
+  --b-fg: var(--so-d-text);
+  --b-bd: var(--so-d-rule);
+}
+.so-btn--outline-light:hover {
+  --b-bg: transparent;
+  --b-bd: var(--so-d-text);
+}
+
+.so-btn--sm {
+  padding: 0.7rem 1.25rem;
+  min-height: 2.75rem;
+  font-size: 0.8125rem;
+}
+
+.so-btn--block {
+  display: flex;
+  width: 100%;
+}
+
+.so-btn[disabled] {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.so-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+@media (max-width: 559px) {
+  .so-btns > .so-btn {
+    width: 100%;
+  }
+}
+
+/* Understated text link with a rule that draws itself in. */
+.so-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--so-ink);
+  padding-bottom: 3px;
+  background-image: linear-gradient(var(--so-olive), var(--so-olive));
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 100% 1px;
+  transition: background-size 0.45s var(--so-ease);
+}
+
+.so-link:hover {
+  background-size: 0 1px;
+  color: var(--so-olive);
+}
+
+/* ---- Navigation ---------------------------------------------------------- */
+
+.so-nav {
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  background: rgba(251, 247, 239, 0.9);
+  backdrop-filter: saturate(140%) blur(10px);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.4s var(--so-ease);
+}
+
+.so-nav.is-stuck {
+  border-bottom-color: var(--so-rule);
+}
+
+.so-nav__inner {
+  position: relative;
+  z-index: 61;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  min-height: 4.5rem;
+}
+
+@media (min-width: 1000px) {
+  .so-nav__inner {
+    min-height: 5.5rem;
+  }
+}
+
+.so-logo {
+  font-family: var(--so-display);
+  font-size: 1.4rem;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: var(--so-ink);
+  line-height: 1;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.so-logo svg {
+  color: var(--so-olive);
+  flex: none;
+}
+
+@media (min-width: 1000px) {
+  .so-logo {
+    font-size: 1.6rem;
+  }
+}
+
+.so-nav__links {
+  display: none;
+}
+
+@media (min-width: 1000px) {
+  .so-nav__links {
+    display: flex;
+    align-items: center;
+    gap: 2.25rem;
+    margin-inline: auto;
+  }
+}
+
+.so-nav__link {
+  position: relative;
+  font-size: 0.9063rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: var(--so-body);
+  padding-block: 0.3rem;
+  transition: color 0.3s var(--so-ease);
+}
+
+.so-nav__link::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 0;
+  height: 1px;
+  background: var(--so-olive);
+  transition:
+    width 0.4s var(--so-ease),
+    left 0.4s var(--so-ease);
+}
+
+.so-nav__link:hover {
+  color: var(--so-ink);
+}
+
+.so-nav__link:hover::after {
+  left: 0;
+  width: 100%;
+}
+
+.so-nav__cta {
+  display: none;
+}
+
+@media (min-width: 1000px) {
+  .so-nav__cta {
+    display: inline-flex;
+  }
+}
+
+.so-nav__mobile {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: auto;
+}
+
+@media (min-width: 1000px) {
+  .so-nav__mobile {
+    display: none;
+  }
+}
+
+.so-burger {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0 0.65rem;
+  margin-right: -0.65rem;
+  border: 0;
+  background: none;
+  color: var(--so-ink);
+  cursor: pointer;
+}
+
+.so-burger span {
+  display: block;
+  height: 1px;
+  width: 1.375rem;
+  background: currentColor;
+  transition: transform 0.35s var(--so-ease);
+}
+
+.so-burger[aria-expanded='true'] span:first-child {
+  transform: translateY(3px) rotate(45deg);
+}
+.so-burger[aria-expanded='true'] span:last-child {
+  transform: translateY(-3px) rotate(-45deg);
+}
+
+.so-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 59;
+  background: var(--so-ivory);
+  padding: 6rem var(--so-gutter) calc(1.5rem + env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  animation: so-fade 0.3s var(--so-ease) both;
+}
+
+@media (min-width: 1000px) {
+  .so-drawer {
+    display: none;
+  }
+}
+
+@keyframes so-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+.so-drawer__nav {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.so-drawer__link {
+  font-family: var(--so-display);
+  font-size: clamp(1.9rem, 8vw, 2.6rem);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  color: var(--so-ink);
+  padding-block: 0.35rem;
+  animation: so-rise 0.5s var(--so-ease) both;
+  animation-delay: calc(60ms + var(--i, 0) * 50ms);
+}
+
+@keyframes so-rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+.so-drawer__foot {
+  margin-top: auto;
+  padding-top: 2.5rem;
+  display: grid;
+  gap: 0.75rem;
+  animation: so-rise 0.5s var(--so-ease) 0.35s both;
+}
+
+.so-drawer__meta {
+  margin-top: 0.5rem;
+  text-align: center;
+  font-size: 0.8125rem;
+  color: var(--so-muted);
+}
+
+/* ---- Arch imagery -------------------------------------------------------- */
+
+.so-arch {
+  border-radius: var(--so-arch);
+  overflow: hidden;
+  background: var(--so-cream);
+  margin: 0;
+}
+
+.so-arch img,
+.so-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.so-frame {
+  border-radius: 2px;
+  overflow: hidden;
+  background: var(--so-cream);
+  margin: 0;
+}
+
+/* ---- Hero ---------------------------------------------------------------- */
+
+.so-hero {
+  position: relative;
+  padding-top: clamp(2rem, 4vw, 3.5rem);
+  padding-bottom: clamp(3rem, 6vw, 5rem);
+}
+
+.so-hero__grid {
+  display: grid;
+  gap: clamp(2.5rem, 5vw, 4rem);
+  align-items: center;
+}
+
+@media (min-width: 940px) {
+  .so-hero__grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.92fr);
+    gap: clamp(3rem, 6vw, 6rem);
+  }
+}
+
+.so-hero h1 {
+  max-width: 11ch;
+}
+
+/* The second line takes the accent colour and a touch of italic wonk. */
+.so-hero h1 em {
+  font-style: italic;
+  color: var(--so-olive);
+  font-variation-settings: 'SOFT' 60, 'WONK' 1;
+}
+
+.so-hero__lede {
+  margin-top: 1.75rem;
+  font-size: var(--so-lede);
+  max-width: 40ch;
+}
+
+.so-hero__actions {
+  margin-top: 2.5rem;
+}
+
+.so-hero__meta {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--so-rule);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 2rem;
+  font-size: 0.8125rem;
+  letter-spacing: 0.06em;
+  color: var(--so-muted);
+}
+
+.so-hero__visual {
+  position: relative;
+}
+
+.so-hero__figure {
+  aspect-ratio: 4 / 5;
+}
+
+/* A small stamp sitting over the corner of the hero image. */
+.so-stamp {
+  position: absolute;
+  left: -1.25rem;
+  bottom: 2rem;
+  width: clamp(6.5rem, 12vw, 8.5rem);
+  height: clamp(6.5rem, 12vw, 8.5rem);
+  border-radius: 50%;
+  background: var(--so-deep);
+  color: var(--so-d-text);
+  display: grid;
+  place-items: center;
+  text-align: center;
+  font-family: var(--so-display);
+  font-size: clamp(0.75rem, 1.1vw, 0.875rem);
+  line-height: 1.3;
+  letter-spacing: 0.01em;
+  padding: 0.5rem;
+}
+
+@media (max-width: 939px) {
+  .so-stamp {
+    left: auto;
+    right: -0.75rem;
+    bottom: -1.5rem;
+  }
+}
+
+/* ---- Intro (overlapping images) ------------------------------------------ */
+
+.so-intro {
+  display: grid;
+  gap: clamp(2.5rem, 5vw, 4rem);
+  align-items: center;
+}
+
+@media (min-width: 900px) {
+  .so-intro {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.88fr);
+    gap: clamp(3rem, 7vw, 7rem);
+  }
+}
+
+.so-intro__images {
+  position: relative;
+  padding-bottom: clamp(3rem, 8vw, 6rem);
+  padding-right: clamp(2.5rem, 7vw, 5rem);
+}
+
+.so-intro__large {
+  aspect-ratio: 4 / 5;
+  width: 100%;
+}
+
+/* The small image overlaps the corner of the large one — the layout device
+   that keeps this section from reading as two tidy columns. */
+.so-intro__small {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: clamp(9rem, 34%, 15rem);
+  aspect-ratio: 1;
+  border: clamp(0.35rem, 1vw, 0.7rem) solid var(--so-ivory);
+  border-radius: 2px;
+}
+
+.so-cream .so-intro__small {
+  border-color: var(--so-cream);
+}
+
+/* ---- Treatments ---------------------------------------------------------- */
+
+.so-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-bottom: clamp(2rem, 3vw, 3rem);
+}
+
+.so-tab {
+  padding: 0.6rem 1.25rem;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: none;
+  font-family: var(--so-ui);
+  font-size: 0.875rem;
+  letter-spacing: 0.06em;
+  color: var(--so-muted);
+  cursor: pointer;
+  transition:
+    color 0.3s var(--so-ease),
+    border-color 0.3s var(--so-ease),
+    background-color 0.3s var(--so-ease);
+}
+
+.so-tab:hover {
+  color: var(--so-ink);
+  border-color: var(--so-taupe);
+}
+
+.so-tab[aria-selected='true'] {
+  background: var(--so-deep);
+  border-color: var(--so-deep);
+  color: var(--so-ivory);
+}
+
+/* An editorial menu, not a grid of cards: each treatment is a row with a
+   dotted leader running out to the duration and price. */
+.so-menu {
+  border-top: 1px solid var(--so-rule);
+}
+
+.so-menu__item {
+  border-bottom: 1px solid var(--so-rule);
+}
+
+.so-menu__row {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: baseline;
+  gap: 0.5rem 1rem;
+  padding: 1.5rem 0;
+  background: none;
+  border: 0;
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
+  color: inherit;
+}
+
+@media (min-width: 640px) {
+  .so-menu__row {
+    grid-template-columns: auto 1fr auto;
+    gap: 1.25rem;
+  }
+}
+
+.so-menu__name {
+  font-family: var(--so-display);
+  font-size: clamp(1.25rem, 1.1vw + 1rem, 1.75rem);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  color: var(--so-ink);
+  line-height: 1.2;
+  transition: color 0.3s var(--so-ease);
+}
+
+.so-menu__row:hover .so-menu__name {
+  color: var(--so-olive);
+}
+
+/* The leader dots. Hidden on small screens where there is no room. */
+.so-menu__leader {
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .so-menu__leader {
+    display: block;
+    align-self: center;
+    height: 1px;
+    margin-top: 0.4rem;
+    background-image: radial-gradient(
+      circle,
+      var(--so-taupe) 1px,
+      transparent 1.2px
+    );
+    background-size: 7px 2px;
+    background-repeat: repeat-x;
+    opacity: 0.75;
+  }
+}
+
+.so-menu__meta {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  white-space: nowrap;
+}
+
+.so-menu__duration {
+  font-size: 0.8125rem;
+  letter-spacing: 0.06em;
+  color: var(--so-muted);
+}
+
+.so-menu__price {
+  font-family: var(--so-display);
+  font-size: 1.125rem;
+  color: var(--so-ink);
+}
+
+.so-menu__sign {
+  position: relative;
+  width: 0.75rem;
+  height: 0.75rem;
+  flex: none;
+  align-self: center;
+}
+
+.so-menu__sign::before,
+.so-menu__sign::after {
+  content: '';
+  position: absolute;
+  background: var(--so-olive);
+  transition: transform 0.35s var(--so-ease);
+}
+
+.so-menu__sign::before {
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  transform: translateY(-50%);
+}
+
+.so-menu__sign::after {
+  left: 50%;
+  top: 0;
+  width: 1px;
+  height: 100%;
+  transform: translateX(-50%);
+}
+
+.so-menu__item[data-open='true'] .so-menu__sign::after {
+  transform: translateX(-50%) scaleY(0);
+}
+
+.so-menu__detail {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.4s var(--so-ease);
+}
+
+.so-menu__item[data-open='true'] .so-menu__detail {
+  grid-template-rows: 1fr;
+}
+
+.so-menu__detail > div {
+  overflow: hidden;
+  visibility: hidden;
+  transition: visibility 0s linear 0.4s;
+}
+
+.so-menu__item[data-open='true'] .so-menu__detail > div {
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+.so-menu__detail p {
+  margin: 0;
+  padding-bottom: 1.5rem;
+  max-width: 58ch;
+  font-size: 0.9688rem;
+}
+
+.so-menu__detail .so-btn {
+  margin-bottom: 1.75rem;
+}
+
+/* ---- Booking band -------------------------------------------------------- */
+
+.so-band {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: var(--so-deep);
+  padding-block: clamp(4rem, 8vw, 8rem);
+  text-align: center;
+}
+
+.so-band__bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.85;
+}
+
+.so-band__inner {
+  display: grid;
+  justify-items: center;
+  gap: 1.5rem;
+}
+
+.so-band h2 {
+  max-width: 16ch;
+}
+
+.so-band .so-lede {
+  text-align: center;
+}
+
+/* ---- Benefits ------------------------------------------------------------ */
+/* Offset rows rather than four equal boxes. */
+
+.so-benefits {
+  display: grid;
+  gap: clamp(2rem, 4vw, 3.25rem);
+}
+
+@media (min-width: 700px) {
+  .so-benefits {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 700px) {
+  .so-benefit:nth-child(even) {
+    margin-top: clamp(2rem, 5vw, 4.5rem);
+  }
+}
+
+.so-benefit__num {
+  font-family: var(--so-display);
+  font-size: 0.875rem;
+  letter-spacing: 0.08em;
+  color: var(--so-olive);
+  margin-bottom: 1rem;
+}
+
+.so-benefit h3 {
+  margin-bottom: 0.65rem;
+}
+
+.so-benefit p {
+  margin: 0;
+  max-width: 32ch;
+  font-size: 0.9688rem;
+}
+
+/* ---- Gallery ------------------------------------------------------------- */
+
+.so-gallery {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(0.5rem, 1.2vw, 1rem);
+  grid-auto-rows: clamp(7rem, 18vw, 13rem);
+}
+
+@media (min-width: 800px) {
+  .so-gallery {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.so-shot {
+  position: relative;
+  padding: 0;
+  border: 0;
+  border-radius: 2px;
+  overflow: hidden;
+  background: var(--so-cream);
+  cursor: zoom-in;
+  grid-row: span 1;
+}
+
+.so-shot--tall {
+  grid-row: span 2;
+}
+
+@media (min-width: 800px) {
+  .so-shot--wide {
+    grid-column: span 2;
+  }
+}
+
+.so-shot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.9s var(--so-ease);
+}
+
+.so-shot:hover img {
+  transform: scale(1.045);
+}
+
+.so-shot::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--so-bark);
+  opacity: 0;
+  transition: opacity 0.5s var(--so-ease);
+}
+
+.so-shot:hover::after {
+  opacity: 0.12;
+}
+
+/* Lightbox — a dialog, not a library. */
+.so-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: grid;
+  place-items: center;
+  padding: clamp(1rem, 4vw, 3rem);
+  background: rgba(38, 36, 30, 0.94);
+  animation: so-fade 0.25s var(--so-ease) both;
+}
+
+.so-lightbox img {
+  max-width: min(100%, 60rem);
+  max-height: 82vh;
+  object-fit: contain;
+  border-radius: 2px;
+}
+
+.so-lightbox__close {
+  position: absolute;
+  top: clamp(0.75rem, 3vw, 1.75rem);
+  right: clamp(0.75rem, 3vw, 1.75rem);
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid rgba(246, 241, 230, 0.35);
+  border-radius: 50%;
+  background: none;
+  color: var(--so-d-text);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: border-color 0.3s var(--so-ease);
+}
+
+.so-lightbox__close:hover {
+  border-color: var(--so-d-text);
+}
+
+.so-lightbox__caption {
+  position: absolute;
+  bottom: clamp(1rem, 4vw, 2.25rem);
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: min(90%, 40rem);
+  text-align: center;
+  font-size: 0.8125rem;
+  color: rgba(246, 241, 230, 0.72);
+}
+
+.so-lightbox__nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3rem;
+  height: 3rem;
+  border: 1px solid rgba(246, 241, 230, 0.3);
+  border-radius: 50%;
+  background: none;
+  color: var(--so-d-text);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: border-color 0.3s var(--so-ease);
+}
+
+.so-lightbox__nav:hover {
+  border-color: var(--so-d-text);
+}
+
+.so-lightbox__nav--prev {
+  left: clamp(0.5rem, 2vw, 1.5rem);
+}
+.so-lightbox__nav--next {
+  right: clamp(0.5rem, 2vw, 1.5rem);
+}
+
+/* ---- About --------------------------------------------------------------- */
+
+.so-about {
+  display: grid;
+  gap: clamp(2.5rem, 5vw, 4.5rem);
+  align-items: center;
+}
+
+@media (min-width: 900px) {
+  .so-about {
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
+    gap: clamp(3rem, 7vw, 6.5rem);
+  }
+}
+
+.so-about__figure {
+  aspect-ratio: 3 / 4;
+}
+
+/* ---- Testimonials -------------------------------------------------------- */
+
+.so-quotes {
+  display: grid;
+  gap: clamp(2.5rem, 4vw, 3.5rem);
+}
+
+@media (min-width: 860px) {
+  .so-quotes {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.so-quote blockquote {
+  margin: 0;
+  font-family: var(--so-display);
+  font-size: clamp(1.1875rem, 0.9vw + 1rem, 1.4375rem);
+  font-weight: 400;
+  line-height: 1.42;
+  letter-spacing: -0.012em;
+  color: var(--so-ink);
+}
+
+.so-quote__mark {
+  display: block;
+  font-family: var(--so-display);
+  font-size: 3rem;
+  line-height: 0.7;
+  color: var(--so-taupe);
+  margin-bottom: 0.75rem;
+}
+
+.so-quote figcaption {
+  margin-top: 1.25rem;
+  font-size: 0.8125rem;
+  letter-spacing: 0.08em;
+  color: var(--so-muted);
+}
+
+/* The honesty note under the demonstration testimonials. */
+.so-note {
+  margin-top: clamp(2rem, 4vw, 3rem);
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--so-rule);
+  font-size: 0.8125rem;
+  color: var(--so-muted);
+  max-width: 62ch;
+}
+
+/* ---- Social grid --------------------------------------------------------- */
+
+.so-social {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(0.35rem, 0.8vw, 0.75rem);
+}
+
+@media (min-width: 800px) {
+  .so-social {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+.so-social figure {
+  position: relative;
+  margin: 0;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: var(--so-cream);
+}
+
+.so-social img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.9s var(--so-ease);
+}
+
+.so-social figure:hover img {
+  transform: scale(1.06);
+}
+
+/* ---- FAQ ----------------------------------------------------------------- */
+
+.so-faq {
+  border-top: 1px solid var(--so-rule);
+}
+
+.so-faq__item {
+  border-bottom: 1px solid var(--so-rule);
+}
+
+.so-faq__q {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1.5rem 0;
+  background: none;
+  border: 0;
+  text-align: left;
+  cursor: pointer;
+  font-family: var(--so-display);
+  font-size: clamp(1.0625rem, 0.5vw + 1rem, 1.3125rem);
+  font-weight: 400;
+  letter-spacing: -0.012em;
+  color: var(--so-ink);
+  transition: color 0.3s var(--so-ease);
+}
+
+.so-faq__q:hover {
+  color: var(--so-olive);
+}
+
+.so-faq__sign {
+  position: relative;
+  flex: none;
+  width: 0.75rem;
+  height: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.so-faq__sign::before,
+.so-faq__sign::after {
+  content: '';
+  position: absolute;
+  background: var(--so-olive);
+  transition: transform 0.35s var(--so-ease);
+}
+
+.so-faq__sign::before {
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  transform: translateY(-50%);
+}
+
+.so-faq__sign::after {
+  left: 50%;
+  top: 0;
+  width: 1px;
+  height: 100%;
+  transform: translateX(-50%);
+}
+
+.so-faq__item[data-open='true'] .so-faq__sign::after {
+  transform: translateX(-50%) scaleY(0);
+}
+
+.so-faq__a {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.4s var(--so-ease);
+}
+
+.so-faq__item[data-open='true'] .so-faq__a {
+  grid-template-rows: 1fr;
+}
+
+.so-faq__a > div {
+  overflow: hidden;
+  visibility: hidden;
+  transition: visibility 0s linear 0.4s;
+}
+
+.so-faq__item[data-open='true'] .so-faq__a > div {
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+.so-faq__a p {
+  margin: 0;
+  padding-bottom: 1.5rem;
+  max-width: 62ch;
+  font-size: 0.9688rem;
+}
+
+/* ---- Booking form -------------------------------------------------------- */
+
+.so-book {
+  display: grid;
+  gap: clamp(2.5rem, 5vw, 4rem);
+  align-items: start;
+}
+
+@media (min-width: 940px) {
+  .so-book {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr);
+    gap: clamp(3rem, 6vw, 6rem);
+  }
+}
+
+.so-details {
+  display: grid;
+  gap: 1.5rem;
+  margin-top: 2.25rem;
+}
+
+.so-detail__label {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--so-muted);
+  margin-bottom: 0.3rem;
+}
+
+.so-detail__value {
+  font-size: 1.0625rem;
+  color: var(--so-ink);
+}
+
+.so-detail__value a:hover {
+  color: var(--so-olive);
+}
+
+.so-detail__value span {
+  display: block;
+  font-size: 0.9063rem;
+  color: var(--so-body);
+}
+
+.so-form {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.so-form__row {
+  display: grid;
+  gap: 1.25rem;
+}
+
+@media (min-width: 560px) {
+  .so-form__row--2 {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.so-field {
+  display: grid;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.so-field label {
+  font-size: 0.8125rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--so-muted);
+}
+
+.so-field label span {
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+/* Underlined fields, not boxes — quieter, and in keeping with the rest. */
+.so-input,
+.so-select,
+.so-textarea {
+  width: 100%;
+  padding: 0.7rem 0.25rem;
+  font-family: var(--so-ui);
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--so-ink);
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--so-taupe);
+  border-radius: 0;
+  transition: border-color 0.3s var(--so-ease);
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.so-input::placeholder,
+.so-textarea::placeholder {
+  color: var(--so-stone);
+}
+
+.so-input:hover,
+.so-select:hover,
+.so-textarea:hover {
+  border-bottom-color: var(--so-mocha);
+}
+
+.so-input:focus,
+.so-select:focus,
+.so-textarea:focus {
+  outline: none;
+  border-bottom-color: var(--so-olive);
+  border-bottom-width: 2px;
+  padding-bottom: calc(0.7rem - 1px);
+}
+
+.so-input[aria-invalid='true'],
+.so-select[aria-invalid='true'],
+.so-textarea[aria-invalid='true'] {
+  border-bottom-color: #a4553c;
+}
+
+.so-textarea {
+  min-height: 6.5rem;
+  resize: vertical;
+}
+
+.so-select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5 6 6.5l5-5' fill='none' stroke='%238a7f6e' stroke-width='1.4' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.25rem center;
+  padding-right: 2rem;
+}
+
+/* Date inputs render their own indicator; keep it in the palette. */
+.so-input[type='date']::-webkit-calendar-picker-indicator {
+  opacity: 0.55;
+  cursor: pointer;
+}
+
+.so-error {
+  font-size: 0.8125rem;
+  color: #9c4f38;
+}
+
+.so-alert {
+  padding: 0.9rem 1.1rem;
+  background: var(--so-cream);
+  border-left: 2px solid #a4553c;
+  font-size: 0.9063rem;
+}
+
+.so-form__note {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: var(--so-muted);
+}
+
+.so-hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.so-success {
+  display: grid;
+  gap: 1.25rem;
+  justify-items: start;
+  padding-block: clamp(1.5rem, 4vw, 3rem);
+}
+
+.so-success .so-sprig {
+  margin-bottom: 0;
+}
+
+/* ---- Footer -------------------------------------------------------------- */
+
+.so-footer {
+  background: var(--so-bark);
+  color: rgba(246, 241, 230, 0.68);
+  padding-top: clamp(3.5rem, 6vw, 5.5rem);
+  padding-bottom: 2rem;
+  font-size: 0.9063rem;
+}
+
+.so-footer__top {
+  display: grid;
+  gap: 2.5rem;
+  padding-bottom: 3rem;
+}
+
+@media (min-width: 720px) {
+  .so-footer__top {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 1000px) {
+  .so-footer__top {
+    grid-template-columns: minmax(0, 1.6fr) repeat(3, minmax(0, 1fr));
+    gap: 2rem;
+  }
+}
+
+.so-footer .so-logo {
+  color: var(--so-d-text);
+}
+
+.so-footer .so-logo svg {
+  color: var(--so-sage);
+}
+
+.so-footer__tagline {
+  margin-top: 1rem;
+  font-family: var(--so-display);
+  font-size: 1.25rem;
+  color: var(--so-d-text);
+  max-width: 18ch;
+  line-height: 1.3;
+}
+
+.so-footer__head {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--so-sage);
+  margin-bottom: 1rem;
+}
+
+.so-footer__list {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.so-footer__list a,
+.so-footer__list span {
+  color: rgba(246, 241, 230, 0.68);
+  transition: color 0.3s var(--so-ease);
+}
+
+.so-footer__list a:hover {
+  color: var(--so-d-text);
+}
+
+.so-footer__bottom {
+  border-top: 1px solid rgba(246, 241, 230, 0.16);
+  padding-top: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8125rem;
+}
+
+.so-footer__credit a {
+  color: var(--so-d-text);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: rgba(246, 241, 230, 0.3);
+  transition: text-decoration-color 0.3s var(--so-ease);
+}
+
+.so-footer__credit a:hover {
+  text-decoration-color: currentColor;
+}
+
+/* ---- Sticky mobile booking bar ------------------------------------------- */
+
+.so-sticky {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 55;
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.625rem var(--so-gutter) calc(0.625rem + env(safe-area-inset-bottom));
+  background: rgba(251, 247, 239, 0.94);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid var(--so-rule);
+  transform: translateY(110%);
+  transition: transform 0.45s var(--so-ease);
+}
+
+.so-sticky.is-shown {
+  transform: translateY(0);
+}
+
+.so-sticky .so-btn {
+  flex: 1;
+  min-height: 3rem;
+  padding-inline: 0.75rem;
+  font-size: 0.875rem;
+}
+
+@media (min-width: 1000px) {
+  .so-sticky {
+    display: none;
+  }
+}
+
+/* Keeps the last section clear of the sticky bar. */
+@media (max-width: 999px) {
+  .so-footer {
+    padding-bottom: 5.5rem;
+  }
+}
+
+.so-skip {
+  position: absolute;
+  left: 1rem;
+  top: -6rem;
+  z-index: 80;
+  padding: 0.75rem 1.25rem;
+  background: var(--so-deep);
+  color: var(--so-ivory);
+  font-weight: 500;
+  transition: top 0.2s var(--so-ease);
+}
+
+.so-skip:focus-visible {
+  top: 1rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .so *,
+  .so *::before,
+  .so *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* The booking band is a dark section without the .so-dark class, so its lede
+   inherits the light-ground body colour and lands at 1.22:1 on the olive. */
+.so-band .so-lede {
+  color: var(--so-d-muted);
+}

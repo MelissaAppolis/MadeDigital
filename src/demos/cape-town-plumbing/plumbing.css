@@ -1,0 +1,1852 @@
+/* ==========================================================================
+   Cape Town Plumbing Co. — website concept by Made Digital
+
+   A self-contained design system for the concept. EVERY selector is scoped
+   under `.ctp` so this file cannot leak into the Made Digital site, and so
+   Made Digital's own globals (display font on headings, pill buttons, clay
+   accent) get overridden inside the concept.
+   ========================================================================== */
+
+.ctp {
+  /* ------------------------------------------------------------------------
+     Water and copper. The trade supplies the palette: deep petrol for water,
+     copper and brass for pipe, warm sand for the light sections.
+
+     There is no white on this site. The lightest ground is --ctp-sand, and
+     anything that would normally be a white card is sand or cream instead —
+     that warmth is what keeps a saturated site feeling premium rather than
+     shouty.
+     ------------------------------------------------------------------------ */
+
+  /* Petrol scale, deepest first */
+  --ctp-abyss: #052226;
+  --ctp-deep: #0a373d;
+  --ctp-mid: #10545c;
+  --ctp-teal: #17767d;
+  --ctp-aqua: #45c2b6;
+  --ctp-aqua-soft: #cfe9e4;
+
+  /* Warm side */
+  --ctp-copper: #dd8244;
+  --ctp-copper-deep: #ad5a28;
+  --ctp-copper-soft: #f7e2cf;
+  --ctp-brass: #c9a227;
+
+  /* Light grounds — warm, never white */
+  --ctp-cream: #fdf6ea;
+  --ctp-sand: #f6ead7;
+  --ctp-sand-2: #eeddc3;
+  --ctp-clay: #e2cdae;
+
+  /* Type */
+  --ctp-ink: #0a373d;
+  --ctp-body: #4a6266;
+  --ctp-muted: #586e71;
+  --ctp-line: #e6d6bd;
+  --ctp-line-2: #d8c2a2;
+
+  /* WhatsApp keeps its own green so it stays recognisable next to the teal */
+  --ctp-wa: #15804d;
+  --ctp-wa-hover: #106540;
+
+  /* On dark */
+  --ctp-d-text: #f7efe1;
+  --ctp-d-muted: #a8c4c4;
+  --ctp-d-line: rgba(247, 239, 225, 0.18);
+
+  /* Kept as aliases so older rules resolve to the new palette */
+  --ctp-paper: var(--ctp-cream);
+  --ctp-surface: var(--ctp-sand);
+  --ctp-surface-2: var(--ctp-sand-2);
+  --ctp-white: var(--ctp-cream);
+  --ctp-ink-2: var(--ctp-mid);
+  --ctp-ink-3: var(--ctp-teal);
+  --ctp-accent: var(--ctp-teal);
+  --ctp-accent-hover: var(--ctp-mid);
+  --ctp-accent-light: var(--ctp-aqua);
+  --ctp-accent-soft: var(--ctp-aqua-soft);
+
+  --ctp-h1: clamp(2.35rem, 5vw + 0.9rem, 4.25rem);
+  --ctp-h2: clamp(1.8rem, 2.6vw + 1rem, 2.875rem);
+  --ctp-h3: clamp(1.125rem, 0.5vw + 1rem, 1.3125rem);
+  --ctp-lede: clamp(1.0625rem, 0.35vw + 1rem, 1.1875rem);
+
+  --ctp-gutter: clamp(1.25rem, 4vw, 3rem);
+  --ctp-max: 1200px;
+  --ctp-section: clamp(3.5rem, 6.5vw, 7rem);
+  --ctp-radius: 8px;
+  --ctp-radius-sm: 6px;
+  --ctp-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+
+  font-family: 'Inter', ui-sans-serif, system-ui, 'Segoe UI', Helvetica, Arial,
+    sans-serif;
+  font-size: 1rem;
+  line-height: 1.62;
+  color: var(--ctp-body);
+  background: var(--ctp-paper);
+  min-height: 100vh;
+  overflow-x: clip;
+}
+
+/* Overrides Made Digital's global heading treatment inside the concept.
+   `:where()` keeps these at single-class specificity, so they still beat the
+   global rules but lose to any component class below — otherwise `.ctp h2`
+   would silently override things like .ctp-footer__head. */
+.ctp :where(h1, h2, h3, h4) {
+  font-family: inherit;
+  color: var(--ctp-ink);
+  font-weight: 700;
+  letter-spacing: -0.022em;
+  line-height: 1.14;
+}
+
+.ctp :where(h1) {
+  font-size: var(--ctp-h1);
+  letter-spacing: -0.033em;
+  line-height: 1.03;
+}
+.ctp :where(h2) {
+  font-size: var(--ctp-h2);
+  letter-spacing: -0.028em;
+  line-height: 1.08;
+}
+.ctp :where(h3) {
+  font-size: var(--ctp-h3);
+}
+
+.ctp :focus-visible {
+  outline: 2px solid var(--ctp-accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.ctp-dark :focus-visible {
+  outline-color: var(--ctp-accent-light);
+}
+
+.ctp ::selection {
+  background: var(--ctp-accent);
+  color: #fff;
+}
+
+/* ---- Layout -------------------------------------------------------------- */
+
+.ctp-container {
+  width: 100%;
+  max-width: calc(var(--ctp-max) + var(--ctp-gutter) * 2);
+  margin-inline: auto;
+  padding-inline: var(--ctp-gutter);
+}
+
+.ctp-section {
+  padding-block: var(--ctp-section);
+}
+
+.ctp-section--tight {
+  padding-block: clamp(2.75rem, 4.5vw, 4.5rem);
+}
+
+.ctp-surface {
+  background: var(--ctp-surface);
+}
+
+.ctp-dark {
+  background: var(--ctp-deep);
+  color: var(--ctp-d-muted);
+}
+
+
+.ctp-dark h2,
+.ctp-dark h3 {
+  color: var(--ctp-d-text);
+}
+
+.ctp-eyebrow {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ctp-accent);
+  margin: 0 0 1rem;
+}
+
+.ctp-dark .ctp-eyebrow {
+  color: var(--ctp-accent-light);
+}
+
+.ctp-lede {
+  font-size: var(--ctp-lede);
+  line-height: 1.6;
+  color: var(--ctp-body);
+  max-width: 56ch;
+}
+
+.ctp-dark .ctp-lede {
+  color: var(--ctp-d-muted);
+}
+
+.ctp-head {
+  max-width: 46rem;
+  margin-bottom: clamp(2.5rem, 4vw, 3.75rem);
+}
+
+.ctp-head h2 + .ctp-lede {
+  margin-top: 1.25rem;
+}
+
+/* ---- Buttons ------------------------------------------------------------- */
+/* Square-shouldered rather than pill, to sit apart from Made Digital's own. */
+
+.ctp-btn {
+  --b-bg: var(--ctp-copper);
+  --b-fg: #2a1607;
+  --b-bd: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55em;
+  padding: 0.9rem 1.5rem;
+  min-height: 3rem;
+  border: 1.5px solid var(--b-bd);
+  border-radius: var(--ctp-radius-sm);
+  background: var(--b-bg);
+  color: var(--b-fg);
+  font-size: 0.9688rem;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  line-height: 1.2;
+  text-align: center;
+  cursor: pointer;
+  transition:
+    background-color 0.25s var(--ctp-ease),
+    border-color 0.25s var(--ctp-ease),
+    color 0.25s var(--ctp-ease),
+    transform 0.25s var(--ctp-ease);
+}
+
+.ctp-btn:hover {
+  --b-bg: var(--ctp-copper-deep);
+  --b-fg: var(--ctp-cream);
+  transform: translateY(-1px);
+}
+
+.ctp-btn:active {
+  transform: translateY(0);
+}
+
+.ctp-btn svg {
+  flex: none;
+}
+
+.ctp-btn--accent {
+  --b-bg: var(--ctp-teal);
+  --b-fg: var(--ctp-cream);
+}
+.ctp-btn--accent:hover {
+  --b-bg: var(--ctp-mid);
+  --b-fg: var(--ctp-cream);
+}
+
+.ctp-btn--wa {
+  --b-bg: var(--ctp-wa);
+  --b-fg: #ffffff;
+}
+.ctp-btn--wa:hover {
+  --b-bg: var(--ctp-wa-hover);
+}
+
+.ctp-btn--ghost {
+  --b-bg: transparent;
+  --b-fg: var(--ctp-ink);
+  --b-bd: var(--ctp-line-2);
+}
+.ctp-btn--ghost:hover {
+  --b-bg: transparent;
+  --b-bd: var(--ctp-teal);
+  --b-fg: var(--ctp-teal);
+}
+
+.ctp-btn--light {
+  --b-bg: var(--ctp-cream);
+  --b-fg: var(--ctp-deep);
+  --b-bd: var(--ctp-cream);
+}
+.ctp-btn--light:hover {
+  --b-bg: var(--ctp-sand-2);
+  --b-bd: var(--ctp-sand-2);
+  --b-fg: var(--ctp-deep);
+}
+
+.ctp-btn--ghost-light {
+  --b-bg: transparent;
+  --b-fg: var(--ctp-d-text);
+  --b-bd: var(--ctp-d-line);
+}
+.ctp-btn--ghost-light:hover {
+  --b-bg: transparent;
+  --b-bd: var(--ctp-d-text);
+}
+
+.ctp-btn--sm {
+  padding: 0.6rem 1rem;
+  min-height: 2.5rem;
+  font-size: 0.875rem;
+}
+
+.ctp-btn--lg {
+  padding: 1.05rem 1.85rem;
+  min-height: 3.375rem;
+  font-size: 1.0313rem;
+}
+
+.ctp-btn--block {
+  display: flex;
+  width: 100%;
+}
+
+.ctp-btn[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.ctp-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+/* On phones the calls-to-action go full width and stack — one decisive target
+   each, rather than two odd-sized buttons sitting next to each other. */
+@media (max-width: 559px) {
+  .ctp-btns > .ctp-btn {
+    width: 100%;
+  }
+}
+
+/* ---- Concept notice ------------------------------------------------------ */
+
+.ctp-notice {
+  background: var(--ctp-ink);
+  color: var(--ctp-d-muted);
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+
+.ctp-notice__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.35rem 1rem;
+  min-height: 2.25rem;
+  padding-block: 0.4rem;
+}
+
+.ctp-notice strong {
+  color: var(--ctp-d-text);
+  font-weight: 600;
+}
+
+.ctp-notice a {
+  color: var(--ctp-d-text);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: var(--ctp-d-line);
+  white-space: nowrap;
+  transition: text-decoration-color 0.25s var(--ctp-ease);
+}
+
+.ctp-notice a:hover {
+  text-decoration-color: currentColor;
+}
+
+/* ---- Navigation ---------------------------------------------------------- */
+
+.ctp-nav {
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  background: rgba(10, 55, 61, 0.94);
+  backdrop-filter: saturate(150%) blur(10px);
+  border-bottom: 1px solid transparent;
+  color: var(--ctp-d-text);
+  transition: border-color 0.3s var(--ctp-ease);
+}
+
+.ctp-nav.is-stuck {
+  border-bottom-color: var(--ctp-d-line);
+}
+
+.ctp-nav .ctp-logo,
+.ctp-nav__phone {
+  color: var(--ctp-d-text);
+}
+
+.ctp-nav .ctp-logo__text small {
+  color: var(--ctp-aqua);
+}
+
+.ctp-nav__link {
+  color: var(--ctp-d-muted);
+}
+
+.ctp-nav__link::after {
+  background: var(--ctp-copper);
+}
+
+.ctp-nav__link:hover {
+  color: var(--ctp-d-text);
+}
+
+.ctp-nav__phone svg {
+  color: var(--ctp-aqua);
+}
+
+.ctp-burger {
+  color: var(--ctp-d-text);
+}
+
+.ctp-nav__inner {
+  position: relative;
+  z-index: 61;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  min-height: 4.25rem;
+}
+
+@media (min-width: 1000px) {
+  .ctp-nav__inner {
+    min-height: 5rem;
+  }
+}
+
+.ctp-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  color: var(--ctp-ink);
+  font-weight: 700;
+  letter-spacing: -0.028em;
+  font-size: 1.0625rem;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+.ctp-logo__mark {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 5px;
+  background: var(--ctp-accent);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  flex: none;
+}
+
+.ctp-logo__text small {
+  display: block;
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ctp-muted);
+  margin-top: 1px;
+}
+
+.ctp-nav__links {
+  display: none;
+}
+
+@media (min-width: 1000px) {
+  .ctp-nav__links {
+    display: flex;
+    align-items: center;
+    gap: 1.875rem;
+    margin-left: auto;
+  }
+}
+
+.ctp-nav__link {
+  position: relative;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--ctp-d-muted);
+  padding-block: 0.25rem;
+  transition: color 0.25s var(--ctp-ease);
+}
+
+.ctp-nav__link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1.5px;
+  background: var(--ctp-accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s var(--ctp-ease);
+}
+
+.ctp-nav__link:hover {
+  color: var(--ctp-ink);
+}
+
+.ctp-nav__link:hover::after {
+  transform: scaleX(1);
+}
+
+.ctp-nav__actions {
+  display: none;
+}
+
+@media (min-width: 1000px) {
+  .ctp-nav__actions {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+  }
+}
+
+.ctp-nav__phone {
+  display: none;
+}
+
+@media (min-width: 1180px) {
+  .ctp-nav__phone {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--ctp-d-text);
+    white-space: nowrap;
+  }
+  .ctp-nav__phone svg {
+    color: var(--ctp-aqua);
+  }
+}
+
+/* Compact WhatsApp button shown next to the burger on small screens */
+.ctp-nav__mobile {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: auto;
+}
+
+@media (min-width: 1000px) {
+  .ctp-nav__mobile {
+    display: none;
+  }
+}
+
+/* The brand name is long. Below these widths the nav gives the WhatsApp
+   button back its space so the burger is never pushed off the edge. */
+@media (max-width: 559px) {
+  .ctp-logo {
+    font-size: 0.9375rem;
+  }
+  .ctp-nav__mobile .ctp-btn > span {
+    display: none;
+  }
+  .ctp-nav__mobile .ctp-btn {
+    padding-inline: 0.7rem;
+  }
+}
+
+@media (max-width: 419px) {
+  .ctp-nav__inner {
+    gap: 0.75rem;
+  }
+  .ctp-logo {
+    font-size: 0.875rem;
+    white-space: normal;
+    align-items: center;
+  }
+  .ctp-logo__text {
+    max-width: 9em;
+    line-height: 1.2;
+  }
+  .ctp-logo__text small {
+    display: none;
+  }
+}
+
+.ctp-burger {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0 0.6rem;
+  margin-right: -0.6rem;
+  border-radius: var(--ctp-radius-sm);
+  color: var(--ctp-d-text);
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.ctp-burger span {
+  display: block;
+  height: 1.5px;
+  width: 1.375rem;
+  background: currentColor;
+  border-radius: 2px;
+  transition: transform 0.3s var(--ctp-ease);
+}
+
+.ctp-burger[aria-expanded='true'] span:first-child {
+  transform: translateY(3.25px) rotate(45deg);
+}
+
+.ctp-burger[aria-expanded='true'] span:last-child {
+  transform: translateY(-3.25px) rotate(-45deg);
+}
+
+/* Mobile drawer */
+.ctp-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 59;
+  background: var(--ctp-paper);
+  padding: 5.5rem var(--ctp-gutter) calc(1.5rem + env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  animation: ctp-fade 0.25s var(--ctp-ease) both;
+}
+
+@media (min-width: 1000px) {
+  .ctp-drawer {
+    display: none;
+  }
+}
+
+@keyframes ctp-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+.ctp-drawer__nav {
+  display: grid;
+  border-top: 1px solid var(--ctp-line);
+}
+
+.ctp-drawer__link {
+  padding: 1.0625rem 0;
+  border-bottom: 1px solid var(--ctp-line);
+  font-size: 1.375rem;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  color: var(--ctp-ink);
+}
+
+.ctp-drawer__foot {
+  margin-top: auto;
+  padding-top: 2rem;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.ctp-drawer__meta {
+  margin-top: 0.75rem;
+  font-size: 0.8125rem;
+  color: var(--ctp-muted);
+  text-align: center;
+}
+
+/* ---- Hero ---------------------------------------------------------------- */
+
+.ctp-hero {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  align-items: center;
+  background: var(--ctp-deep);
+  color: var(--ctp-d-muted);
+  padding-block: clamp(3rem, 7vw, 6rem);
+  overflow: hidden;
+  /* Fills the screen below the notice bar and the sticky nav. svh keeps it
+     honest on phones, where vh includes the browser chrome. */
+  min-height: calc(100vh - var(--ctp-chrome, 6.75rem));
+  min-height: calc(100svh - var(--ctp-chrome, 6.75rem));
+}
+
+@media (min-width: 1000px) {
+  .ctp-hero {
+    --ctp-chrome: 7.5rem;
+  }
+}
+
+/* The full-bleed backdrop. */
+.ctp-hero__bg {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  display: block;
+}
+
+.ctp-hero__bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 62% center;
+  display: block;
+}
+
+@media (min-width: 760px) {
+  .ctp-hero__bg img {
+    object-position: center center;
+  }
+}
+
+/* Scrim over the image. The artwork carries its own falloff; this only has to
+   guarantee the headline clears AA wherever the image happens to crop. */
+.ctp-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    to bottom,
+    rgba(5, 34, 38, 0.82) 0%,
+    rgba(5, 34, 38, 0.6) 55%,
+    rgba(5, 34, 38, 0.75) 100%
+  );
+}
+
+@media (min-width: 760px) {
+  .ctp-hero::after {
+    background: linear-gradient(
+      100deg,
+      rgba(5, 34, 38, 0.72) 0%,
+      rgba(5, 34, 38, 0.34) 52%,
+      rgba(5, 34, 38, 0) 88%
+    );
+  }
+}
+
+/* Two soft washes of colour behind the hero, so the ground is not a flat
+   rectangle of teal. */
+.ctp-hero h1 {
+  color: var(--ctp-d-text);
+}
+
+/* The promise in the headline gets the copper. */
+.ctp-hero h1 em {
+  font-style: normal;
+  color: var(--ctp-copper);
+}
+
+.ctp-hero__lede,
+.ctp-hero__note {
+  color: var(--ctp-d-muted);
+}
+
+.ctp-hero__note svg {
+  color: var(--ctp-aqua);
+}
+
+.ctp-hero__grid {
+  display: grid;
+  gap: clamp(2.25rem, 5vw, 4rem);
+  align-items: center;
+}
+
+@media (min-width: 960px) {
+  .ctp-hero__grid {
+    grid-template-columns: minmax(0, 1.06fr) minmax(0, 1fr);
+    gap: clamp(3rem, 5vw, 5rem);
+  }
+}
+
+.ctp-hero h1 {
+  max-width: 13ch;
+}
+
+.ctp-hero__lede {
+  margin-top: 1.5rem;
+  font-size: var(--ctp-lede);
+  line-height: 1.62;
+  max-width: 48ch;
+}
+
+.ctp-hero__actions {
+  margin-top: 2.125rem;
+}
+
+.ctp-hero__note {
+  margin-top: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--ctp-d-muted);
+}
+
+.ctp-hero__note svg {
+  color: var(--ctp-accent);
+  flex: none;
+}
+
+/* Visual: portrait image with an overlapping response card */
+.ctp-hero__visual {
+  position: relative;
+}
+
+/* The contact card is all that is left in the right-hand column, so it sits
+   on the glass rather than on a solid panel — the pipework stays visible
+   through it. */
+.ctp-hero__card {
+  background: rgba(253, 246, 234, 0.94);
+  border: 1px solid rgba(253, 246, 234, 0.5);
+  border-radius: var(--ctp-radius);
+  padding: 1.25rem 1.375rem;
+  box-shadow: 0 24px 50px -26px rgba(5, 34, 38, 0.75);
+  display: grid;
+  gap: 0.875rem;
+}
+
+@media (min-width: 960px) {
+  .ctp-hero__card {
+    margin-left: auto;
+    width: min(20rem, 100%);
+  }
+}
+
+.ctp-hero__cardrow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.ctp-hero__cardrow svg {
+  color: var(--ctp-accent);
+  flex: none;
+}
+
+.ctp-hero__cardlabel {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--ctp-muted);
+}
+
+.ctp-hero__cardvalue {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--ctp-ink);
+  line-height: 1.35;
+}
+
+.ctp-hero__card hr {
+  border: 0;
+  border-top: 1px solid var(--ctp-line);
+  margin: 0;
+}
+
+/* ---- Trust strip --------------------------------------------------------- */
+
+.ctp-trust {
+  background: var(--ctp-copper);
+  color: #2a1607;
+}
+
+.ctp-trust__list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+@media (min-width: 860px) {
+  .ctp-trust__list {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.ctp-trust__item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  padding: 1.125rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #2a1607;
+  text-align: center;
+  border-bottom: 1px solid rgba(42, 22, 7, 0.16);
+}
+
+.ctp-trust__item svg {
+  color: #2a1607;
+  flex: none;
+  opacity: 0.75;
+}
+
+.ctp-trust__item:nth-child(2n) {
+  border-left: 1px solid rgba(42, 22, 7, 0.16);
+}
+
+@media (min-width: 860px) {
+  .ctp-trust__item {
+    border-bottom: 0;
+  }
+  .ctp-trust__item:nth-child(2n) {
+    border-left: 0;
+  }
+  .ctp-trust__item + .ctp-trust__item {
+    border-left: 1px solid rgba(42, 22, 7, 0.16);
+  }
+}
+
+/* ---- Services ------------------------------------------------------------ */
+
+/* Six services, six grounds. A card per colour rather than six identical
+   boxes — and two of them dark, so the grid has real rhythm instead of being
+   a uniform slab. Each card carries its own --card-* values. */
+.ctp-services {
+  display: grid;
+  gap: clamp(0.5rem, 1vw, 0.875rem);
+}
+
+@media (min-width: 620px) {
+  .ctp-services {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 980px) {
+  .ctp-services {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.ctp-service {
+  --card-bg: var(--ctp-cream);
+  --card-fg: var(--ctp-ink);
+  --card-body: var(--ctp-body);
+  --card-chip: var(--ctp-aqua-soft);
+  --card-chip-fg: var(--ctp-teal);
+  background: var(--card-bg);
+  color: var(--card-body);
+  padding: clamp(1.5rem, 2.6vw, 2.125rem);
+  border-radius: var(--ctp-radius);
+  display: grid;
+  gap: 0.75rem;
+  align-content: start;
+  transition:
+    transform 0.35s var(--ctp-ease),
+    box-shadow 0.35s var(--ctp-ease);
+}
+
+.ctp-service:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 32px -20px rgba(5, 34, 38, 0.55);
+}
+
+.ctp-service :where(h3) {
+  color: var(--card-fg);
+}
+
+.ctp-service:nth-child(1) {
+  --card-bg: var(--ctp-deep);
+  --card-fg: var(--ctp-d-text);
+  --card-body: var(--ctp-d-muted);
+  --card-chip: rgba(221, 130, 68, 0.2);
+  --card-chip-fg: var(--ctp-copper);
+}
+
+.ctp-service:nth-child(2) {
+  --card-bg: var(--ctp-sand);
+  --card-chip: var(--ctp-copper-soft);
+  --card-chip-fg: var(--ctp-copper-deep);
+}
+
+.ctp-service:nth-child(3) {
+  --card-bg: var(--ctp-aqua-soft);
+  --card-chip: var(--ctp-cream);
+  --card-chip-fg: var(--ctp-mid);
+}
+
+.ctp-service:nth-child(4) {
+  --card-bg: var(--ctp-copper-soft);
+  --card-chip: var(--ctp-cream);
+  --card-chip-fg: var(--ctp-copper-deep);
+}
+
+.ctp-service:nth-child(5) {
+  --card-bg: var(--ctp-sand-2);
+  --card-chip: var(--ctp-cream);
+  --card-chip-fg: var(--ctp-teal);
+}
+
+.ctp-service:nth-child(6) {
+  --card-bg: var(--ctp-mid);
+  --card-fg: var(--ctp-d-text);
+  --card-body: var(--ctp-d-muted);
+  --card-chip: rgba(69, 194, 182, 0.22);
+  --card-chip-fg: var(--ctp-aqua);
+}
+
+.ctp-service__icon {
+  display: grid;
+  place-items: center;
+  width: 2.875rem;
+  height: 2.875rem;
+  border-radius: var(--ctp-radius-sm);
+  background: var(--card-chip);
+  color: var(--card-chip-fg);
+  margin-bottom: 0.375rem;
+  transition: transform 0.35s var(--ctp-ease);
+}
+
+.ctp-service:hover .ctp-service__icon {
+  transform: scale(1.06) rotate(-4deg);
+}
+
+.ctp-service p {
+  font-size: 0.9375rem;
+  margin: 0;
+}
+
+/* ---- Why choose us ------------------------------------------------------- */
+
+.ctp-why {
+  display: grid;
+  gap: clamp(2.5rem, 5vw, 4.5rem);
+}
+
+@media (min-width: 940px) {
+  .ctp-why {
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
+    align-items: start;
+  }
+}
+
+.ctp-reasons {
+  display: grid;
+  gap: 1px;
+  background: var(--ctp-line);
+}
+
+@media (min-width: 560px) {
+  .ctp-reasons {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.ctp-reason {
+  background: var(--ctp-paper);
+  padding: 1.5rem 1.5rem 1.75rem 0;
+}
+
+@media (min-width: 560px) {
+  .ctp-reason {
+    padding: 1.75rem;
+  }
+  .ctp-reason:nth-child(odd) {
+    padding-left: 0;
+  }
+}
+
+.ctp-reason__num {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: var(--ctp-accent);
+  margin-bottom: 1rem;
+}
+
+.ctp-reason h3 {
+  margin-bottom: 0.5rem;
+}
+
+.ctp-reason p {
+  font-size: 0.9375rem;
+  margin: 0;
+  max-width: 34ch;
+}
+
+/* Finished work, shown next to the reasons to choose the business. */
+.ctp-why__figure {
+  margin: 2.5rem 0 0;
+  border-radius: var(--ctp-radius);
+  overflow: hidden;
+  background: var(--ctp-ink);
+  aspect-ratio: 5 / 4;
+}
+
+.ctp-why__figure img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 38%;
+  display: block;
+}
+
+/* ---- Emergency ----------------------------------------------------------- */
+
+.ctp-emergency {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+/* Pipework sits behind the emergency band, darkened enough to keep the
+   headline and buttons at full contrast. */
+.ctp-emergency__bg {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 42%;
+}
+
+/* Heavy enough on the left to hold the headline, light enough on the right
+   that the pipework is clearly visible rather than a texture. */
+.ctp-emergency::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    100deg,
+    rgba(5, 34, 38, 0.95) 0%,
+    rgba(5, 34, 38, 0.84) 34%,
+    rgba(5, 34, 38, 0.4) 100%
+  );
+}
+
+@media (max-width: 899px) {
+  .ctp-emergency::before {
+    background: rgba(5, 34, 38, 0.88);
+  }
+}
+
+.ctp-emergency__inner {
+  display: grid;
+  gap: clamp(2rem, 4vw, 3.5rem);
+  align-items: center;
+}
+
+@media (min-width: 900px) {
+  .ctp-emergency__inner {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: clamp(3rem, 5vw, 5rem);
+  }
+}
+
+.ctp-emergency h2 {
+  max-width: 15ch;
+}
+
+.ctp-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.375rem 0.75rem;
+  border: 1px solid var(--ctp-d-line);
+  border-radius: var(--ctp-radius-sm);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ctp-d-text);
+  margin-bottom: 1.5rem;
+}
+
+.ctp-pill::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ctp-accent-light);
+}
+
+.ctp-emergency__actions {
+  display: grid;
+  gap: 0.75rem;
+  padding: clamp(1.5rem, 3vw, 2rem);
+  border: 1px solid var(--ctp-d-line);
+  border-radius: var(--ctp-radius);
+  background: var(--ctp-ink-2);
+}
+
+.ctp-emergency__actions p {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: var(--ctp-d-muted);
+  text-align: center;
+}
+
+/* ---- Steps --------------------------------------------------------------- */
+
+.ctp-steps {
+  display: grid;
+  gap: 0;
+  counter-reset: none;
+}
+
+@media (min-width: 820px) {
+  .ctp-steps {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.ctp-step {
+  padding: 1.75rem 0;
+  border-top: 1px solid var(--ctp-line);
+}
+
+@media (min-width: 820px) {
+  .ctp-step {
+    padding: 2rem 2rem 0 0;
+  }
+  .ctp-step + .ctp-step {
+    padding-left: 2rem;
+    border-left: 1px solid var(--ctp-line);
+  }
+}
+
+.ctp-step__num {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--ctp-accent);
+  margin-bottom: 0.875rem;
+}
+
+.ctp-step h3 {
+  margin-bottom: 0.5rem;
+}
+
+.ctp-step p {
+  font-size: 0.9375rem;
+  margin: 0;
+  max-width: 32ch;
+}
+
+/* ---- About --------------------------------------------------------------- */
+
+.ctp-about {
+  display: grid;
+  gap: clamp(2.25rem, 4.5vw, 4rem);
+  align-items: center;
+}
+
+@media (min-width: 900px) {
+  .ctp-about {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
+.ctp-about__figure {
+  margin: 0;
+  border-radius: var(--ctp-radius);
+  overflow: hidden;
+  background: var(--ctp-ink);
+  aspect-ratio: 4 / 3;
+}
+
+.ctp-about__figure img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ctp-about__list {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
+}
+
+.ctp-about__list li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  font-size: 0.9375rem;
+}
+
+.ctp-about__list svg {
+  color: var(--ctp-accent);
+  flex: none;
+  transform: translateY(0.15em);
+}
+
+/* ---- Service areas ------------------------------------------------------- */
+
+.ctp-areas {
+  display: grid;
+  gap: 1px;
+  background: var(--ctp-line);
+  border: 1px solid var(--ctp-line);
+  border-radius: var(--ctp-radius);
+  overflow: hidden;
+}
+
+@media (min-width: 620px) {
+  .ctp-areas {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 980px) {
+  .ctp-areas {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.ctp-area {
+  --area-bg: var(--ctp-cream);
+  background: var(--area-bg);
+  padding: 1.5rem;
+  display: flex;
+  gap: 0.875rem;
+  align-items: flex-start;
+}
+
+.ctp-area svg {
+  color: var(--ctp-accent);
+  flex: none;
+  transform: translateY(0.1rem);
+}
+
+.ctp-area h3 {
+  font-size: 1.0313rem;
+  margin-bottom: 0.25rem;
+}
+
+.ctp-area p {
+  font-size: 0.875rem;
+  margin: 0;
+  color: var(--ctp-body);
+}
+
+.ctp-areas__note {
+  margin-top: 1.5rem;
+  font-size: 0.9375rem;
+  color: var(--ctp-muted);
+}
+
+/* ---- FAQ ----------------------------------------------------------------- */
+
+.ctp-faq {
+  border-top: 1px solid var(--ctp-line);
+  max-width: 52rem;
+}
+
+.ctp-faq__item {
+  border-bottom: 1px solid var(--ctp-line);
+}
+
+.ctp-faq__q {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1.375rem 0;
+  background: none;
+  border: 0;
+  text-align: left;
+  font-family: inherit;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--ctp-ink);
+  cursor: pointer;
+}
+
+.ctp-faq__sign {
+  position: relative;
+  flex: none;
+  width: 0.875rem;
+  height: 0.875rem;
+  margin-top: 0.3rem;
+}
+
+.ctp-faq__sign::before,
+.ctp-faq__sign::after {
+  content: '';
+  position: absolute;
+  background: var(--ctp-accent);
+  transition: transform 0.3s var(--ctp-ease);
+}
+
+.ctp-faq__sign::before {
+  left: 0;
+  top: 50%;
+  width: 100%;
+  height: 1.5px;
+  transform: translateY(-50%);
+}
+
+.ctp-faq__sign::after {
+  top: 0;
+  left: 50%;
+  width: 1.5px;
+  height: 100%;
+  transform: translateX(-50%);
+}
+
+.ctp-faq__item[data-open='true'] .ctp-faq__sign::after {
+  transform: translateX(-50%) scaleY(0);
+}
+
+.ctp-faq__a {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.32s var(--ctp-ease);
+}
+
+.ctp-faq__item[data-open='true'] .ctp-faq__a {
+  grid-template-rows: 1fr;
+}
+
+.ctp-faq__a > div {
+  overflow: hidden;
+  visibility: hidden;
+  transition: visibility 0s linear 0.32s;
+}
+
+.ctp-faq__item[data-open='true'] .ctp-faq__a > div {
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+.ctp-faq__a p {
+  margin: 0;
+  padding-bottom: 1.5rem;
+  font-size: 0.9688rem;
+  max-width: 62ch;
+}
+
+/* ---- Contact / quote form ------------------------------------------------ */
+
+.ctp-contact {
+  display: grid;
+  gap: clamp(2.5rem, 5vw, 4rem);
+  align-items: start;
+}
+
+@media (min-width: 940px) {
+  .ctp-contact {
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
+    gap: clamp(3rem, 5vw, 5rem);
+  }
+}
+
+.ctp-details {
+  display: grid;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.ctp-detail {
+  display: flex;
+  gap: 0.875rem;
+  align-items: flex-start;
+}
+
+.ctp-detail svg {
+  color: var(--ctp-accent-light);
+  flex: none;
+  transform: translateY(0.15rem);
+}
+
+.ctp-detail__label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--ctp-d-muted);
+  margin-bottom: 0.2rem;
+}
+
+.ctp-detail__value {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ctp-d-text);
+  line-height: 1.45;
+}
+
+.ctp-detail__value a:hover {
+  color: var(--ctp-accent-light);
+}
+
+.ctp-detail__value span {
+  display: block;
+  font-weight: 400;
+  font-size: 0.875rem;
+  color: var(--ctp-d-muted);
+}
+
+.ctp-formcard {
+  background: var(--ctp-white);
+  border-radius: var(--ctp-radius);
+  padding: clamp(1.5rem, 3.2vw, 2.5rem);
+  box-shadow: 0 24px 50px -34px rgba(0, 0, 0, 0.6);
+}
+
+.ctp-form {
+  display: grid;
+  gap: 1.125rem;
+}
+
+.ctp-form__row {
+  display: grid;
+  gap: 1.125rem;
+}
+
+@media (min-width: 560px) {
+  .ctp-form__row--2 {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.ctp-field {
+  display: grid;
+  gap: 0.375rem;
+  min-width: 0;
+}
+
+.ctp-field label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--ctp-ink);
+}
+
+.ctp-field label span {
+  font-weight: 400;
+  color: var(--ctp-muted);
+}
+
+.ctp-input,
+.ctp-select,
+.ctp-textarea {
+  width: 100%;
+  padding: 0.8125rem 0.9375rem;
+  font-family: inherit;
+  font-size: 1rem;
+  line-height: 1.45;
+  color: var(--ctp-ink);
+  background: var(--ctp-white);
+  border: 1.5px solid var(--ctp-line-2);
+  border-radius: var(--ctp-radius-sm);
+  transition:
+    border-color 0.2s var(--ctp-ease),
+    box-shadow 0.2s var(--ctp-ease);
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.ctp-input::placeholder,
+.ctp-textarea::placeholder {
+  color: #9aa1a8;
+}
+
+.ctp-input:hover,
+.ctp-select:hover,
+.ctp-textarea:hover {
+  border-color: var(--ctp-muted);
+}
+
+.ctp-input:focus,
+.ctp-select:focus,
+.ctp-textarea:focus {
+  outline: none;
+  border-color: var(--ctp-accent);
+  box-shadow: 0 0 0 3px rgba(17, 86, 92, 0.13);
+}
+
+.ctp-input[aria-invalid='true'],
+.ctp-select[aria-invalid='true'],
+.ctp-textarea[aria-invalid='true'] {
+  border-color: #b0452f;
+}
+
+.ctp-textarea {
+  min-height: 7.5rem;
+  resize: vertical;
+}
+
+.ctp-select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5 6 6.5l5-5' fill='none' stroke='%236f7880' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.9375rem center;
+  padding-right: 2.5rem;
+}
+
+.ctp-error {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #a83e2a;
+}
+
+.ctp-form__note {
+  font-size: 0.8125rem;
+  color: var(--ctp-muted);
+  margin: 0;
+}
+
+.ctp-hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.ctp-alert {
+  padding: 0.875rem 1rem;
+  border-radius: var(--ctp-radius-sm);
+  border: 1px solid var(--ctp-line-2);
+  border-left: 3px solid #b0452f;
+  font-size: 0.9063rem;
+  background: var(--ctp-surface);
+}
+
+.ctp-success {
+  display: grid;
+  gap: 1rem;
+  justify-items: start;
+  padding: clamp(1.5rem, 3vw, 2rem) 0;
+}
+
+.ctp-success__mark {
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: var(--ctp-accent);
+  color: #fff;
+}
+
+.ctp-success h3 {
+  font-size: 1.375rem;
+}
+
+.ctp-success p {
+  margin: 0;
+  font-size: 0.9688rem;
+  max-width: 42ch;
+}
+
+/* ---- Footer -------------------------------------------------------------- */
+
+.ctp-footer {
+  background: var(--ctp-abyss);
+  color: var(--ctp-d-muted);
+  padding-top: clamp(3rem, 5vw, 4.5rem);
+  padding-bottom: 2rem;
+  font-size: 0.9063rem;
+}
+
+.ctp-footer__top {
+  display: grid;
+  gap: 2.5rem;
+  padding-bottom: 2.5rem;
+}
+
+@media (min-width: 720px) {
+  .ctp-footer__top {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 1000px) {
+  .ctp-footer__top {
+    grid-template-columns: minmax(0, 1.5fr) repeat(3, minmax(0, 1fr));
+    gap: 2rem;
+  }
+}
+
+.ctp-footer .ctp-logo {
+  color: var(--ctp-d-text);
+}
+
+.ctp-footer .ctp-logo__text small {
+  color: var(--ctp-d-muted);
+}
+
+.ctp-footer__tagline {
+  margin-top: 1rem;
+  color: var(--ctp-d-text);
+  font-weight: 600;
+  font-size: 1.0625rem;
+  letter-spacing: -0.02em;
+}
+
+.ctp-footer__blurb {
+  margin-top: 0.625rem;
+  max-width: 34ch;
+  font-size: 0.875rem;
+}
+
+.ctp-footer__head {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ctp-d-text);
+  margin-bottom: 1rem;
+}
+
+.ctp-footer__list {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.ctp-footer__list a,
+.ctp-footer__list span {
+  color: var(--ctp-d-muted);
+  transition: color 0.25s var(--ctp-ease);
+}
+
+.ctp-footer__list a:hover {
+  color: var(--ctp-d-text);
+}
+
+.ctp-footer__bottom {
+  border-top: 1px solid var(--ctp-d-line);
+  padding-top: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8125rem;
+}
+
+.ctp-footer__credit {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.ctp-footer__credit a {
+  color: var(--ctp-d-text);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: var(--ctp-d-line);
+  transition: text-decoration-color 0.25s var(--ctp-ease);
+}
+
+.ctp-footer__credit a:hover {
+  text-decoration-color: currentColor;
+}
+
+/* ---- Floating WhatsApp (small screens only) ------------------------------ */
+
+.ctp-fab {
+  position: fixed;
+  right: 1rem;
+  bottom: calc(1rem + env(safe-area-inset-bottom));
+  z-index: 55;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8125rem 1.125rem;
+  border-radius: 999px;
+  background: var(--ctp-wa);
+  color: #fff;
+  font-size: 0.9063rem;
+  font-weight: 600;
+  box-shadow: 0 12px 28px -10px rgba(21, 122, 82, 0.65);
+  transition: background-color 0.25s var(--ctp-ease);
+}
+
+.ctp-fab:hover {
+  background: var(--ctp-wa-hover);
+}
+
+@media (min-width: 1000px) {
+  .ctp-fab {
+    display: none;
+  }
+}
+
+/* Skip link, scoped so it uses the concept's own accent */
+.ctp-skip {
+  position: absolute;
+  left: 1rem;
+  top: -6rem;
+  z-index: 80;
+  padding: 0.75rem 1.25rem;
+  background: var(--ctp-ink);
+  color: #fff;
+  border-radius: var(--ctp-radius-sm);
+  font-weight: 600;
+  transition: top 0.2s var(--ctp-ease);
+}
+
+.ctp-skip:focus-visible {
+  top: 1rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ctp *,
+  .ctp *::before,
+  .ctp *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ---- Water divider ------------------------------------------------------- */
+
+/* A single wave between the copper trust band and the services below it. The
+   trade is water, so the one decorative flourish on the site is a waterline. */
+.ctp-wave {
+  display: block;
+  width: 100%;
+  height: clamp(1.75rem, 3.5vw, 3.25rem);
+  /* Copper behind, the next section's cream cut out of it as the wave. */
+  background: var(--ctp-copper);
+  color: var(--ctp-cream);
+  margin-bottom: -1px;
+}
+
+.ctp-wave svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Tinted service areas, so the grid is not six identical boxes. */
+.ctp-area:nth-child(6n + 2) {
+  --area-bg: var(--ctp-sand);
+}
+.ctp-area:nth-child(6n + 3) {
+  --area-bg: var(--ctp-aqua-soft);
+}
+.ctp-area:nth-child(6n + 4) {
+  --area-bg: var(--ctp-copper-soft);
+}
+.ctp-area:nth-child(6n + 5) {
+  --area-bg: var(--ctp-sand-2);
+}
+.ctp-area:nth-child(6n) {
+  --area-bg: var(--ctp-sand);
+}
+
+/* The hero is a dark section without the .ctp-dark class, so its eyebrow has
+   to be lifted off the petrol ground explicitly. */
+.ctp-hero .ctp-eyebrow {
+  color: var(--ctp-aqua);
+}

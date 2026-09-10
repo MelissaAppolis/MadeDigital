@@ -1,0 +1,1875 @@
+/* ==========================================================================
+   Harbour House — website concept by Made Digital
+
+   A self-contained design system. EVERY selector is scoped under `.hh`, so it
+   cannot leak into the Made Digital site or into the other five concepts, and
+   so Made Digital's globals are overridden inside this concept.
+
+   The structural idea: a quiet house. Where AutoHaus is an instrument panel
+   and Cape Build is a slab, this one is air. The page is warm ivory, the
+   photographs are inset into it rather than run to the edges, and the type is
+   a light high-contrast serif with a great deal of room around it. Structure
+   comes from whitespace and hairlines, never from boxes — there is not a
+   single bordered card on the site.
+
+   Photography is static everywhere. No zoom, no pan, no parallax, no Ken
+   Burns, no video, no slideshow, no auto-advance. Hover changes a ground
+   colour, an underline or the opacity of an overlay, and nothing else.
+   ========================================================================== */
+
+.hh {
+  /* Warm ivory through to sand and stone — no white anywhere on the site. */
+  --hh-ivory: #faf7f2;
+  --hh-sand: #f2ece2;
+  --hh-stone: #e0d7c8;
+  --hh-stone-2: #cec2af;
+
+  /* Deep charcoal, never pure black. */
+  --hh-ink: #23262a;
+  --hh-ink-2: #2d3136;
+  --hh-body: #565d65;
+  /* Dark enough to clear AA at 11px on the sand ground, which is the tightest
+     pairing on the site — this token carries a lot of small print. */
+  --hh-mute: #5f676f;
+
+  /* One accent: a muted sea green. Nothing here is turquoise or gold. */
+  --hh-sea: #4d7268;
+  --hh-sea-hi: #3c5b53;
+  --hh-blue: #7e939b;
+
+  /* On the dark grounds */
+  --hh-d-text: #f4f0e9;
+  --hh-d-mute: #b9bdbd;
+  --hh-d-rule: rgba(244, 240, 233, 0.22);
+
+  --hh-display: 'Cormorant Garamond', 'Iowan Old Style', Georgia, serif;
+  --hh-sans: 'Jost', ui-sans-serif, system-ui, 'Segoe UI', Helvetica, Arial,
+    sans-serif;
+
+  /* The serif is small on the body, so display sizes run generous. */
+  --hh-h1: clamp(2.5rem, 4.6vw + 1.1rem, 5.25rem);
+  --hh-h2: clamp(2.1rem, 3.4vw + 1rem, 3.9rem);
+  --hh-h3: clamp(1.5rem, 1.4vw + 1rem, 2.1rem);
+
+  /* Soft, not rounded, and never a pill. */
+  --hh-r: 2px;
+
+  --hh-nav-h: 4.75rem;
+  --hh-gutter: clamp(1.25rem, 4vw, 4rem);
+  --hh-max: 1280px;
+  --hh-section: clamp(4.5rem, 9vw, 9.5rem);
+
+  --hh-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+
+  /* Theme the shared concept notice to this palette. */
+  --notice-bg: var(--hh-ink);
+  --notice-fg: #f4f0e9;
+  --notice-fg-muted: rgba(244, 240, 233, 0.74);
+  --notice-rule: rgba(244, 240, 233, 0.34);
+  --notice-max: var(--hh-max);
+  --notice-gutter: var(--hh-gutter);
+
+  background: var(--hh-ivory);
+  color: var(--hh-body);
+  font-family: var(--hh-sans);
+  font-size: 1rem;
+  font-weight: 300;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- Base: these have to beat Made Digital's globals inside the concept.
+   Scoped with :where() so they lose to any component class below, which is
+   what stops a section heading rule from eating a footer column heading. --- */
+
+.hh :where(h1, h2, h3, h4) {
+  font-family: var(--hh-display);
+  font-weight: 300;
+  color: var(--hh-ink);
+  letter-spacing: -0.005em;
+  margin: 0;
+}
+
+.hh :where(h1) {
+  font-size: var(--hh-h1);
+  line-height: 1.03;
+}
+
+.hh :where(h2) {
+  font-size: var(--hh-h2);
+  line-height: 1.06;
+}
+
+.hh :where(h3) {
+  font-size: var(--hh-h3);
+  line-height: 1.2;
+}
+
+.hh :where(p) {
+  margin: 0;
+}
+
+.hh :where(ul, ol) {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hh :where(img) {
+  display: block;
+  max-width: 100%;
+}
+
+.hh :where(a) {
+  color: inherit;
+}
+
+.hh :where(button) {
+  font: inherit;
+  color: inherit;
+}
+
+.hh :where(a, button, input, select, textarea):focus-visible {
+  outline: 2px solid var(--hh-sea);
+  outline-offset: 3px;
+}
+
+.hh-skip {
+  position: absolute;
+  left: -9999px;
+}
+
+.hh-skip:focus {
+  position: fixed;
+  left: 1rem;
+  top: 1rem;
+  z-index: 200;
+  background: var(--hh-ink);
+  color: var(--hh-d-text);
+  padding: 0.7rem 1.1rem;
+  border-radius: var(--hh-r);
+  text-decoration: none;
+}
+
+/* ---- Layout -------------------------------------------------------------- */
+
+.hh-shell {
+  width: 100%;
+  max-width: calc(var(--hh-max) + var(--hh-gutter) * 2);
+  margin-inline: auto;
+  padding-inline: var(--hh-gutter);
+}
+
+.hh-section {
+  padding-block: var(--hh-section);
+}
+
+.hh-sand {
+  background: var(--hh-sand);
+}
+
+.hh-ink {
+  background: var(--hh-ink);
+  color: var(--hh-d-mute);
+}
+
+.hh-ink :where(h1, h2, h3, h4) {
+  color: var(--hh-d-text);
+}
+
+/* ---- Type ---------------------------------------------------------------- */
+
+.hh-eyebrow {
+  font-family: var(--hh-sans);
+  font-size: 0.6875rem;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--hh-sea);
+  margin: 0;
+}
+
+/* The sea green does not carry on charcoal — every dark ground, the footer
+   included, takes the blue-grey instead. */
+.hh-ink .hh-eyebrow,
+.hh-close .hh-eyebrow,
+.hh-footer .hh-eyebrow {
+  color: var(--hh-blue);
+}
+
+.hh-display {
+  max-width: 16ch;
+}
+
+.hh-lede {
+  font-size: clamp(1.0625rem, 0.5vw + 0.95rem, 1.25rem);
+  line-height: 1.6;
+  color: var(--hh-body);
+  max-width: 46ch;
+}
+
+.hh-ink .hh-lede,
+.hh-close .hh-lede {
+  color: var(--hh-d-mute);
+}
+
+.hh-prose {
+  max-width: 52ch;
+  color: var(--hh-body);
+}
+
+.hh-head {
+  display: grid;
+  gap: 1.125rem;
+  margin-bottom: clamp(2.75rem, 5vw, 4.5rem);
+}
+
+.hh-head--centre {
+  justify-items: center;
+  text-align: center;
+}
+
+.hh-head--centre .hh-display,
+.hh-head--centre .hh-lede {
+  max-width: 34ch;
+}
+
+.hh-head--centre .hh-lede {
+  max-width: 54ch;
+}
+
+/* ---- Buttons and links --------------------------------------------------- */
+
+.hh-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  padding: 0.85rem 1.5rem;
+  border: 1px solid var(--hh-ink);
+  border-radius: var(--hh-r);
+  background: var(--hh-ink);
+  color: var(--hh-d-text);
+  font-family: var(--hh-sans);
+  font-size: 0.8125rem;
+  font-weight: 400;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color 0.3s var(--hh-ease),
+    border-color 0.3s var(--hh-ease),
+    color 0.3s var(--hh-ease);
+}
+
+.hh-btn:hover {
+  background: var(--hh-sea-hi);
+  border-color: var(--hh-sea-hi);
+  color: var(--hh-d-text);
+}
+
+.hh-btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.hh-btn--lg {
+  padding: 1.0625rem 2rem;
+}
+
+.hh-btn--sm {
+  padding: 0.6875rem 1.15rem;
+  font-size: 0.75rem;
+}
+
+.hh-btn--block {
+  width: 100%;
+}
+
+.hh-btn--ghost {
+  background: transparent;
+  border-color: var(--hh-stone-2);
+  color: var(--hh-ink);
+}
+
+.hh-btn--ghost:hover {
+  background: transparent;
+  border-color: var(--hh-ink);
+  color: var(--hh-ink);
+}
+
+/* On the charcoal grounds the primary button has to invert: an ink fill on an
+   ink section is a button you cannot see. */
+.hh-close .hh-btn,
+.hh-ink .hh-btn {
+  background: var(--hh-ivory);
+  border-color: var(--hh-ivory);
+  color: var(--hh-ink);
+}
+
+.hh-close .hh-btn:hover,
+.hh-ink .hh-btn:hover {
+  background: var(--hh-sand);
+  border-color: var(--hh-sand);
+  color: var(--hh-ink);
+}
+
+.hh-close .hh-btn--ghost,
+.hh-ink .hh-btn--ghost {
+  background: transparent;
+  border-color: var(--hh-d-rule);
+  color: var(--hh-d-text);
+}
+
+.hh-close .hh-btn--ghost:hover,
+.hh-ink .hh-btn--ghost:hover {
+  border-color: var(--hh-d-text);
+  color: var(--hh-d-text);
+}
+
+.hh-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+/* A text link with a rule that draws itself on hover. */
+.hh-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--hh-ink);
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  border-bottom: 1px solid var(--hh-stone-2);
+  padding-bottom: 0.4rem;
+  transition: border-color 0.3s var(--hh-ease), color 0.3s var(--hh-ease);
+}
+
+.hh-link:hover {
+  color: var(--hh-sea-hi);
+  border-color: var(--hh-sea);
+}
+
+.hh-link--light {
+  color: var(--hh-d-text);
+  border-color: var(--hh-d-rule);
+}
+
+.hh-link--light:hover {
+  color: var(--hh-d-text);
+  border-color: var(--hh-d-text);
+}
+
+/* ---- Navigation ---------------------------------------------------------- */
+
+.hh-nav {
+  position: sticky;
+  top: 0;
+  z-index: 90;
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  transition:
+    background-color 0.35s var(--hh-ease),
+    border-color 0.35s var(--hh-ease);
+}
+
+/* The hero photograph is inset in the page, so the bar never sits over a
+   picture — it can go solid without inverting anything. */
+.hh-nav.is-stuck {
+  background: rgba(250, 247, 242, 0.94);
+  backdrop-filter: blur(8px);
+  border-bottom-color: var(--hh-stone);
+}
+
+.hh-nav__inner {
+  min-height: var(--hh-nav-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.hh-logo {
+  font-family: var(--hh-sans);
+  font-size: 0.8125rem;
+  font-weight: 400;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--hh-ink);
+  text-decoration: none;
+  white-space: nowrap;
+  margin: 0;
+}
+
+.hh-nav__links {
+  display: none;
+  align-items: center;
+  gap: clamp(1.25rem, 2.4vw, 2.25rem);
+}
+
+.hh-nav__link {
+  font-size: 0.8125rem;
+  font-weight: 300;
+  color: var(--hh-body);
+  text-decoration: none;
+  padding-block: 0.35rem;
+  border-bottom: 1px solid transparent;
+  transition: color 0.25s var(--hh-ease), border-color 0.25s var(--hh-ease);
+}
+
+.hh-nav__link:hover {
+  color: var(--hh-ink);
+  border-bottom-color: var(--hh-sea);
+}
+
+.hh-nav__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.hh-nav__cta {
+  display: none;
+}
+
+.hh-menubtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.6rem 0.9rem;
+  border: 1px solid var(--hh-stone-2);
+  border-radius: var(--hh-r);
+  background: transparent;
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  cursor: pointer;
+  color: var(--hh-ink);
+  transition: border-color 0.25s var(--hh-ease);
+}
+
+.hh-menubtn:hover {
+  border-color: var(--hh-ink);
+}
+
+.hh-menubtn__bars {
+  display: grid;
+  gap: 4px;
+  width: 15px;
+}
+
+.hh-menubtn__bars i {
+  display: block;
+  height: 1px;
+  background: currentColor;
+}
+
+@media (min-width: 1000px) {
+  .hh-nav__links {
+    display: flex;
+  }
+  .hh-nav__cta {
+    display: inline-flex;
+  }
+  .hh-menubtn {
+    display: none;
+  }
+}
+
+/* Mobile menu: a full-height panel where the type gets the whole screen. */
+.hh-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 95;
+  background: var(--hh-ivory);
+  display: flex;
+  flex-direction: column;
+  padding: var(--hh-gutter);
+  overflow-y: auto;
+}
+
+.hh-menu__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--hh-stone);
+}
+
+.hh-menu__close {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 0.9rem;
+  border: 1px solid var(--hh-stone-2);
+  border-radius: var(--hh-r);
+  background: transparent;
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.hh-menu__nav {
+  display: grid;
+  padding-block: 1rem;
+}
+
+.hh-menu__link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.15rem 0;
+  border-bottom: 1px solid var(--hh-stone);
+  font-family: var(--hh-display);
+  font-size: 2rem;
+  font-weight: 300;
+  color: var(--hh-ink);
+  text-decoration: none;
+}
+
+.hh-menu__link svg {
+  color: var(--hh-sea);
+}
+
+.hh-menu__foot {
+  margin-top: auto;
+  padding-top: 1.75rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.hh-menu__meta {
+  font-size: 0.875rem;
+  color: var(--hh-mute);
+  line-height: 1.8;
+}
+
+.hh-menu__meta a {
+  color: var(--hh-ink);
+}
+
+/* ---- Hero ---------------------------------------------------------------- */
+
+.hh-hero {
+  padding-top: clamp(2.25rem, 5vw, 4rem);
+  padding-bottom: clamp(3rem, 6vw, 5.5rem);
+}
+
+.hh-hero__head {
+  display: grid;
+  gap: 1.25rem;
+  justify-items: start;
+  margin-bottom: clamp(2rem, 4vw, 3.25rem);
+  max-width: 46rem;
+}
+
+.hh-hero__brand {
+  letter-spacing: 0.32em;
+}
+
+.hh-hero h1 span {
+  display: block;
+  color: var(--hh-sea);
+}
+
+.hh-hero__lede {
+  font-size: clamp(1.0625rem, 0.5vw + 0.95rem, 1.1875rem);
+  max-width: 42ch;
+  color: var(--hh-body);
+}
+
+.hh-hero__where {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.6875rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--hh-mute);
+}
+
+.hh-hero__frame {
+  position: relative;
+}
+
+.hh-hero__shot {
+  margin: 0;
+}
+
+.hh-hero__shot img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+}
+
+.hh-hero__note {
+  margin-top: 1.5rem;
+  font-size: 0.8125rem;
+  color: var(--hh-mute);
+  max-width: 44ch;
+}
+
+/* ---- Booking panel ------------------------------------------------------- */
+
+.hh-booking {
+  display: grid;
+  gap: 1px;
+  background: var(--hh-stone);
+  border: 1px solid var(--hh-stone);
+  margin-top: 1px;
+}
+
+.hh-booking__field {
+  background: var(--hh-ivory);
+  padding: 1rem 1.15rem;
+  display: grid;
+  gap: 0.45rem;
+}
+
+.hh-booking__input {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: var(--hh-mute);
+}
+
+.hh-booking__input input,
+.hh-booking__input select {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  font-family: var(--hh-sans);
+  font-size: 0.9375rem;
+  font-weight: 300;
+  color: var(--hh-ink);
+  padding: 0;
+}
+
+.hh-booking__input input:focus-visible,
+.hh-booking__input select:focus-visible {
+  outline-offset: 2px;
+}
+
+.hh-booking__go {
+  background: var(--hh-ink);
+  border-radius: 0;
+}
+
+@media (min-width: 760px) {
+  .hh-booking {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
+    align-items: stretch;
+  }
+  .hh-booking__go {
+    padding-inline: clamp(1.25rem, 2.5vw, 2.25rem);
+  }
+}
+
+/* On a wide screen the panel sits across the lower edge of the photograph —
+   the one place the design lets two elements overlap. */
+@media (min-width: 1000px) {
+  /* Capped rather than left to the aspect ratio: at 16:10 the photograph is
+     tall enough to push the booking panel — the hero's actual call to action
+     — off the bottom of a laptop screen. */
+  .hh-hero__shot img {
+    aspect-ratio: auto;
+    height: min(56vh, 34rem);
+  }
+  .hh-hero__frame {
+    margin-bottom: 4.75rem;
+  }
+  .hh-booking {
+    position: absolute;
+    left: clamp(1.5rem, 4vw, 3.5rem);
+    right: clamp(1.5rem, 4vw, 3.5rem);
+    bottom: -3.5rem;
+    margin-top: 0;
+    box-shadow: 0 18px 50px -28px rgba(35, 38, 42, 0.45);
+  }
+}
+
+/* ---- Introduction -------------------------------------------------------- */
+
+.hh-intro {
+  display: grid;
+  gap: clamp(2.5rem, 5vw, 4.5rem);
+  align-items: center;
+}
+
+.hh-intro__text {
+  display: grid;
+  gap: 1.35rem;
+  justify-items: start;
+}
+
+.hh-intro__shot {
+  margin: 0;
+}
+
+.hh-intro__shot img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
+@media (min-width: 900px) {
+  .hh-intro {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  }
+}
+
+/* ---- Rooms ---------------------------------------------------------------
+   Three compositions, not three cards. Nothing here is boxed or bordered. --- */
+
+.hh-rooms {
+  display: grid;
+  gap: clamp(4rem, 8vw, 7.5rem);
+}
+
+.hh-room {
+  display: grid;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.hh-room__shot {
+  margin: 0;
+}
+
+.hh-room__shot img {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+
+.hh-room__detail {
+  margin: 0;
+}
+
+.hh-room__detail img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+.hh-room__text {
+  display: grid;
+  gap: 0.85rem;
+  justify-items: start;
+  align-content: start;
+}
+
+.hh-room__name {
+  font-size: clamp(1.75rem, 2.2vw + 1rem, 2.75rem);
+}
+
+.hh-room__short {
+  max-width: 38ch;
+  color: var(--hh-body);
+}
+
+.hh-room__text .hh-link {
+  margin-top: 0.5rem;
+}
+
+@media (min-width: 900px) {
+  /* 01 — broad photograph, text tucked under its left edge. */
+  .hh-room--wide {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: end;
+  }
+  .hh-room--wide .hh-room__shot {
+    grid-column: 1 / -1;
+  }
+  .hh-room--wide .hh-room__shot img {
+    aspect-ratio: 21 / 9;
+  }
+
+  /* 02 — text first, photograph right, square detail below the text. */
+  .hh-room--offset {
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    /* The third row is slack. Without it the photograph spanning two rows
+       stretches both of them, and the square detail drifts away from the text
+       it belongs to. */
+    grid-template-areas:
+      'text shot'
+      'detail shot'
+      '. shot';
+    grid-template-rows: auto auto 1fr;
+    align-items: start;
+    column-gap: clamp(2rem, 4vw, 4rem);
+    row-gap: 1.75rem;
+  }
+  .hh-room--offset .hh-room__text {
+    grid-area: text;
+    padding-top: 1rem;
+  }
+  .hh-room--offset .hh-room__detail {
+    grid-area: detail;
+    width: 70%;
+  }
+  .hh-room--offset .hh-room__shot {
+    grid-area: shot;
+  }
+  .hh-room--offset .hh-room__shot img {
+    aspect-ratio: 4 / 5;
+  }
+
+  /* 03 — full-width photograph, text indented to the right beneath it. */
+  .hh-room--full .hh-room__shot img {
+    aspect-ratio: 2 / 1;
+  }
+  .hh-room--full .hh-room__text {
+    margin-left: auto;
+    width: min(100%, 34rem);
+  }
+}
+
+/* ---- Room dialog --------------------------------------------------------- */
+
+.hh-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  background: rgba(35, 38, 42, 0.72);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: clamp(0rem, 3vw, 3rem);
+  overflow: hidden;
+}
+
+.hh-modal__panel {
+  position: relative;
+  width: min(64rem, 100%);
+  max-height: 100%;
+  background: var(--hh-ivory);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.hh-modal__close {
+  position: absolute;
+  top: 0.85rem;
+  right: 0.85rem;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.6rem 0.9rem;
+  border: 0;
+  border-radius: var(--hh-r);
+  background: rgba(250, 247, 242, 0.92);
+  color: var(--hh-ink);
+  font-size: 0.6875rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.hh-modal__close:hover {
+  background: var(--hh-ivory);
+}
+
+.hh-modal__scroll {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.hh-modal__shot {
+  margin: 0;
+}
+
+.hh-modal__shot img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.hh-modal__body {
+  padding: clamp(1.5rem, 4vw, 3rem);
+  display: grid;
+  gap: 1.25rem;
+  justify-items: start;
+}
+
+.hh-modal__title {
+  font-size: clamp(1.9rem, 3vw + 1rem, 3rem);
+}
+
+.hh-modal__prose {
+  max-width: 60ch;
+  color: var(--hh-body);
+}
+
+.hh-modal__specs {
+  width: 100%;
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--hh-stone);
+  margin: 0.5rem 0 0;
+}
+
+.hh-modal__specs > div {
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.9rem 0;
+  border-bottom: 1px solid var(--hh-stone);
+}
+
+.hh-modal__specs dt {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.6875rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--hh-sea);
+}
+
+.hh-modal__specs dd {
+  margin: 0;
+  color: var(--hh-ink);
+}
+
+.hh-modal__extras {
+  width: 100%;
+  display: grid;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  margin-top: 0.5rem;
+}
+
+.hh-ticks {
+  display: grid;
+  gap: 0.55rem;
+  margin-top: 0.9rem;
+}
+
+.hh-ticks li {
+  position: relative;
+  padding-left: 1.1rem;
+  color: var(--hh-body);
+}
+
+.hh-ticks li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.72em;
+  width: 5px;
+  height: 5px;
+  border: 1px solid var(--hh-sea);
+  border-radius: 50%;
+}
+
+.hh-modal__detail {
+  margin: 0;
+}
+
+.hh-modal__detail img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+.hh-modal__bath {
+  width: 100%;
+  margin: 0;
+}
+
+.hh-modal__bath img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.hh-modal__bath figcaption {
+  margin-top: 0.75rem;
+  font-size: 0.875rem;
+  color: var(--hh-mute);
+}
+
+.hh-modal__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+@media (min-width: 720px) {
+  .hh-modal__extras {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.75fr);
+    align-items: start;
+  }
+}
+
+/* ---- Experience rail -----------------------------------------------------
+   A scroll container the guest drives. Nothing advances on its own. -------- */
+
+.hh-rail {
+  margin-top: clamp(1rem, 2vw, 2rem);
+}
+
+.hh-rail__track {
+  display: flex;
+  gap: clamp(0.75rem, 1.5vw, 1.25rem);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-inline: var(--hh-gutter);
+  padding-bottom: 1rem;
+  scrollbar-width: thin;
+}
+
+.hh-rail__item {
+  flex: 0 0 clamp(15rem, 62vw, 22rem);
+  scroll-snap-align: center;
+}
+
+.hh-exp {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+}
+
+.hh-exp img {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+}
+
+/* A fixed scrim, not an effect: it is always there, so nothing animates. */
+.hh-exp::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(28, 31, 34, 0.86) 0%,
+    rgba(28, 31, 34, 0.55) 34%,
+    rgba(28, 31, 34, 0.08) 66%,
+    rgba(28, 31, 34, 0) 100%
+  );
+  pointer-events: none;
+}
+
+.hh-exp__text {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  z-index: 1;
+  padding: clamp(1.25rem, 2.5vw, 1.75rem);
+  display: grid;
+  gap: 0.5rem;
+}
+
+.hh-exp__label {
+  font-family: var(--hh-sans);
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--hh-d-text);
+}
+
+.hh-exp__line {
+  font-family: var(--hh-display);
+  font-size: 1.5rem;
+  line-height: 1.2;
+  color: var(--hh-d-text);
+}
+
+.hh-exp__body {
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: rgba(244, 240, 233, 0.82);
+}
+
+.hh-rail__hint {
+  padding-inline: var(--hh-gutter);
+  font-size: 0.6875rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--hh-mute);
+}
+
+@media (min-width: 900px) {
+  .hh-rail__hint {
+    display: none;
+  }
+}
+
+/* ---- Cape Town: a plan, not a map ---------------------------------------- */
+
+.hh-place {
+  display: grid;
+  gap: clamp(2.5rem, 5vw, 4.5rem);
+  align-items: start;
+}
+
+.hh-place__text {
+  display: grid;
+  gap: 1.25rem;
+  justify-items: start;
+}
+
+.hh-place__note {
+  font-size: 0.8125rem;
+  color: var(--hh-mute);
+  max-width: 38ch;
+}
+
+/* A route line with stops on it — map-ish without pretending to be a map. */
+.hh-plan {
+  position: relative;
+  padding-left: 1.75rem;
+}
+
+.hh-plan::before {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 0.65rem;
+  bottom: 0.65rem;
+  width: 1px;
+  background: var(--hh-stone-2);
+}
+
+.hh-plan__centre {
+  position: relative;
+  display: grid;
+  gap: 0.25rem;
+  padding-bottom: 1.25rem;
+  font-family: var(--hh-display);
+  font-size: 1.375rem;
+  color: var(--hh-ink);
+}
+
+.hh-plan__centre::before {
+  content: '';
+  position: absolute;
+  left: -1.75rem;
+  top: 0.55rem;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--hh-sea);
+}
+
+.hh-plan__list {
+  display: grid;
+}
+
+.hh-plan__list li {
+  position: relative;
+  display: grid;
+  gap: 0.15rem;
+  padding: 0.95rem 0;
+  border-top: 1px solid var(--hh-stone);
+}
+
+.hh-plan__list li::before {
+  content: '';
+  position: absolute;
+  left: -1.75rem;
+  top: 1.35rem;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  border: 1px solid var(--hh-stone-2);
+  background: var(--hh-sand);
+}
+
+.hh-plan__name {
+  color: var(--hh-ink);
+  font-size: 1.0625rem;
+}
+
+.hh-plan__note {
+  font-size: 0.875rem;
+  color: var(--hh-mute);
+}
+
+@media (min-width: 900px) {
+  .hh-place {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: clamp(3rem, 6vw, 6rem);
+  }
+  /* The list of places is far taller than the copy beside it, so the copy
+     travels with it rather than leaving a hole under itself. */
+  .hh-place__text {
+    position: sticky;
+    top: calc(var(--hh-nav-h) + 3rem);
+  }
+}
+
+/* ---- Hospitality --------------------------------------------------------- */
+
+.hh-little {
+  display: grid;
+  gap: clamp(2.25rem, 4vw, 3rem);
+}
+
+.hh-little__item {
+  display: grid;
+  gap: 0.85rem;
+  justify-items: start;
+}
+
+.hh-little__item figure {
+  margin: 0;
+  width: 100%;
+}
+
+.hh-little__item img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+.hh-little__label {
+  font-family: var(--hh-sans);
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--hh-ink);
+  margin-top: 0.35rem;
+}
+
+.hh-little__item p {
+  color: var(--hh-body);
+  max-width: 30ch;
+}
+
+@media (min-width: 620px) {
+  .hh-little {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1000px) {
+  .hh-little {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* ---- Breakfast ----------------------------------------------------------- */
+
+.hh-breakfast {
+  display: grid;
+  gap: clamp(2.5rem, 5vw, 4.5rem);
+  align-items: center;
+}
+
+.hh-breakfast__shot {
+  margin: 0;
+}
+
+.hh-breakfast__shot img {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+
+.hh-breakfast__text {
+  display: grid;
+  gap: 1.35rem;
+  justify-items: start;
+}
+
+.hh-breakfast__list {
+  display: grid;
+  gap: 0;
+  width: min(100%, 26rem);
+  border-top: 1px solid var(--hh-d-rule);
+}
+
+.hh-breakfast__list li {
+  padding: 0.8rem 0;
+  border-bottom: 1px solid var(--hh-d-rule);
+  color: var(--hh-d-mute);
+  font-size: 1.0625rem;
+}
+
+@media (min-width: 900px) {
+  .hh-breakfast {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  }
+}
+
+/* ---- Guest feedback ------------------------------------------------------ */
+
+.hh-quotes {
+  display: grid;
+  gap: clamp(2.25rem, 4vw, 3.25rem);
+}
+
+.hh-quote {
+  margin: 0;
+  display: grid;
+  gap: 1rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--hh-stone);
+}
+
+.hh-quote blockquote {
+  margin: 0;
+}
+
+.hh-quote blockquote p {
+  font-family: var(--hh-display);
+  font-size: clamp(1.375rem, 1.1vw + 1.05rem, 1.75rem);
+  line-height: 1.35;
+  color: var(--hh-ink);
+}
+
+.hh-quote figcaption {
+  font-size: 0.6875rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--hh-mute);
+}
+
+@media (min-width: 860px) {
+  .hh-quotes {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* ---- Gallery -------------------------------------------------------------
+   A run down the page rather than a grid: narrow, wide, narrow, each one
+   sitting in its own space. Not masonry, not a collage. ------------------- */
+
+.hh-gallery {
+  display: grid;
+  gap: clamp(2rem, 4vw, 3.5rem);
+}
+
+.hh-gallery__item {
+  margin: 0;
+}
+
+.hh-gallery__item img {
+  width: 100%;
+  object-fit: cover;
+}
+
+.hh-gallery__item--1 img,
+.hh-gallery__item--3 img {
+  aspect-ratio: 4 / 5;
+}
+
+.hh-gallery__item--2 img {
+  aspect-ratio: 3 / 2;
+}
+
+@media (min-width: 900px) {
+  .hh-gallery__item--1 {
+    width: 58%;
+  }
+  .hh-gallery__item--2 {
+    width: 100%;
+  }
+  .hh-gallery__item--3 {
+    width: 46%;
+    margin-left: auto;
+  }
+}
+
+/* ---- Booking CTA --------------------------------------------------------- */
+
+.hh-cta {
+  background: var(--hh-sand);
+  padding-block: clamp(4rem, 8vw, 8rem);
+  border-top: 1px solid var(--hh-stone);
+}
+
+.hh-cta__inner {
+  display: grid;
+  justify-items: center;
+  text-align: center;
+}
+
+.hh-cta__inner > .reveal {
+  display: grid;
+  gap: 1.5rem;
+  justify-items: center;
+}
+
+.hh-cta .hh-display {
+  max-width: 18ch;
+}
+
+/* ---- Contact ------------------------------------------------------------- */
+
+.hh-contact {
+  display: grid;
+  gap: clamp(2.5rem, 5vw, 4.5rem);
+  align-items: start;
+}
+
+.hh-contact__text {
+  display: grid;
+  gap: 1.35rem;
+  justify-items: start;
+}
+
+.hh-contact__list {
+  display: grid;
+  gap: 1.15rem;
+  margin-top: 0.5rem;
+}
+
+.hh-contact__list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  color: var(--hh-ink);
+}
+
+.hh-contact__list li > svg {
+  margin-top: 0.35rem;
+  color: var(--hh-sea);
+  flex: none;
+}
+
+.hh-contact__list div {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.hh-contact__list a {
+  color: var(--hh-ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--hh-stone-2);
+  padding-bottom: 1px;
+  width: fit-content;
+}
+
+.hh-contact__list a:hover {
+  border-color: var(--hh-ink);
+}
+
+.hh-contact__times {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin: 0.75rem 0 0;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--hh-stone);
+  width: 100%;
+}
+
+.hh-contact__times dt {
+  font-size: 0.6875rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--hh-mute);
+}
+
+.hh-contact__times dd {
+  margin: 0.15rem 0 0;
+  font-family: var(--hh-display);
+  font-size: 1.5rem;
+  color: var(--hh-ink);
+}
+
+@media (min-width: 900px) {
+  .hh-contact {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    column-gap: clamp(3rem, 6vw, 6rem);
+  }
+}
+
+/* ---- Forms --------------------------------------------------------------- */
+
+.hh-form {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.hh-form__grid {
+  display: grid;
+  gap: 1.25rem;
+}
+
+@media (min-width: 560px) {
+  .hh-form__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.hh-field {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.hh-field label span {
+  letter-spacing: 0.1em;
+  color: var(--hh-mute);
+  text-transform: none;
+}
+
+.hh-input,
+.hh-select,
+.hh-textarea {
+  width: 100%;
+  padding: 0.8rem 0.95rem;
+  border: 1px solid var(--hh-stone-2);
+  border-radius: var(--hh-r);
+  background: var(--hh-ivory);
+  font-family: var(--hh-sans);
+  font-size: 0.9375rem;
+  font-weight: 300;
+  color: var(--hh-ink);
+  transition: border-color 0.25s var(--hh-ease);
+}
+
+.hh-sand .hh-input,
+.hh-sand .hh-select,
+.hh-sand .hh-textarea {
+  background: var(--hh-sand);
+}
+
+.hh-input:hover,
+.hh-select:hover,
+.hh-textarea:hover {
+  border-color: var(--hh-mute);
+}
+
+.hh-textarea {
+  resize: vertical;
+  min-height: 7rem;
+}
+
+.hh-input[aria-invalid='true'],
+.hh-select[aria-invalid='true'],
+.hh-textarea[aria-invalid='true'] {
+  border-color: #a4483c;
+}
+
+.hh-error {
+  font-size: 0.8125rem;
+  color: #8f3d33;
+}
+
+.hh-alert {
+  padding: 0.85rem 1rem;
+  border-left: 2px solid #a4483c;
+  background: rgba(164, 72, 60, 0.07);
+  font-size: 0.9375rem;
+  color: var(--hh-ink);
+}
+
+/* Parked off-screen, not display:none — a bot has to be able to fill it in. */
+.hh-hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.hh-sent {
+  display: grid;
+  gap: 1rem;
+  justify-items: start;
+  padding: clamp(1.75rem, 4vw, 2.75rem);
+  border: 1px solid var(--hh-stone);
+  background: var(--hh-sand);
+}
+
+.hh-sand .hh-sent {
+  background: var(--hh-ivory);
+}
+
+.hh-sent__title {
+  font-size: clamp(1.5rem, 1.6vw + 1rem, 2rem);
+}
+
+.hh-sent p {
+  color: var(--hh-body);
+  max-width: 44ch;
+}
+
+/* ---- FAQ ----------------------------------------------------------------- */
+
+.hh-faqwrap {
+  display: grid;
+  gap: clamp(1rem, 3vw, 3rem);
+}
+
+.hh-faq {
+  border-top: 1px solid var(--hh-stone-2);
+}
+
+.hh-faq__item {
+  border-bottom: 1px solid var(--hh-stone-2);
+}
+
+.hh-faq__item h3 {
+  margin: 0;
+  font-size: inherit;
+}
+
+.hh-faq__q {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1.5rem 0;
+  border: 0;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  font-family: var(--hh-display);
+  font-size: clamp(1.25rem, 1.2vw + 1rem, 1.625rem);
+  font-weight: 300;
+  line-height: 1.25;
+  color: var(--hh-ink);
+}
+
+.hh-faq__q:hover {
+  color: var(--hh-sea-hi);
+}
+
+.hh-faq__sign {
+  position: relative;
+  flex: none;
+  width: 14px;
+  height: 14px;
+}
+
+.hh-faq__sign::before,
+.hh-faq__sign::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  background: var(--hh-sea);
+}
+
+.hh-faq__sign::before {
+  width: 14px;
+  height: 1px;
+}
+
+.hh-faq__sign::after {
+  width: 1px;
+  height: 14px;
+  transition: opacity 0.25s var(--hh-ease);
+}
+
+.hh-faq__item[data-open='true'] .hh-faq__sign::after {
+  opacity: 0;
+}
+
+.hh-faq__a {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.32s var(--hh-ease);
+}
+
+.hh-faq__item[data-open='true'] .hh-faq__a {
+  grid-template-rows: 1fr;
+}
+
+.hh-faq__a > div {
+  overflow: hidden;
+}
+
+.hh-faq__a p {
+  padding-bottom: 1.5rem;
+  max-width: 62ch;
+  color: var(--hh-body);
+}
+
+@media (min-width: 900px) {
+  .hh-faqwrap {
+    grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+    align-items: start;
+  }
+  .hh-faqwrap .hh-head {
+    margin-bottom: 0;
+    position: sticky;
+    top: calc(var(--hh-nav-h) + 2rem);
+  }
+}
+
+/* ---- Final brand moment -------------------------------------------------- */
+
+.hh-close {
+  background: var(--hh-ink);
+  color: var(--hh-d-mute);
+}
+
+.hh-close :where(h2) {
+  color: var(--hh-d-text);
+}
+
+.hh-close__shot {
+  margin: 0;
+}
+
+.hh-close__shot img {
+  width: 100%;
+  aspect-ratio: 21 / 8;
+  object-fit: cover;
+}
+
+.hh-close__inner {
+  padding-block: clamp(3.5rem, 7vw, 6.5rem);
+}
+
+.hh-close__inner > .reveal {
+  display: grid;
+  gap: 1.5rem;
+  justify-items: start;
+}
+
+.hh-close h2 span {
+  display: block;
+  color: var(--hh-blue);
+}
+
+@media (max-width: 600px) {
+  .hh-close__shot img {
+    aspect-ratio: 3 / 2;
+  }
+}
+
+/* ---- Footer -------------------------------------------------------------- */
+
+.hh-footer {
+  background: var(--hh-ink);
+  color: var(--hh-d-mute);
+  padding-block: clamp(3rem, 6vw, 5rem) 2rem;
+  border-top: 1px solid var(--hh-d-rule);
+}
+
+.hh-footer .hh-logo {
+  color: var(--hh-d-text);
+}
+
+.hh-footer__top {
+  display: grid;
+  gap: clamp(2.25rem, 4vw, 3.5rem);
+  padding-bottom: clamp(2.5rem, 5vw, 4rem);
+  border-bottom: 1px solid var(--hh-d-rule);
+}
+
+.hh-footer__brand {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.hh-footer__tagline {
+  font-family: var(--hh-display);
+  font-size: 1.375rem;
+  line-height: 1.35;
+  color: var(--hh-d-mute);
+  max-width: 22ch;
+}
+
+.hh-footer__nav ul,
+.hh-footer__contact ul {
+  display: grid;
+  gap: 0.7rem;
+  margin-top: 1.1rem;
+}
+
+.hh-footer__nav a {
+  color: var(--hh-d-mute);
+  text-decoration: none;
+  transition: color 0.25s var(--hh-ease);
+}
+
+.hh-footer__nav a:hover {
+  color: var(--hh-d-text);
+}
+
+.hh-footer__contact li {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  color: var(--hh-d-mute);
+}
+
+.hh-footer__contact li > svg {
+  color: var(--hh-blue);
+  flex: none;
+}
+
+.hh-footer__contact a {
+  color: var(--hh-d-mute);
+  text-decoration: none;
+  border-bottom: 1px solid var(--hh-d-rule);
+  padding-bottom: 1px;
+}
+
+.hh-footer__contact a:hover {
+  color: var(--hh-d-text);
+  border-color: var(--hh-d-text);
+}
+
+.hh-footer__base {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.75rem 1.5rem;
+  padding-top: 1.75rem;
+  font-size: 0.8125rem;
+  /* --hh-mute is tuned for the ivory grounds; on charcoal it drops under AA. */
+  color: var(--hh-d-mute);
+}
+
+.hh-footer__base a {
+  color: var(--hh-d-mute);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: var(--hh-d-rule);
+}
+
+.hh-footer__base a:hover {
+  color: var(--hh-d-text);
+  text-decoration-color: currentColor;
+}
+
+@media (min-width: 780px) {
+  .hh-footer__top {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.7fr) minmax(0, 1fr);
+  }
+}
+
+/* ==========================================================================
+   Reveal override — opacity only.
+
+   The shared <Reveal> lifts its children 22px as they fade in. On this
+   concept a reveal very often wraps a photograph, and the brief ruled out
+   photographic movement of every kind, so the lift is removed and only the
+   fade remains.
+
+   This depends on the concept stylesheet loading after Made Digital's
+   globals, which it does: concepts are lazy-imported. Do not "tidy" it away.
+   ========================================================================== */
+
+.hh .reveal {
+  transform: none;
+}
+
+.hh .reveal.is-visible {
+  transform: none;
+}

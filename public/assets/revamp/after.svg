@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1080" width="1600" height="1080" role="img" aria-label="Your Business website concept, desktop view">
+  <rect width="1600" height="1080" fill="#FAF8F4"/>
+
+  <text x="88" y="68" font-family="Manrope, Inter, Segoe UI, Helvetica, Arial, sans-serif" font-size="26" font-weight="800" fill="#16150F" letter-spacing="-0.6" text-anchor="start">Your Business</text>
+  <text x="600" y="66" font-family="Inter, Segoe UI, Helvetica, Arial, sans-serif" font-size="17" font-weight="500" fill="#16150F" letter-spacing="0" text-anchor="start">Services</text>
+  <text x="728" y="66" font-family="Inter, Segoe UI, Helvetica, Arial, sans-serif" font-size="17" font-weight="500" fill="#16150F" letter-spacing="0" text-anchor="start">Projects</text>
+  <text x="856" y="66" font-family="Inter, Segoe UI, Helvetica, Arial, sans-serif" font-size="17" font-weight="500" fill="#16150F" letter-spacing="0" text-anchor="start">About</text>
+  <text x="984" y="66" font-family="Inter, Segoe UI, Helvetica, Arial, sans-serif" font-size="17" font-weight="500" fill="#16150F" letter-spacing="0" text-anchor="start">Contact</text>
+  <rect x="1322" y="38" width="190" height="50" rx="25" fill="#16150F"/>
+  <text x="1417" y="69" font-family="Inter, Segoe UI, Helvetica, Arial, sans-serif" font-size="16" font-weight="600" fill="#FAF8F4" letter-spacing="0" text-anchor="middle">Get a quote</text>
+  <line x1="0" y1="112" x2="1600" y2="112" stroke="#E4DED2"/>
+
+  <text x="88" y="228" font-family="Inter, Segoe UI, Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#C15F3C" letter-spacing="3.4" text-anchor="start">CAPE TOWN</text>
+  <text x="88" y="326" font-family="Manrope, Inter, Segoe UI, Helvetica, Arial, sans-serif" font-size="76" font-weight="800" fill="#16150F" letter-spacing="-2.6" text-anchor="start">Trusted work,</text>
+  <text x="88" y="410" font-family="Manrope, Inter, Segoe UI, Helvetica, Arial, sans-serif" font-size="76" font-weight="800" fill="#16150F" letter-spacing="-2.6" text-anchor="start">done properly.</text>
+  <rect x="88" y="456" width="460" height="12" rx="6" fill="#16150F" opacity="0.2"/>
+  <rect x="88" y="484" width="378" height="12" rx="6" fill="#16150F" opacity="0.2"/>
+  <rect x="88" y="536" width="224" height="60" rx="30" fill="#C15F3C"/>
+  <text x="200" y="573" font-family="Inter, Segoe UI, Helvetica, Arial, sans-serif" font-size="17" font-weight="600" fill="#ffffff" letter-spacing="0" text-anchor="middle">Request a quote</text>
+  <rect x="332" y="536" width="196" height="60" rx="30" fill="none" stroke="#16150F" stroke-opacity="0.32"/>
+  <text x="430" y="573" font-family="Inter, Segoe UI, Helvetica, Arial, sans-serif" font-size="17" font-weight="600" fill="#16150F" letter-spacing="0" text-anchor="middle">Our services</text>
+  <g><clipPath id="c2-846-176"><rect x="846" y="176" width="666" height="456" rx="10"/></clipPath>
+  <g clip-path="url(#c2-846-176)"><rect x="846" y="176" width="666" height="456" fill="#EDE7DB"/><circle cx="1179" cy="404" r="136.79999999999998" fill="#C15F3C"/>
+     <rect x="846" y="504.32" width="666" height="127.68" fill="#16150F" opacity="0.88"/></g></g>
+
+  <line x1="0" y1="690" x2="1600" y2="690" stroke="#E4DED2"/>
+  <text x="88" y="754" font-family="Inter, Segoe UI, Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#C15F3C" letter-spacing="3.4" text-anchor="start">WHAT WE DO</text>
+  <g>
+    <rect x="88" y="794" width="440" height="216" rx="14" fill="#ffffff" stroke="#E4DED2"/>
+    <g><clipPath id="c1-89-795"><rect x="89" y="795" width="438" height="86" rx="10"/></clipPath>
+  <g clip-path="url(#c1-89-795)"><rect x="89" y="795" width="438" height="86" fill="#EDE7DB"/><path d="M89 881 L308 820.8 L527 881 Z" fill="#16150F" opacity="0.9"/>
+     <circle cx="430.64" cy="817.36" r="11.18" fill="#C15F3C"/></g></g>
+    <text x="116" y="926" font-family="Manrope, Inter, Segoe UI, Helvetica, Arial, sans-serif" font-size="22" font-weight="700" fill="#16150F" letter-spacing="-0.4" text-anchor="start">Our services</text>
+    <rect x="116" y="946" width="330" height="9" rx="4.5" fill="#16150F" opacity="0.16"/>
+    <rect x="116" y="966" width="250" height="9" rx="4.5" fill="#16150F" opacity="0.16"/>
+  </g>
+  <g>
+    <rect x="560" y="794" width="440" height="216" rx="14" fill="#ffffff" stroke="#E4DED2"/>
+    <g><clipPath id="c2-561-795"><rect x="561" y="795" width="438" height="86" rx="10"/></clipPath>
+  <g clip-path="url(#c2-561-795)"><rect x="561" y="795" width="438" height="86" fill="#EDE7DB"/><circle cx="780" cy="838" r="25.8" fill="#C15F3C"/>
+     <rect x="561" y="856.92" width="438" height="24.080000000000002" fill="#16150F" opacity="0.88"/></g></g>
+    <text x="588" y="926" font-family="Manrope, Inter, Segoe UI, Helvetica, Arial, sans-serif" font-size="22" font-weight="700" fill="#16150F" letter-spacing="-0.4" text-anchor="start">Recent work</text>
+    <rect x="588" y="946" width="330" height="9" rx="4.5" fill="#16150F" opacity="0.16"/>
+    <rect x="588" y="966" width="250" height="9" rx="4.5" fill="#16150F" opacity="0.16"/>
+  </g>
+  <g>
+    <rect x="1032" y="794" width="440" height="216" rx="14" fill="#ffffff" stroke="#E4DED2"/>
+    <g><clipPath id="c3-1033-795"><rect x="1033" y="795" width="438" height="86" rx="10"/></clipPath>
+  <g clip-path="url(#c3-1033-795)"><rect x="1033" y="795" width="438" height="86" fill="#EDE7DB"/><circle cx="1339.6" cy="822.52" r="18.92" fill="#C15F3C"/>
+     <rect x="1068.04" y="838" width="192.72" height="43" rx="8" fill="#16150F" opacity="0.88"/></g></g>
+    <text x="1060" y="926" font-family="Manrope, Inter, Segoe UI, Helvetica, Arial, sans-serif" font-size="22" font-weight="700" fill="#16150F" letter-spacing="-0.4" text-anchor="start">Get a quote</text>
+    <rect x="1060" y="946" width="330" height="9" rx="4.5" fill="#16150F" opacity="0.16"/>
+    <rect x="1060" y="966" width="250" height="9" rx="4.5" fill="#16150F" opacity="0.16"/>
+  </g>
+</svg>
