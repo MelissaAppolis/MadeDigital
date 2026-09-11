@@ -33,7 +33,7 @@ export function useSeo({ title, description, image, type = 'website', noindex = 
       ? image.startsWith('http')
         ? image
         : `${site.url}${image}`
-      : `${site.url}/og-image.svg`
+      : `${site.url}/og-image.png`
 
     document.title = title
     setMeta('meta[name="description"]', 'content', description)
