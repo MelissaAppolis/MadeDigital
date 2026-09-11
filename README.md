@@ -51,8 +51,13 @@ domain, so nothing breaks in between.
 
 ### Also worth doing
 
-- Replace `public/og-image.svg` with a 1200×630 image (this is the preview card
-  people see when your link is shared).
+- The share card people see when your link is posted is `public/og-image.png`
+  (1200×630). `og-image.svg` is the editable source — edit that, then re-render
+  the PNG from it. Social scrapers cannot read SVG, so the PNG is the one the
+  tags point at; keep them in step.
+- `public/sitemap.xml` carries a fixed `<lastmod>` date on every URL. Refresh it
+  when you make a meaningful content change. Search engines treat it as a hint,
+  so a slightly old date is harmless — a permanently wrong one is just ignored.
 - Replace `public/favicon.svg` if you have a proper logo mark.
 
 ---

@@ -1,10 +1,12 @@
 import { Link, Navigate, useParams } from 'react-router-dom'
 import { useSeo } from '../hooks/useSeo.js'
+import { useJsonLd } from '../hooks/useJsonLd.js'
 import Reveal from '../components/Reveal.jsx'
 import { BrowserMockup, PhoneMockup } from '../components/Mockup.jsx'
 import { CtaBand } from '../components/Sections.jsx'
 import { typeLabel, previewUrl } from '../components/ProjectCard.jsx'
 import { projects, projectBySlug } from '../data/projects.js'
+import { site } from '../data/site.js'
 
 export default function ProjectDetail() {
   const { slug } = useParams()
@@ -26,6 +28,23 @@ function ProjectView({ project, next, isConcept }) {
     description: `${project.description} Designed and built by Made Digital, a web design studio in Cape Town.`,
     image: project.desktop,
     type: 'article',
+  })
+
+  // Home > Work > this project. Google still surfaces breadcrumbs in results,
+  // and these are the only pages on the site that sit more than one level deep.
+  useJsonLd({
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${site.url}/` },
+      { '@type': 'ListItem', position: 2, name: 'Work', item: `${site.url}/work` },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: project.title,
+        item: `${site.url}/work/${project.slug}`,
+      },
+    ],
   })
 
   return (
