@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://madedigital.co.za/sitemap.xml
+Sitemap: https://madedigital.netlify.app/sitemap.xml

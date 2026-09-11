@@ -9,7 +9,7 @@ export const site = {
   tagline: 'Websites that bring you business.',
   description:
     'Made Digital creates modern, high-converting websites for small and growing businesses in Cape Town, South Africa.',
-  url: 'https://madedigital.co.za',
+  url: 'https://madedigital.netlify.app',
   location: 'Cape Town, South Africa',
   founder: 'Melissa Appolis',
 
