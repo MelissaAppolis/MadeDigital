@@ -1,5 +1,11 @@
 import { Link } from 'react-router-dom'
-import { footerNav, hasRealContact, site } from '../data/site.js'
+import {
+  footerNav,
+  hasRealContact,
+  hasRealPhone,
+  phoneLink,
+  site,
+} from '../data/site.js'
 
 export default function Footer() {
   return (
@@ -33,6 +39,11 @@ export default function Footer() {
                 <li>
                   <a href={`mailto:${site.email}`}>{site.email}</a>
                 </li>
+                {hasRealPhone && (
+                  <li>
+                    <a href={phoneLink}>{site.phoneDisplay}</a>
+                  </li>
+                )}
               </ul>
             </div>
           )}

@@ -32,6 +32,14 @@ export const whatsappLink = hasRealWhatsapp
   ? `https://wa.me/${site.whatsappNumber}`
   : null
 
+/** True once phoneDisplay is a real number rather than the '+27 XX ...' mask. */
+export const hasRealPhone = !site.phoneDisplay.includes('X')
+
+/** tel: href derived from the displayed number, so there is one number to edit. */
+export const phoneLink = hasRealPhone
+  ? `tel:${site.phoneDisplay.replace(/[^0-9+]/g, '')}`
+  : null
+
 export const nav = [
   { label: 'Work', to: '/work' },
   { label: 'Services', to: '/services' },

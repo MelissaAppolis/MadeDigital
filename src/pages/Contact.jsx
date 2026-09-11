@@ -6,7 +6,9 @@ import Reveal from '../components/Reveal.jsx'
 import Field, { ChoiceGroup } from '../components/Field.jsx'
 import {
   hasRealContact,
+  hasRealPhone,
   hasRealWhatsapp,
+  phoneLink,
   site,
   whatsappLink,
 } from '../data/site.js'
@@ -89,6 +91,12 @@ export default function Contact() {
                   value={site.email}
                   href={`mailto:${site.email}`}
                   isPlaceholder={!hasRealContact}
+                />
+                <Detail
+                  label="Phone"
+                  value={site.phoneDisplay}
+                  href={phoneLink}
+                  isPlaceholder={!hasRealPhone}
                 />
                 <Detail
                   label="WhatsApp"
