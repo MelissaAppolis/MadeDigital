@@ -1,7 +1,7 @@
 /**
- * Site-wide details. Replace the PLACEHOLDER values below with your real
- * contact details before going live — they are the only invented-looking
- * strings on the site and they appear on the contact page and in the footer.
+ * Site-wide details. The contact block below is live — it appears on the
+ * contact page and in the footer. The hasReal* flags are derived from it, so
+ * reverting a value to PLACEHOLDER brings the 'replace this' markers back.
  */
 
 export const site = {
@@ -13,13 +13,13 @@ export const site = {
   location: 'Cape Town, South Africa',
   founder: 'Melissa Appolis',
 
-  // ---- REPLACE THESE -----------------------------------------------------
-  email: 'PLACEHOLDER@madedigital.co.za',
+  // ---- Live contact details ----------------------------------------------
+  email: 'madedigital101@gmail.com',
   // Digits only, international format, no "+" — used to build the wa.me link.
-  whatsappNumber: 'PLACEHOLDER',
+  whatsappNumber: '27716140682',
   // What is shown to a visitor, e.g. '+27 XX XXX XXXX'
-  whatsappDisplay: '+27 XX XXX XXXX',
-  phoneDisplay: '+27 XX XXX XXXX',
+  whatsappDisplay: '+27 71 614 0682',
+  phoneDisplay: '+27 71 614 0682',
   // ------------------------------------------------------------------------
 
 }
