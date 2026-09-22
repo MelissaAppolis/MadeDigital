@@ -27,6 +27,9 @@ const CapeBuild = lazy(() => import('./demos/cape-build/index.jsx'))
 const CleanAndCo = lazy(() => import('./demos/clean-and-co/index.jsx'))
 const AutoHaus = lazy(() => import('./demos/autohaus/index.jsx'))
 const HarbourHouse = lazy(() => import('./demos/harbour-house/index.jsx'))
+const KestrelDermatology = lazy(
+  () => import('./demos/kestrel-dermatology/index.jsx')
+)
 
 /** Concept routes render bare — no Made Digital header or footer. */
 const conceptRoutes = [
@@ -36,6 +39,7 @@ const conceptRoutes = [
   { path: '/work/clean-and-co/live', element: <CleanAndCo /> },
   { path: '/work/autohaus-cape-town/live', element: <AutoHaus /> },
   { path: '/work/harbour-house/live', element: <HarbourHouse /> },
+  { path: '/work/kestrel-dermatology/live', element: <KestrelDermatology /> },
 ]
 
 /**

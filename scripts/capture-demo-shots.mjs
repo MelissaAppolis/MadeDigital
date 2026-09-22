@@ -110,6 +110,16 @@ const targets = [
       { name: 'shot-contact', at: '#contact' },
     ],
   },
+  {
+    slug: 'kestrel-dermatology',
+    path: '/work/kestrel-dermatology/live',
+    shots: [
+      { name: 'desktop', at: '#top' },
+      { name: 'shot-conditions', at: '#conditions' },
+      { name: 'shot-skin-checks', at: '#skin-checks' },
+      { name: 'shot-appointment', at: '#appointment' },
+    ],
+  },
 ]
 
 /** Optional slug filter: any argument after the origin names a concept. */

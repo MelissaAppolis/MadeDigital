@@ -162,14 +162,14 @@ Remember to add the new URL to `public/sitemap.xml`.
 appears, and the project page states the business is fictional. `type:
 'Client'` badges it **"Client Project"** and drops the fictional-business note.
 
-The six starter projects are concepts — demonstration sites, not client work —
+The seven portfolio projects are concepts — demonstration sites, not client work —
 and the site says so plainly on `/work` and on each project page. Only switch a
 project to `'Client'` when it really is client work you have permission to show.
 
 ### Concept sites — the browsable demos
 
 Some concepts are not just screenshots: they are complete websites you can
-click through, living inside this project. Five are built:
+click through, living inside this project. Seven are built:
 
 | Concept                | Live at                             | Scope |
 | ---------------------- | ----------------------------------- | ----- |
@@ -178,6 +178,8 @@ click through, living inside this project. Five are built:
 | Cape Build Co.         | `/work/cape-build-co/live`          | `.cb`  |
 | Clean & Co.            | `/work/clean-and-co/live`           | `.cc`  |
 | AutoHaus Cape Town     | `/work/autohaus-cape-town/live`     | `.ah`  |
+| Harbour House          | `/work/harbour-house/live`          | `.hh`  |
+| Kestrel Dermatology    | `/work/kestrel-dermatology/live`    | `.kd`  |
 
 A concept site has its own navigation, footer, colours and typography, and
 renders with **none** of the Made Digital header or footer — so it reads as a
@@ -190,7 +192,11 @@ square-cornered and built around large static photography; Clean & Co. is
 eucalyptus on warm cream, heavily rounded and built around a service selector
 that leads straight to a quote; AutoHaus is dark charcoal and steel blue,
 squared off at 4px and built around a service directory that reads like a
-workshop index. None of them uses white anywhere.
+workshop index; Harbour House is warm ivory and sea green, set in a serif and
+built around photography and dated enquiries; Kestrel Dermatology is cool
+porcelain, indigo and coral, with its photographs framed as circles like a view
+through a dermatoscope, and built around a condition finder and an appointment
+request. None of them uses white anywhere.
 
 Each one carries a slim bar at the top saying it is a concept and the business
 is fictional, plus a line in its footer. That bar is deliberately quiet, and it
@@ -225,6 +231,14 @@ src/demos/
     config.js  content.js  index.jsx  Nav.jsx  Footer.jsx  icons.jsx
     QuickAccess.jsx  ServiceDirectory.jsx  BookingForm.jsx
     autohaus.css      its design system, all scoped to .ah
+  harbour-house/
+    config.js  content.js  index.jsx  Nav.jsx  Footer.jsx  icons.jsx
+    BookingBar.jsx  Rooms.jsx  RoomDialog.jsx  Experience.jsx  EnquiryForm.jsx
+    harbour-house.css its design system, all scoped to .hh
+  kestrel-dermatology/
+    config.js  content.js  index.jsx  Nav.jsx  Footer.jsx  icons.jsx
+    ConditionFinder.jsx  AppointmentForm.jsx
+    kestrel.css       its design system, all scoped to .kd
 ```
 
 **To add another concept site:**
@@ -245,7 +259,8 @@ src/demos/
 **Fonts.** Made Digital loads Inter and Manrope in `index.html`. A concept that
 needs its own display face (Studio Olive uses Fraunces, Cape Build uses
 Archivo, Clean & Co. uses Bricolage Grotesque, AutoHaus uses DM Sans with IBM
-Plex Mono, Harbour House uses Cormorant Garamond with Jost) loads it with
+Plex Mono, Harbour House uses Cormorant Garamond with Jost, Kestrel Dermatology
+uses Instrument Sans with Instrument Serif) loads it with
 `useWebFont` from its own component, so the request only happens when someone
 opens that concept — it never slows your own site down.
 
@@ -278,8 +293,7 @@ concept's `config.js` — or `content.js` for Studio Olive's gallery and social
 grids. The crop each slot expects is noted next to it.
 
 Keep replacements web-sized: around 2000px wide for a full-bleed hero, 1000px
-for gallery images, saved as progressive JPEG at roughly 75% quality. The five
-concepts together come to about 7.5 MB of photography.
+for gallery images, saved as progressive JPEG at roughly 75% quality.
 
 The concepts' forms validate properly and show real success and error states,
 but deliberately send nowhere — there is no business to send them to.

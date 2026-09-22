@@ -310,6 +310,52 @@ export const projects = [
       },
     ],
   },
+  {
+    slug: 'kestrel-dermatology',
+    title: 'Kestrel Dermatology',
+    category: 'Medical',
+    type: 'Concept',
+    description:
+      'A calm, clear website concept for a specialist dermatology practice, built to answer patients’ questions before they phone the rooms.',
+    summary:
+      'Patients choose a specialist carefully, and most of what they want to know is practical: can you help with my problem, do I need a referral, what will it cost and what happens at the visit. This concept answers each of those on the page — a condition finder that starts with a search box, a first-visit timeline, fees and medical aid in plain language, and an appointment request that asks nothing clinical. The photographs are framed as circles with a fine ring, like a view through a dermatoscope. The copy follows the HPCSA’s rules for medical advertising: no testimonials, no comparisons, no promised results.',
+    desktop: '/assets/projects/kestrel-dermatology/desktop.jpg',
+    mobile: '/assets/projects/kestrel-dermatology/mobile.jpg',
+    accent: '#1B2238',
+    tags: ['Medical', 'Specialist Practice', 'Appointments'],
+    demoPath: '/work/kestrel-dermatology/live',
+    featured: true,
+    goals: [
+      'Answer the questions reception hears every day, before the call',
+      'Help a worried patient find their condition in seconds',
+      'Stay within the HPCSA’s rules for medical advertising',
+    ],
+    features: [
+      'Condition finder with search, type filters and a note card for each condition',
+      '“Book about this” preselects the reason in the appointment form',
+      'Skin check section with the ABCDE warning signs',
+      'First-visit timeline and a “please bring” checklist',
+      'Fees, medical aid and cancellations explained in plain language',
+      'Appointment request that asks for no medical details, with POPIA consent',
+    ],
+    shots: [
+      {
+        src: '/assets/projects/kestrel-dermatology/shot-conditions.jpg',
+        alt: 'The condition finder from the Kestrel Dermatology concept, with a search box, a list of conditions and a note card',
+        label: 'Condition finder',
+      },
+      {
+        src: '/assets/projects/kestrel-dermatology/shot-skin-checks.jpg',
+        alt: 'The skin checks section, with circular photographs beside the ABCDE warning signs',
+        label: 'Skin checks',
+      },
+      {
+        src: '/assets/projects/kestrel-dermatology/shot-appointment.jpg',
+        alt: 'The appointment section, with consulting hours beside the appointment request form',
+        label: 'Appointments',
+      },
+    ],
+  },
 ]
 
 export const projectBySlug = (slug) => projects.find((p) => p.slug === slug)

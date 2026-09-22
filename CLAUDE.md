@@ -46,7 +46,7 @@ items, edit the data file — not the page.
 ### Concept sites (`src/demos/`)
 
 A concept site is a **whole fictional client website** living inside this
-project — its own nav, footer, palette and type. Six exist:
+project — its own nav, footer, palette and type. Seven exist:
 
 | Concept                | Route                              | Scope  | Character |
 | ---------------------- | ---------------------------------- | ------ | --------- |
@@ -56,6 +56,7 @@ project — its own nav, footer, palette and type. Six exist:
 | Cape Build Co.         | `/work/cape-build-co/live`         | `.cb`  | Concrete + charcoal, Archivo set wide, photography-led |
 | AutoHaus Cape Town     | `/work/autohaus-cape-town/live`    | `.ah`  | Dark charcoal + steel blue, DM Sans over IBM Plex Mono, directory-led |
 | Harbour House          | `/work/harbour-house/live`         | `.hh`  | Warm ivory + sea green, Cormorant Garamond over Jost, photography-led |
+| Kestrel Dermatology    | `/work/kestrel-dermatology/live`   | `.kd`  | Cool porcelain + indigo + coral, Instrument Sans with an Instrument Serif italic accent, lens-led |
 
 The table order is the portfolio order, set by the `projects` array in
 `src/data/projects.js`. That one array drives the Work grid, the homepage
@@ -84,7 +85,17 @@ ivory page rather than run full bleed, with a booking panel across its lower
 edge; the three rooms are three different compositions; the five Cape Town
 experiences are a guest-driven horizontal scroll rail; the neighbourhood is a
 route line with stops on it instead of a map; and a room opens in an
-accessible dialog. There is not one bordered card on it.
+accessible dialog. There is not one bordered card on it. Kestrel Dermatology
+is the only concept on a **cool** ground (porcelain, not cream) and the only
+medical one: its photographs sit inside circles with a fine concentric ring —
+the "lens" — and it leads with a condition finder that starts from a search
+box, because patients arrive with a word, not a category.
+
+**Kestrel's copy follows the HPCSA's advertising rules** — no testimonials, no
+patient before-and-after images, no comparisons with other practices, no
+promised outcomes. The appointment form asks for a reason for the visit and
+nothing clinical (health data is special personal information under POPIA).
+Keep both when editing it or adapting it for a real practice.
 
 **Cape Build, Clean & Co., AutoHaus and Harbour House allow no image motion at
 all.** Their
@@ -129,7 +140,7 @@ downloads one. **Pexels ignores its own quality parameter** — a 2000px hero
 arrives over a megabyte — so re-encode locally (`sharp`, installed in the
 scratchpad, never in this project) at about quality 74, progressive, mozjpeg.
 
-**All six concepts are now built**, so `npm run mockups` has an empty concept
+**All seven concepts are now built**, so `npm run mockups` has an empty concept
 list and only regenerates the before/after revamp placeholders. Every portfolio
 card image comes from `npm run shots` against the running site. If a seventh
 concept is ever designed but not yet built, add it to `concepts` in
@@ -330,6 +341,13 @@ The business is new and the site's credibility rests on being honest about it.
 - **`npm run shots` takes a slug.** `node scripts/capture-demo-shots.mjs <origin>
   <slug>` recaptures one concept, so adding a fifth does not rewrite the other
   four's images for no reason.
+- **`base.css` already sets `html { scroll-padding-top: 6rem }`.** A concept
+  that adds its own `scroll-margin-top` to sections gets both, and anchor jumps
+  land 90px too low. Kestrel briefly did exactly that; rely on the global.
+- **Chip groups side by side wrap early.** Kestrel's appointment form pairs
+  chip groups two to a row; between 960 and 1280px the form shares its row
+  with the contact column and "Any" or "Not sure" dropped to a second line.
+  Count the rendered rows per group across widths rather than eyeballing one.
 - **Do not rebuild while an audit is running.** `vite preview` serves `dist/`,
   so `npm run build` mid-run pulls the files out from under the browser and the
   audit dies on a navigation error that looks like a site fault.
