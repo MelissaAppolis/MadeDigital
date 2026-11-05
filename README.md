@@ -41,13 +41,10 @@ placeholders and are labelled as such in the footer.
 
 ### 2. Your domain — `src/data/site.js`, `index.html`, `public/sitemap.xml`, `public/robots.txt`
 
-These currently use `https://madedigital.netlify.app`, the live Netlify
-subdomain. It drives canonical URLs, the Open Graph tags and the sitemap.
-
-When `madedigital.co.za` is connected as the primary domain in Netlify,
-search-and-replace the subdomain across those four files in one pass. Netlify
-keeps serving the `.netlify.app` address and redirects it to the primary
-domain, so nothing breaks in between.
+These use `https://madedigital.co.za`, the primary domain in Netlify. It
+drives canonical URLs, the Open Graph tags and the sitemap. Netlify still serves
+the old `madedigital.netlify.app` address and redirects it to the primary
+domain, so links already shared keep working.
 
 ### Also worth doing
 
