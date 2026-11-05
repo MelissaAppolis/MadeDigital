@@ -141,7 +141,9 @@ arrives over a megabyte — so re-encode locally (`sharp`, installed in the
 scratchpad, never in this project) at about quality 74, progressive, mozjpeg.
 
 **All seven concepts are now built**, so `npm run mockups` has an empty concept
-list and only regenerates the before/after revamp placeholders. Every portfolio
+list and generates nothing. The before/after revamp section is real work —
+Apex Cleaning Solutions, shown with Adrian's permission — so it has no
+placeholder; its images are screenshots in `public/assets/revamp/`. Every portfolio
 card image comes from `npm run shots` against the running site. If a seventh
 concept is ever designed but not yet built, add it to `concepts` in
 `generate-mockups.mjs` for a placeholder card, and take it out again the moment

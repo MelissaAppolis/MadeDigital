@@ -694,6 +694,18 @@
   max-width: 40ch;
 }
 
+.compare__credit {
+  margin-top: 2rem;
+  font-size: 0.9375rem;
+  color: var(--d-muted);
+}
+
+.compare__credit a {
+  color: var(--d-text);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
 .compare__item--before .mockup {
   filter: saturate(0.55);
   opacity: 0.82;

@@ -160,65 +160,13 @@ const palettes = {
  * graduates, so a generated placeholder can never overwrite a real
  * screenshot.
  *
- * The before/after revamp placeholders below are still generated — they
- * illustrate a dated site being replaced, and there is no real site to
- * photograph for that.
+ * The before/after revamp section used to be generated here too. It now shows
+ * Apex Cleaning Solutions, a real client, so it has no placeholder left.
  *
  * Add an entry here only for a concept that has been designed but not yet
  * built, and remove it again as soon as it has.
  */
 const concepts = []
-
-/* ---- Before / after placeholders --------------------------------------- */
-
-function datedSite() {
-  const links = ['Home', 'About Us', 'Services', 'Gallery', 'Contact Us']
-    .map((l, i) => text(186 + i * 136, 150, l, { size: 15, fill: '#1B4A73', family: 'Georgia, Times New Roman, serif' }))
-    .join('\n  ')
-  const copy = Array.from({ length: 9 }, (_, i) =>
-    bar(186, 566 + i * 26, i % 3 === 2 ? 690 : 900, 10, '#7B7B74', 0.5, 2)
-  ).join('\n  ')
-  const ctas = ['Read more »', 'Click here »', 'Download our brochure »']
-    .map((l, i) => text(186, 856 + i * 34, l, { size: 17, fill: '#2255AA', family: 'Georgia, Times New Roman, serif' }))
-    .join('\n  ')
-  const sidebar = Array.from({ length: 4 }, (_, i) =>
-    bar(1146, 596 + i * 24, 210, 9, '#7B7B74', 0.45, 2)
-  ).join('\n  ')
-
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1080" width="1600" height="1080" role="img" aria-label="Placeholder illustration of a dated, desktop-only website layout">
-  <rect width="1600" height="1080" fill="#E9E9E4"/>
-  <rect x="150" y="0" width="1300" height="1080" fill="#FFFFFF"/>
-  <rect x="150" y="0" width="1300" height="120" fill="#2F5C86"/>
-  ${text(186, 76, 'Your Business (Pty) Ltd', { size: 32, weight: 700, fill: '#FFFFFF', family: 'Georgia, Times New Roman, serif' })}
-  <rect x="150" y="120" width="1300" height="44" fill="#C9D6E2"/>
-  ${links}
-  <rect x="186" y="202" width="1228" height="256" fill="#D8D8D2"/>
-  ${text(800, 340, 'banner-image-final-v3.jpg', { size: 26, fill: '#8B8B84', anchor: 'middle' })}
-  ${text(186, 528, 'Welcome to our website!', { size: 30, weight: 700, fill: '#1B4A73', family: 'Georgia, Times New Roman, serif' })}
-  ${copy}
-  ${ctas}
-  <rect x="1120" y="528" width="294" height="220" fill="#F1F1EC" stroke="#CFCFC8"/>
-  ${text(1146, 568, 'Contact', { size: 20, weight: 700, fill: '#1B4A73', family: 'Georgia, Times New Roman, serif' })}
-  ${sidebar}
-  <rect x="150" y="980" width="1300" height="100" fill="#2F5C86"/>
-  ${text(800, 1038, 'Copyright 2011 · All Rights Reserved', { size: 18, weight: 400, fill: '#C9D6E2', family: 'Georgia, Times New Roman, serif', anchor: 'middle' })}
-</svg>
-`
-}
-
-const revampAfter = {
-  slug: 'revamp-after',
-  title: 'Your Business',
-  shortName: 'Your Business',
-  palette: { paper: '#FAF8F4', ink: '#16150F', accent: '#C15F3C', line: '#E4DED2', tint: '#EDE7DB' },
-  nav: ['Services', 'Projects', 'About', 'Contact'],
-  navCta: 'Get a quote',
-  eyebrow: 'CAPE TOWN',
-  h1: ['Trusted work,', 'done properly.'],
-  heroCta: 'Request a quote',
-  sectionLabel: 'WHAT WE DO',
-  cards: [{ title: 'Our services' }, { title: 'Recent work' }, { title: 'Get a quote' }],
-}
 
 /* ---- Write -------------------------------------------------------------- */
 
@@ -234,9 +182,5 @@ for (const c of concepts) {
   write(`projects/${c.slug}/desktop.svg`, desktop(c))
   write(`projects/${c.slug}/mobile.svg`, mobile(c))
 }
-
-write('revamp/before.svg', datedSite())
-write('revamp/after.svg', desktop(revampAfter))
-write('revamp/after-mobile.svg', mobile(revampAfter))
 
 console.log(`Generated ${count} placeholder mockups in public/assets/`)

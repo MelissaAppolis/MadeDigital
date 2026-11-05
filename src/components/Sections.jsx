@@ -86,7 +86,7 @@ export function ReviewCallout() {
           >
             <PhoneMockup
               src={revamp.after.mobile}
-              alt="A modern business website concept shown on a phone"
+              alt={`${revamp.client}’s new website shown on a phone`}
               style={{ '--phone-w': 'clamp(13rem, 32vw, 17rem)' }}
             />
           </Reveal>
@@ -159,7 +159,9 @@ export function BeforeAfter({ showCta = true }) {
             <BrowserMockup
               src={revamp.before.src}
               alt={revamp.before.alt}
-              url="yourbusiness.co.za"
+              url={revamp.url}
+              width={revamp.width}
+              height={revamp.height}
             />
             <p className="compare__caption">{revamp.before.caption}</p>
           </Reveal>
@@ -172,11 +174,22 @@ export function BeforeAfter({ showCta = true }) {
             <BrowserMockup
               src={revamp.after.src}
               alt={revamp.after.alt}
-              url="yourbusiness.co.za"
+              url={revamp.url}
+              width={revamp.width}
+              height={revamp.height}
             />
             <p className="compare__caption">{revamp.after.caption}</p>
           </Reveal>
         </div>
+
+        <Reveal as="p" className="compare__credit">
+          <span>
+            {revamp.client}, {revamp.location}.
+          </span>{' '}
+          <a href={revamp.href} target="_blank" rel="noopener">
+            See the live site<span className="sr-only"> (opens in a new tab)</span>
+          </a>
+        </Reveal>
 
         {showCta && (
           <Reveal className="btn-row" style={{ marginTop: '3rem' }}>

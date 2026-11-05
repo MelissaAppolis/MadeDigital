@@ -300,8 +300,10 @@ submission.
 ### Before / after
 
 The revamp section reads from the `revamp` export at the bottom of
-`src/data/projects.js`. Replace the two image paths with a real redesign and
-set `placeholder: false` to remove the "illustrative placeholders" note.
+`src/data/projects.js`. It shows Apex Cleaning Solutions, the first client,
+with the owner's permission. The images are 1600×1000 JPEGs in
+`public/assets/revamp/`; to feature a different revamp, swap the paths, the
+client name and the captions there.
 
 ---
 

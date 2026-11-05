@@ -366,22 +366,32 @@ export const featuredProjects = projects.filter((p) => p.featured)
 export const categories = ['All', ...new Set(projects.map((p) => p.category))]
 
 /**
- * Before / after placeholders for the revamp section. Replace these two paths
- * with screenshots of a real redesign once you have permission to show one.
+ * The revamp section: Apex Cleaning Solutions, Made Digital's first client,
+ * shown with Adrian Weideman's permission (agreement clause "Showing the
+ * work"). If he ever withdraws it, this comes down.
+ *
+ * "Before" is his old homepage, replayed from outreach/apex-revamp/old-site-backup
+ * with the files the backup missed taken from his old FreeHosting server.
+ * "After" is the live site. Both are 1600×1000 to match the browser frame.
  */
 export const revamp = {
+  client: 'Apex Cleaning Solutions',
+  location: 'Rugby, Cape Town',
+  url: 'apexcapetown.co.za',
+  href: 'https://apexcapetown.co.za',
   before: {
-    src: '/assets/revamp/before.svg',
-    alt: 'Illustration of a dated, desktop-only website layout',
+    src: '/assets/revamp/apex-before.jpg',
+    alt: 'Apex Cleaning Solutions’ old homepage: an orange banner with a Book Now button beside a photo of a carpet being cleaned',
     label: 'Before',
-    caption: 'Dated layout, hard to read on a phone, no clear next step.',
+    caption: 'His own colours and photos, but one Book Now button was the only way in from the first screen.',
   },
   after: {
-    src: '/assets/revamp/after.svg',
-    mobile: '/assets/revamp/after-mobile.svg',
-    alt: 'Illustration of the same website rebuilt with a modern layout',
+    src: '/assets/revamp/apex-after.jpg',
+    mobile: '/assets/revamp/apex-after-mobile.jpg',
+    alt: 'Apex Cleaning Solutions’ new homepage: a dark hero with the headline “Deep-clean results for your home, office or business” beside a quote form',
     label: 'After',
-    caption: 'Clear message, strong call-to-action, built mobile-first.',
+    caption: 'A quote form on the first screen, his 24-hour hours up front, and Call and WhatsApp one tap away on a phone.',
   },
-  placeholder: true,
+  width: 1600,
+  height: 1000,
 }

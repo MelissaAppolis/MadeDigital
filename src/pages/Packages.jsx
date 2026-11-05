@@ -163,7 +163,9 @@ export default function Packages() {
               <BrowserMockup
                 src={revamp.after.src}
                 alt={revamp.after.alt}
-                url="yourbusiness.co.za"
+                url={revamp.url}
+                width={revamp.width}
+                height={revamp.height}
               />
             </Reveal>
           </div>
