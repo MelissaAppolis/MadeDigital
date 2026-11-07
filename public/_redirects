@@ -1,1 +1,3 @@
+# The old Netlify address sends everyone to the real domain, page for page.
+https://madedigital.netlify.app/*  https://madedigital.co.za/:splat  301!
 /*    /index.html   200
