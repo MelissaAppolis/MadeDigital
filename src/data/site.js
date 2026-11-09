@@ -14,7 +14,7 @@ export const site = {
   founder: 'Melissa Appolis',
 
   // ---- Live contact details ----------------------------------------------
-  email: 'madedigital101@gmail.com',
+  email: 'hello@madedigital.co.za',
   // Digits only, international format, no "+" — used to build the wa.me link.
   whatsappNumber: '27716140682',
   // What is shown to a visitor, e.g. '+27 XX XXX XXXX'
