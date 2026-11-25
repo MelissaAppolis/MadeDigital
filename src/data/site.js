@@ -6,9 +6,9 @@
 
 export const site = {
   name: 'Made Digital',
-  tagline: 'Websites that bring you business.',
+  tagline: 'Websites and apps that bring you business.',
   description:
-    'Made Digital creates modern, high-converting websites for small and growing businesses in Cape Town, South Africa.',
+    'Made Digital creates modern websites and tailor-made business apps for small and growing businesses in Cape Town, South Africa.',
   url: 'https://madedigital.co.za',
   location: 'Cape Town, South Africa',
   founder: 'Melissa Appolis',
@@ -43,6 +43,7 @@ export const phoneLink = hasRealPhone
 export const nav = [
   { label: 'Work', to: '/work' },
   { label: 'Services', to: '/services' },
+  { label: 'Products', to: '/products' },
   { label: 'Packages', to: '/packages' },
   { label: 'About', to: '/about' },
 ]
@@ -50,6 +51,7 @@ export const nav = [
 export const footerNav = [
   { label: 'Work', to: '/work' },
   { label: 'Services', to: '/services' },
+  { label: 'Products', to: '/products' },
   { label: 'Packages', to: '/packages' },
   { label: 'About', to: '/about' },
   { label: 'Website Review', to: '/website-review' },

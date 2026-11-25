@@ -11,9 +11,9 @@ import { benefits, services } from '../data/services.js'
 
 export default function Services() {
   useSeo({
-    title: 'Services | Web Design & Development in Cape Town | Made Digital',
+    title: 'Services | Websites & Business Apps in Cape Town | Made Digital',
     description:
-      'New business websites, website redesigns, mobile optimisation, WhatsApp integration, SEO foundations and website care for Cape Town businesses.',
+      'New business websites, website redesigns, mobile optimisation, WhatsApp integration, SEO foundations, website care and custom business apps for Cape Town businesses.',
   })
 
   return (
@@ -24,13 +24,13 @@ export default function Services() {
             <Reveal>
               <p className="eyebrow">Services</p>
               <h1 style={{ marginTop: '1.5rem' }}>
-                Websites built to bring in work.
+                Websites and apps built to bring in work.
               </h1>
             </Reveal>
             <Reveal delay={100}>
               <p className="lede">
-                Six things we do, all pointed at the same outcome: more of the
-                right people getting in touch with your business.
+                Seven things we do, all pointed at the same outcome: more of the
+                right people getting in touch, and less time lost to admin.
               </p>
               <div className="btn-row" style={{ marginTop: '2rem' }}>
                 <Link className="btn" to="/website-review">

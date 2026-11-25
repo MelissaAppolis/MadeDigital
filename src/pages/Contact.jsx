@@ -17,10 +17,20 @@ const needs = [
   { value: 'New website', label: 'New website' },
   { value: 'Website redesign', label: 'Website redesign' },
   { value: 'Website maintenance', label: 'Website maintenance' },
+  { value: 'Custom app', label: 'A custom business app' },
+  { value: 'Invitations', label: 'Digital invitations' },
+  { value: 'Spadework', label: 'Spadework' },
   { value: 'Not sure yet', label: 'I’m not sure yet' },
 ]
 
 const packageNames = { start: 'Start', grow: 'Grow', pro: 'Pro' }
+
+/** ?need= links from the Products page preselect the matching choice. */
+const needFromParam = {
+  app: 'Custom app',
+  invitations: 'Invitations',
+  spadework: 'Spadework',
+}
 
 /** A contact detail that reads as a placeholder until it has been replaced. */
 function Detail({ label, value, href, isPlaceholder }) {
@@ -40,11 +50,14 @@ function Detail({ label, value, href, isPlaceholder }) {
 export default function Contact() {
   const [params] = useSearchParams()
   const chosenPackage = packageNames[params.get('package')] || ''
+  const chosenNeed = chosenPackage
+    ? 'New website'
+    : needFromParam[params.get('need')]
 
   useSeo({
     title: 'Contact | Made Digital — Web Design Cape Town',
     description:
-      'Get in touch with Made Digital about a new website, a redesign or ongoing website care for your Cape Town business.',
+      'Get in touch with Made Digital about a new website, a redesign, website care or a custom business app for your Cape Town business.',
   })
 
   const validate = useCallback((values) => {
@@ -238,7 +251,7 @@ export default function Contact() {
                     legend="What do you need?"
                     name="need"
                     options={needs}
-                    defaultValue={chosenPackage ? 'New website' : undefined}
+                    defaultValue={chosenNeed}
                   />
 
                   <Field

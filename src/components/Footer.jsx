@@ -52,7 +52,7 @@ export default function Footer() {
         <div className="footer__bottom">
           <p>&copy; 2026 Made Digital. All rights reserved.</p>
           <p>
-            Web design in Cape Town, South Africa.
+            Websites and apps from Cape Town, South Africa.
           </p>
         </div>
       </div>

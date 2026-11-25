@@ -1,7 +1,7 @@
 {
   "name": "Made Digital",
   "short_name": "Made Digital",
-  "description": "Websites that bring you business.",
+  "description": "Websites and apps that bring you business.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#FAF8F4",

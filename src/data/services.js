@@ -83,6 +83,20 @@ export const services = [
       'A person to email when something needs changing',
     ],
   },
+  {
+    id: 'custom-apps',
+    number: '07',
+    title: 'Custom business apps',
+    short: 'Tailor-made tools that speed up your quotes, leads and admin.',
+    body: 'Some work outgrows spreadsheets, WhatsApp groups and paper forms. We build tools around the way your business already runs, so quotes go out sooner, leads stop slipping through, and the admin takes less of your day. It starts with a conversation about what slows you down.',
+    includes: [
+      'Quote builders and price calculators',
+      'Lead capture and follow-up reminders',
+      'Bookings, job cards and checklists',
+      'Customer and supplier records',
+      'Works on a phone, a tablet or a computer',
+    ],
+  },
 ]
 
 export const benefits = [

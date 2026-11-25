@@ -33,7 +33,7 @@ export default function About() {
   useSeo({
     title: 'About | Made Digital — Cape Town Web Design Studio',
     description:
-      'Made Digital is a Cape Town digital studio founded by Melissa Appolis, building modern websites for small and growing businesses.',
+      'Made Digital is a Cape Town digital studio founded by Melissa Appolis, building modern websites and business apps for small and growing businesses.',
   })
 
   return (
@@ -50,7 +50,7 @@ export default function About() {
             <Reveal delay={100}>
               <p className="lede">
                 A small Cape Town studio that would rather make a handful of
-                websites properly than a hundred of them quickly.
+                websites and apps properly than a hundred of them quickly.
               </p>
             </Reveal>
           </div>
@@ -70,7 +70,8 @@ export default function About() {
               <p>
                 We created Made Digital to help small and growing businesses
                 build a stronger online presence without the complexity and cost
-                of a traditional agency.
+                of a traditional agency. That has grown to include apps: tools
+                that take the quoting, follow-ups and admin off your hands.
               </p>
               <p>
                 Most of the businesses we work with are good at what they do and

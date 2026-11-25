@@ -12,6 +12,7 @@ import {
 import { featuredProjects, projects } from '../data/projects.js'
 import { benefits, services } from '../data/services.js'
 import { packages } from '../data/packages.js'
+import { products } from '../data/products.js'
 
 /**
  * Continuous strip of concept mockups under the hero. The list is rendered
@@ -56,9 +57,9 @@ function Showreel() {
 
 export default function Home() {
   useSeo({
-    title: 'Made Digital | Websites That Bring You Business',
+    title: 'Made Digital | Websites and Apps That Bring You Business',
     description:
-      'Made Digital creates modern, high-converting websites for small and growing businesses in Cape Town, South Africa.',
+      'Made Digital creates modern websites and tailor-made business apps for small and growing businesses in Cape Town, South Africa.',
   })
 
   return (
@@ -68,16 +69,16 @@ export default function Home() {
         <div className="container">
           <div className="hero__inner">
             <Reveal>
-              <p className="eyebrow">Web design studio · Cape Town</p>
+              <p className="eyebrow">Websites and apps · Cape Town</p>
               <h1 style={{ marginTop: '1.5rem' }}>
-                Websites that bring you business.
+                Websites and apps that bring you business.
               </h1>
             </Reveal>
 
             <Reveal className="hero__aside" delay={120}>
               <p className="hero__lede">
-                Modern, professional websites for Cape Town businesses —
-                designed to turn visitors into enquiries.
+                Modern websites that turn visitors into enquiries, and
+                tailor-made apps that take the admin off your hands.
               </p>
               <div className="btn-row">
                 <Link className="btn btn--lg" to="/website-review">
@@ -174,7 +175,7 @@ export default function Home() {
             <div>
               <p className="eyebrow">What we do</p>
               <h2 style={{ marginTop: '1.25rem' }}>
-                Everything your website needs to earn its keep.
+                Everything it takes to win more work.
               </h2>
             </div>
             <p className="lede">
@@ -202,6 +203,56 @@ export default function Home() {
               </span>
             </Link>
           </Reveal>
+        </div>
+      </section>
+
+      {/* ---- Products and custom apps ---- */}
+      <section className="section section--cream">
+        <div className="container">
+          <Reveal className="head head--split" style={{ marginBottom: '3.5rem' }}>
+            <div>
+              <p className="eyebrow">More than websites</p>
+              <h2 style={{ marginTop: '1.25rem' }}>
+                Apps and tools that save you time.
+              </h2>
+            </div>
+            <p className="lede">
+              Two products of our own, and apps built to order for the
+              quoting, follow-ups and admin that eat into your week.
+            </p>
+          </Reveal>
+
+          <div className="offers">
+            {products.map((product, i) => (
+              <Reveal className="offer" key={product.id} delay={i * 70}>
+                <p className="status">
+                  <span className="status__dot" aria-hidden="true" />
+                  {product.status}
+                </p>
+                <h3>{product.name}</h3>
+                <p>{product.short}</p>
+                <Link className="offer__link" to={product.to}>
+                  {product.linkLabel}
+                  <span aria-hidden="true"> &rarr;</span>
+                </Link>
+              </Reveal>
+            ))}
+            <Reveal className="offer" delay={products.length * 70}>
+              <p className="status">
+                <span className="status__dot" aria-hidden="true" />
+                Built for you
+              </p>
+              <h3>Custom business apps</h3>
+              <p>
+                Tailor-made tools for your quotes, leads and admin, shaped
+                around how your business already works.
+              </p>
+              <Link className="offer__link" to="/products#custom-apps">
+                See custom apps
+                <span aria-hidden="true"> &rarr;</span>
+              </Link>
+            </Reveal>
+          </div>
         </div>
       </section>
 

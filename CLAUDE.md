@@ -11,7 +11,17 @@ Melissa Appolis. It sells websites to local SMEs — plumbers, salons, builders,
 cleaners, guesthouses. The visitor is a busy business owner on a phone, not a
 developer.
 
-Tagline: **Websites that bring you business.**
+Tagline: **Websites and apps that bring you business.** (changed from "Websites that
+bring you business." in Nov 2026 — the share image `public/og-image.png` and the
+email signature carry it too, so re-render both from their sources if it changes.)
+
+Besides websites, the studio sells two products of its own and builds custom
+business apps. `/products` presents all three: **Digital invitations** (the
+`public/invites/` demo, with public pricing), **Spadework** (construction
+management, finished but not yet launched — say so) and custom apps. Spadework
+lives in its own repo; it has no screenshots here yet. Link to `/invites/` with a
+plain `<a>`, never a `<Link>`: it is outside the React app, and the router would
+render the 404.
 
 ## Stack and constraints
 
@@ -49,6 +59,7 @@ items, edit the data file — not the page.
 | `projects.js` | the portfolio + the before/after `revamp` export |
 | `services.js` | services, benefits, process steps                |
 | `packages.js` | packages, refresh offer, care plans, FAQ         |
+| `products.js` | invitations, Spadework, custom-app examples      |
 
 ### Concept sites (`src/demos/`)
 

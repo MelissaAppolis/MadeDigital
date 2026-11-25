@@ -6,6 +6,7 @@ import Footer from './components/Footer.jsx'
 
 import Home from './pages/Home.jsx'
 import Services from './pages/Services.jsx'
+import Products from './pages/Products.jsx'
 import Work from './pages/Work.jsx'
 import ProjectDetail from './pages/ProjectDetail.jsx'
 import Packages from './pages/Packages.jsx'
@@ -106,6 +107,7 @@ export default function App() {
         <Route element={<StudioLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/services" element={<Services />} />
+          <Route path="/products" element={<Products />} />
           <Route path="/work" element={<Work />} />
           <Route path="/work/:slug" element={<ProjectDetail />} />
           <Route path="/packages" element={<Packages />} />

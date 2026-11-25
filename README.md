@@ -2,7 +2,7 @@
 
 Marketing website for Made Digital — a Cape Town web design studio.
 
-**Websites that bring you business.**
+**Websites and apps that bring you business.**
 
 Built with React + Vite. No backend, no CMS, no server. It builds to static
 files and deploys to Netlify.
