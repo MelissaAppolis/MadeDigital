@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useSeo } from '../hooks/useSeo.js'
 import Reveal from '../components/Reveal.jsx'
-import { CtaBand, ProcessSteps } from '../components/Sections.jsx'
+import { CtaBand } from '../components/Sections.jsx'
 import { DeviceStage } from '../components/Mockup.jsx'
 import { previewUrl } from '../components/ProjectCard.jsx'
 import { projectBySlug } from '../data/projects.js'
@@ -9,20 +9,20 @@ import { site } from '../data/site.js'
 
 const principles = [
   {
-    title: 'One studio, start to finish',
-    body: 'The person you speak to is the person designing and building your website. Nothing gets handed down a chain.',
+    title: 'One person, start to finish',
+    body: 'The person you talk to designs and builds your project.',
   },
   {
-    title: 'Business first, technology second',
-    body: 'We care what your website does for you. The tools underneath are our problem, not yours.',
+    title: 'Business first',
+    body: 'We care what it does for you, not which tools are underneath.',
   },
   {
-    title: 'Built to be used',
-    body: 'A website you cannot update is a website that goes stale. We hand over something you can actually live with.',
+    title: 'Easy to use',
+    body: 'You get something you can actually run yourself.',
   },
   {
     title: 'Honest about scope',
-    body: 'If something is not worth doing, we will say so. If a job is bigger than a package, we will price it properly.',
+    body: 'If something is not worth doing, we will say so.',
   },
 ]
 
@@ -49,8 +49,7 @@ export default function About() {
             </Reveal>
             <Reveal delay={100}>
               <p className="lede">
-                A small Cape Town studio that would rather make a handful of
-                websites and apps properly than a hundred of them quickly.
+                A small Cape Town studio. Fewer projects, done properly.
               </p>
             </Reveal>
           </div>
@@ -62,27 +61,16 @@ export default function About() {
           <div className="split">
             <Reveal className="prose">
               <p>
-                Made Digital is a Cape Town digital studio founded by{' '}
+                Made Digital was started by{' '}
                 <strong style={{ color: 'var(--ink)' }}>Melissa Appolis</strong>,
-                a full-stack web developer passionate about building modern
-                digital experiences.
+                a full-stack developer in Cape Town. The studio is new, so
+                every project gets her full attention.
               </p>
               <p>
-                We created Made Digital to help small and growing businesses
-                build a stronger online presence without the complexity and cost
-                of a traditional agency. That has grown to include apps: tools
-                that take the quoting, follow-ups and admin off your hands.
-              </p>
-              <p>
-                Most of the businesses we work with are good at what they do and
-                busy doing it. Their website is usually the thing that got left
-                behind — built years ago, never quite finished, or never built
-                at all. It rarely reflects the standard of the actual work.
-              </p>
-              <p>
-                That is the gap we work in. Not a marketing department, not a
-                sales pipeline — one studio that designs and builds a website
-                you would be happy for a customer to see.
+                Most small businesses are good at what they do but their
+                website was left behind. We build websites that match the
+                standard of your work, and apps that take the admin off your
+                hands.
               </p>
 
               <div className="facts" style={{ marginTop: '1.5rem' }}>
@@ -126,11 +114,8 @@ export default function About() {
       <section className="section section--cream">
         <div className="container">
           <Reveal className="head head--split" style={{ marginBottom: '3.5rem' }}>
-            <h2>How we work.</h2>
-            <p className="lede">
-              Four things we hold to, whether the job is R4,500 or considerably
-              more.
-            </p>
+            <h2>What we stand for.</h2>
+            <p className="lede">The same on every job, big or small.</p>
           </Reveal>
 
           <div className="benefits">
@@ -145,13 +130,11 @@ export default function About() {
         </div>
       </section>
 
-      <ProcessSteps detailed />
-
       <CtaBand
-        title="Let’s build something better."
-        body="Tell us about your business. We will tell you honestly whether we are the right studio for it."
+        title="Let’s talk."
+        body="Tell us about your business. We will tell you honestly if we are the right fit."
         primary={{ to: '/contact', label: 'Get in Touch' }}
-        secondary={{ to: '/website-review', label: 'Free website review' }}
+        secondary={{ to: '/products', label: 'See our products' }}
       />
     </>
   )

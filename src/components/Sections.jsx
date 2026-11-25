@@ -8,9 +8,9 @@ import { revamp } from '../data/projects.js'
 export function CtaBand({
   eyebrow = 'Start here',
   title = 'Let’s build something better.',
-  body = 'Tell us about your business and what you need. We will come back with a straight answer on scope, timing and cost — no pressure, no jargon.',
-  primary = { to: '/website-review', label: 'Get a Free Website Review' },
-  secondary = { to: '/contact', label: 'Contact Us' },
+  body = 'Tell us what you need. We will come back with a straight answer on time and cost.',
+  primary = { to: '/contact', label: 'Get in Touch' },
+  secondary = { to: '/packages', label: 'See pricing' },
 }) {
   return (
     <section className="section section--dark">
@@ -97,7 +97,7 @@ export function ReviewCallout() {
 }
 
 /** Four-step process. */
-export function ProcessSteps({ dark = false, detailed = false }) {
+export function ProcessSteps({ dark = false }) {
   return (
     <section className={`section${dark ? ' section--dark' : ''}`}>
       <div className="container">
@@ -105,13 +105,10 @@ export function ProcessSteps({ dark = false, detailed = false }) {
           <div>
             <p className="eyebrow">How it works</p>
             <h2 style={{ marginTop: '1.25rem' }}>
-              A simple process, start to finish.
+              Four simple steps.
             </h2>
           </div>
-          <p className="lede">
-            You always know what is happening, what we need from you, and what
-            comes next.
-          </p>
+          <p className="lede">You always know what comes next.</p>
         </Reveal>
 
         <ol className="steps">
@@ -122,7 +119,6 @@ export function ProcessSteps({ dark = false, detailed = false }) {
               </div>
               <h3>{step.title}</h3>
               <p>{step.body}</p>
-              {detailed && <p>{step.detail}</p>}
             </Reveal>
           ))}
         </ol>
@@ -144,9 +140,7 @@ export function BeforeAfter({ showCta = true }) {
             </h2>
           </div>
           <p className="lede">
-            You do not have to start from scratch. We keep your domain, your
-            content and whatever is already working, and rebuild the rest around
-            it.
+            No need to start over. We keep what works and rebuild the rest.
           </p>
         </Reveal>
 

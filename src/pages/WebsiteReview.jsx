@@ -80,9 +80,8 @@ export default function WebsiteReview() {
             </Reveal>
             <Reveal delay={100}>
               <p className="lede">
-                Get a free, no-obligation review of your website. We’ll identify
-                the biggest opportunities to improve your design, mobile
-                experience and ability to generate enquiries.
+                Send us your website. We will tell you, for free, what to fix
+                first to win more enquiries.
               </p>
             </Reveal>
           </div>
@@ -281,7 +280,7 @@ export default function WebsiteReview() {
       <CtaBand
         eyebrow="Or skip the form"
         title="Would rather just talk it through?"
-        body="Send us a message instead and tell us what you are trying to fix. We will reply either way."
+        body="Send us a message instead. We will reply either way."
         primary={{ to: '/contact', label: 'Contact Us' }}
         secondary={{ to: '/packages', label: 'See packages' }}
       />

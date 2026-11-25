@@ -74,8 +74,8 @@ export default function Header() {
               {item.label}
             </NavLink>
           ))}
-          <Link className="btn btn--sm header__cta" to="/website-review">
-            Free Website Review
+          <Link className="btn btn--sm header__cta" to="/contact">
+            Get in Touch
           </Link>
         </nav>
 
@@ -114,8 +114,8 @@ export default function Header() {
           </nav>
 
           <div className="drawer__foot">
-            <Link className="btn btn--block btn--lg" to="/website-review">
-              <span>Free Website Review</span>
+            <Link className="btn btn--block btn--lg" to="/contact">
+              <span>Get in Touch</span>
               <span className="btn__arrow" aria-hidden="true">
                 &rarr;
               </span>

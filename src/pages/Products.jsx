@@ -49,21 +49,16 @@ function Invitations() {
           </Reveal>
         </div>
 
-        <Reveal className="head" style={{ margin: 'clamp(3rem, 6vw, 4.5rem) 0 1.75rem' }}>
-          <h3 className="product__subhead">Pricing</h3>
+        <Reveal className="aside-row" style={{ marginTop: 'clamp(2.5rem, 5vw, 3.5rem)' }}>
+          <p>
+            <b>Free for your first 3 events.</b> Then R650 an event, or R1,650 a
+            month.
+          </p>
+          <Link className="link-arrow" to="/packages#invitations">
+            <span>See prices</span>
+            <span aria-hidden="true">&rarr;</span>
+          </Link>
         </Reveal>
-        <div className="prices">
-          {p.pricing.map((tier, i) => (
-            <Reveal className="price" key={tier.label} delay={i * 70}>
-              <p className="fact__label">{tier.label}</p>
-              <p className="plan__price">
-                <span>{tier.price}</span>
-                {tier.period && <span className="plan__period">{tier.period}</span>}
-              </p>
-              <p className="muted small">{tier.note}</p>
-            </Reveal>
-          ))}
-        </div>
 
         <Reveal className="product__foot">
           <p className="muted">{p.note}</p>
@@ -139,9 +134,8 @@ function CustomApps() {
             </h2>
           </div>
           <p className="lede">
-            Not every business fits a ready-made product. We build apps around
-            how you already quote, follow up and get the job done, so the
-            routine work takes less of your day.
+            We build apps around how you already work, so the admin takes less
+            of your day.
           </p>
         </Reveal>
 
@@ -161,9 +155,6 @@ function CustomApps() {
             <span className="btn__arrow" aria-hidden="true">
               &rarr;
             </span>
-          </Link>
-          <Link className="btn btn--ghost btn--lg" to="/services#custom-apps">
-            About custom apps
           </Link>
         </Reveal>
       </div>
@@ -191,8 +182,7 @@ export default function Products() {
             </Reveal>
             <Reveal delay={100}>
               <p className="lede">
-                Two products of our own, and apps built to order for businesses
-                that have outgrown spreadsheets and paper.
+                Two products of our own, and apps built to order.
               </p>
             </Reveal>
           </div>
@@ -205,7 +195,7 @@ export default function Products() {
 
       <CtaBand
         title="Not sure what you need?"
-        body="Tell us how your business runs and where the time goes. We will tell you honestly whether a website, an app or neither is the answer."
+        body="Tell us where the time goes. We will tell you honestly what would help."
         primary={{ to: '/contact', label: 'Get in Touch' }}
         secondary={{ to: '/services', label: 'See all services' }}
       />

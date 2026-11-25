@@ -13,14 +13,15 @@ import {
   whatsappLink,
 } from '../data/site.js'
 
+// Grouped as the site is: websites first, then apps and products.
 const needs = [
   { value: 'New website', label: 'New website' },
-  { value: 'Website redesign', label: 'Website redesign' },
-  { value: 'Website maintenance', label: 'Website maintenance' },
-  { value: 'Custom app', label: 'A custom business app' },
+  { value: 'Website redesign', label: 'Website refresh' },
+  { value: 'Website maintenance', label: 'Website care' },
   { value: 'Invitations', label: 'Digital invitations' },
   { value: 'Spadework', label: 'Spadework' },
-  { value: 'Not sure yet', label: 'I’m not sure yet' },
+  { value: 'Custom app', label: 'Custom app' },
+  { value: 'Not sure yet', label: 'Not sure yet' },
 ]
 
 const packageNames = { start: 'Start', grow: 'Grow', pro: 'Pro' }
@@ -79,14 +80,11 @@ export default function Contact() {
           <div className="page-hero__grid">
             <Reveal>
               <p className="eyebrow">Contact</p>
-              <h1 style={{ marginTop: '1.5rem' }}>
-                Let’s build something better.
-              </h1>
+              <h1 style={{ marginTop: '1.5rem' }}>Let’s talk.</h1>
             </Reveal>
             <Reveal delay={100}>
               <p className="lede">
-                Tell us about your business and what you need. We read every
-                message and reply personally.
+                Tell us what you need. We usually reply within one working day.
               </p>
             </Reveal>
           </div>
@@ -128,9 +126,7 @@ export default function Contact() {
                 }}
               >
                 <p className="muted small" style={{ maxWidth: '38ch' }}>
-                  Not ready for a full conversation? Send your website address
-                  through the free review instead and we will come back with
-                  what we would change.
+                  Already have a website? We will review it for free.
                 </p>
                 <Link
                   className="link-arrow"
@@ -161,9 +157,7 @@ export default function Contact() {
                     Thank you — message received.
                   </h2>
                   <p className="muted" style={{ maxWidth: '44ch' }}>
-                    We will get back to you by email, usually within one working
-                    day. If it is urgent, reply to that email and it comes
-                    straight to us.
+                    We will reply by email, usually within one working day.
                   </p>
                   <Link className="btn" to="/work">
                     <span>See our work</span>
@@ -200,8 +194,7 @@ export default function Contact() {
                   {chosenPackage && (
                     <p className="form__status">
                       Enquiring about the <strong>{chosenPackage}</strong>{' '}
-                      package. Add anything else below and we will confirm the
-                      details.
+                      package.
                     </p>
                   )}
 
@@ -260,7 +253,7 @@ export default function Contact() {
                     label="Message"
                     required
                     error={errors.message}
-                    placeholder="What does your business do, and what would you like the website to achieve?"
+                    placeholder="What does your business do, and what do you need?"
                   />
 
                   {status === 'invalid' && (
@@ -290,8 +283,7 @@ export default function Contact() {
                       </span>
                     </button>
                     <p className="small muted" style={{ maxWidth: '30ch' }}>
-                      We reply to every enquiry, even the ones that turn out not
-                      to be a fit.
+                      We reply to every message.
                     </p>
                   </div>
                 </form>

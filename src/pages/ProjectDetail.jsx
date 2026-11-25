@@ -224,7 +224,8 @@ function ProjectView({ project, next, isConcept }) {
 
       <CtaBand
         title="Could your business look like this?"
-        body="Every concept here started with the same question: how does this business actually win customers? Tell us about yours and we will show you what it could look like."
+        body="Tell us about your business. We will show you what yours could look like."
+        secondary={{ to: '/website-review', label: 'Free website review' }}
       />
     </>
   )

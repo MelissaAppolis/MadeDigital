@@ -1,18 +1,12 @@
 import { Link } from 'react-router-dom'
 import { useSeo } from '../hooks/useSeo.js'
 import Reveal from '../components/Reveal.jsx'
-import { BrowserMockup } from '../components/Mockup.jsx'
+import { BrowserMockup, DeviceStage } from '../components/Mockup.jsx'
 import ProjectCard, { previewUrl } from '../components/ProjectCard.jsx'
-import {
-  BeforeAfter,
-  CtaBand,
-  ProcessSteps,
-  ReviewCallout,
-} from '../components/Sections.jsx'
+import { CtaBand } from '../components/Sections.jsx'
 import { featuredProjects, projects } from '../data/projects.js'
-import { benefits, services } from '../data/services.js'
-import { packages } from '../data/packages.js'
-import { products } from '../data/products.js'
+import { offerings } from '../data/services.js'
+import { appExamples, invitations, spadework } from '../data/products.js'
 
 /**
  * Continuous strip of concept mockups under the hero. The list is rendered
@@ -55,6 +49,27 @@ function Showreel() {
   )
 }
 
+function Arrow() {
+  return (
+    <span className="btn__arrow" aria-hidden="true">
+      &rarr;
+    </span>
+  )
+}
+
+/** Eyebrow + h2 (+ optional one-liner) that opens each homepage section. */
+function Head({ eyebrow, title, line }) {
+  return (
+    <Reveal className="head head--split" style={{ marginBottom: '3rem' }}>
+      <div>
+        <p className="eyebrow">{eyebrow}</p>
+        <h2 style={{ marginTop: '1.25rem' }}>{title}</h2>
+      </div>
+      {line && <p className="lede">{line}</p>}
+    </Reveal>
+  )
+}
+
 export default function Home() {
   useSeo({
     title: 'Made Digital | Websites and Apps That Bring You Business',
@@ -69,7 +84,7 @@ export default function Home() {
         <div className="container">
           <div className="hero__inner">
             <Reveal>
-              <p className="eyebrow">Websites and apps · Cape Town</p>
+              <p className="eyebrow">Web and app studio · Cape Town</p>
               <h1 style={{ marginTop: '1.5rem' }}>
                 Websites and apps that bring you business.
               </h1>
@@ -77,239 +92,165 @@ export default function Home() {
 
             <Reveal className="hero__aside" delay={120}>
               <p className="hero__lede">
-                Modern websites that turn visitors into enquiries, and
-                tailor-made apps that take the admin off your hands.
+                Websites that win enquiries. Apps that save you time.
               </p>
               <div className="btn-row">
-                <Link className="btn btn--lg" to="/website-review">
-                  <span>Get a Free Website Review</span>
-                  <span className="btn__arrow" aria-hidden="true">
-                    &rarr;
-                  </span>
+                <Link className="btn btn--lg" to="/contact">
+                  <span>Get in Touch</span>
+                  <Arrow />
                 </Link>
-                <Link className="btn btn--ghost btn--lg" to="/work">
-                  View Our Work
-                </Link>
+                <a className="btn btn--ghost btn--lg" href="#what-we-do">
+                  What We Do
+                </a>
               </div>
             </Reveal>
           </div>
         </div>
 
         <Showreel />
-
-        <div className="container">
-          <ul className="hero__meta">
-            <li>Built for phones first</li>
-            <li>WhatsApp and enquiry forms as standard</li>
-            <li>Websites from R4,500</li>
-          </ul>
-        </div>
       </section>
 
-      {/* ---- First impression / benefits ---- */}
-      <section className="section">
+      {/* ---- The four offerings, given equal weight ---- */}
+      <section className="section" id="what-we-do">
         <div className="container">
-          <Reveal className="head head--split" style={{ marginBottom: '3.5rem' }}>
-            <h2>
-              Your website is often the first impression of your business.
-            </h2>
-            <p className="lede">
-              Before someone calls you, visits your shop or asks for a quote,
-              they look you up. What they find decides whether they get in touch
-              — or carry on scrolling to the next business.
-            </p>
-          </Reveal>
-
-          <div className="benefits">
-            {benefits.map((benefit, i) => (
-              <Reveal className="benefit" key={benefit.title} delay={i * 70}>
-                <p className="benefit__num">0{i + 1}</p>
-                <h3>{benefit.title}</h3>
-                <p>{benefit.body}</p>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ---- Proof: the concepts ---- */}
-      <section className="section section--cream">
-        <div className="container">
-          <Reveal className="head head--split" style={{ marginBottom: '3.5rem' }}>
-            <div>
-              <p className="eyebrow">Made Digital concepts</p>
-              <h2 style={{ marginTop: '1.25rem' }}>
-                Website concepts created for local businesses and industries.
-              </h2>
-            </div>
-            <p className="lede">
-              These are demonstration websites we designed and built ourselves
-              to show what is possible for each trade.
-            </p>
-          </Reveal>
-
-          <div className="grid-work">
-            {featuredProjects.slice(0, 4).map((project, i) => (
-              <ProjectCard key={project.slug} project={project} delay={i * 80} />
-            ))}
-          </div>
-
-          <Reveal className="btn-row" style={{ marginTop: '3.5rem' }}>
-            <Link className="btn btn--ghost btn--lg" to="/work">
-              <span>View all concepts</span>
-              <span className="btn__arrow" aria-hidden="true">
-                &rarr;
-              </span>
-            </Link>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ---- Lead magnet ---- */}
-      <ReviewCallout />
-
-      {/* ---- Services ---- */}
-      <section className="section">
-        <div className="container">
-          <Reveal className="head head--split" style={{ marginBottom: '3.5rem' }}>
-            <div>
-              <p className="eyebrow">What we do</p>
-              <h2 style={{ marginTop: '1.25rem' }}>
-                Everything it takes to win more work.
-              </h2>
-            </div>
-            <p className="lede">
-              Whether you are starting from nothing or fixing something that no
-              longer works, the goal is the same: more enquiries from the people
-              already looking for you.
-            </p>
-          </Reveal>
-
-          <div className="services">
-            {services.map((service, i) => (
-              <Reveal className="service" key={service.id} delay={i * 50}>
-                <p className="service__num">{service.number}</p>
-                <h3>{service.title}</h3>
-                <p className="service__body">{service.short}</p>
-              </Reveal>
-            ))}
-          </div>
-
-          <Reveal className="btn-row" style={{ marginTop: '3rem' }}>
-            <Link className="btn btn--ghost btn--lg" to="/services">
-              <span>More about our services</span>
-              <span className="btn__arrow" aria-hidden="true">
-                &rarr;
-              </span>
-            </Link>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ---- Products and custom apps ---- */}
-      <section className="section section--cream">
-        <div className="container">
-          <Reveal className="head head--split" style={{ marginBottom: '3.5rem' }}>
-            <div>
-              <p className="eyebrow">More than websites</p>
-              <h2 style={{ marginTop: '1.25rem' }}>
-                Apps and tools that save you time.
-              </h2>
-            </div>
-            <p className="lede">
-              Two products of our own, and apps built to order for the
-              quoting, follow-ups and admin that eat into your week.
-            </p>
-          </Reveal>
-
-          <div className="offers">
-            {products.map((product, i) => (
-              <Reveal className="offer" key={product.id} delay={i * 70}>
-                <p className="status">
-                  <span className="status__dot" aria-hidden="true" />
-                  {product.status}
-                </p>
-                <h3>{product.name}</h3>
-                <p>{product.short}</p>
-                <Link className="offer__link" to={product.to}>
-                  {product.linkLabel}
+          <Head eyebrow="What we do" title="Four ways to grow your business." />
+          <div className="offers offers--four">
+            {offerings.map((o, i) => (
+              <Reveal className="offer" key={o.id} delay={i * 70}>
+                <p className="offer__num">0{i + 1}</p>
+                <h3>{o.title}</h3>
+                <p>{o.body}</p>
+                <p className="offer__meta">{o.meta}</p>
+                <Link className="offer__link" to={o.to}>
+                  {o.link}
                   <span aria-hidden="true"> &rarr;</span>
                 </Link>
               </Reveal>
             ))}
-            <Reveal className="offer" delay={products.length * 70}>
-              <p className="status">
-                <span className="status__dot" aria-hidden="true" />
-                Built for you
-              </p>
-              <h3>Custom business apps</h3>
-              <p>
-                Tailor-made tools for your quotes, leads and admin, shaped
-                around how your business already works.
-              </p>
-              <Link className="offer__link" to="/products#custom-apps">
-                See custom apps
-                <span aria-hidden="true"> &rarr;</span>
-              </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ---- Websites: the concepts ---- */}
+      <section className="section section--cream">
+        <div className="container">
+          <Head
+            eyebrow="Websites"
+            title="Built to look the part."
+            line="Concept sites we designed for local trades."
+          />
+          <div className="grid-work">
+            {featuredProjects.slice(0, 2).map((project, i) => (
+              <ProjectCard key={project.slug} project={project} delay={i * 80} />
+            ))}
+          </div>
+          <Reveal className="btn-row" style={{ marginTop: '3rem' }}>
+            <Link className="btn btn--lg" to="/work">
+              <span>View all work</span>
+              <Arrow />
+            </Link>
+            <Link className="btn btn--ghost btn--lg" to="/packages">
+              Website prices
+            </Link>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ---- Digital invitations ---- */}
+      <section className="section">
+        <div className="container">
+          <div className="split">
+            <Reveal>
+              <p className="eyebrow">{invitations.audience}</p>
+              <h2 style={{ marginTop: '1.25rem' }}>
+                Invitations guests answer on their phones.
+              </h2>
+              <ul className="checklist" style={{ marginTop: '1.75rem' }}>
+                <li>Shared on WhatsApp, no app needed</li>
+                <li>Live guest count and dietary needs</li>
+                <li>Your venue’s name on every invitation</li>
+              </ul>
+              <div className="btn-row" style={{ marginTop: '2rem' }}>
+                {/* /invites/ is a separate static app, so a full page load. */}
+                <a className="btn btn--lg" href={invitations.demoHref}>
+                  <span>Try the demo</span>
+                  <Arrow />
+                </a>
+                <Link className="btn btn--ghost btn--lg" to="/packages#invitations">
+                  Free trial and prices
+                </Link>
+              </div>
+            </Reveal>
+            <Reveal delay={100}>
+              <DeviceStage
+                className="stage--compact"
+                desktop={invitations.images.desktop}
+                mobile={invitations.images.mobile}
+                alt={invitations.images.alt}
+                url={invitations.images.url}
+              />
             </Reveal>
           </div>
         </div>
       </section>
 
-      {/* ---- Revamps ---- */}
-      <BeforeAfter />
-
-      {/* ---- Process ---- */}
-      <ProcessSteps />
-
-      {/* ---- Packages teaser ---- */}
-      <section className="section section--cream">
+      {/* ---- Spadework ---- */}
+      <section className="section section--dark">
         <div className="container">
-          <Reveal className="head head--split" style={{ marginBottom: '3.5rem' }}>
-            <div>
-              <p className="eyebrow">Packages</p>
-              <h2 style={{ marginTop: '1.25rem' }}>
-                Clear pricing, decided before we start.
-              </h2>
-            </div>
-            <p className="lede">
-              You will know the cost before any work begins. Monthly care plans
-              are available afterwards, and they are entirely optional.
-            </p>
+          <Head
+            eyebrow={`${spadework.audience} · ${spadework.status}`}
+            title="Spadework. Every job, one place."
+            line="From the first quote to the final invoice."
+          />
+          <Reveal>
+            <ul className="chips">
+              {spadework.groups.map((g) => (
+                <li key={g.title}>{g.title}</li>
+              ))}
+            </ul>
           </Reveal>
-
-          <div className="facts" style={{ borderTop: 0, paddingTop: 0 }}>
-            {packages.map((pkg, i) => (
-              <Reveal key={pkg.id} delay={i * 70}>
-                <p className="fact__label">
-                  {pkg.name}
-                  {pkg.popular ? ' · Most popular' : ''}
-                </p>
-                <p className="plan__price" style={{ marginBottom: '0.75rem' }}>
-                  {pkg.prefix && (
-                    <span className="plan__prefix">{pkg.prefix}</span>
-                  )}
-                  {pkg.price}
-                </p>
-                <p className="muted small" style={{ maxWidth: '30ch' }}>
-                  {pkg.tagline}
-                </p>
-              </Reveal>
-            ))}
-          </div>
-
-          <Reveal className="btn-row" style={{ marginTop: '3rem' }}>
-            <Link className="btn btn--lg" to="/packages">
-              <span>See what is included</span>
-              <span className="btn__arrow" aria-hidden="true">
-                &rarr;
-              </span>
+          <Reveal className="btn-row" style={{ marginTop: '2.5rem' }}>
+            <Link className="btn btn--light btn--lg" to={spadework.contact}>
+              <span>Book a walkthrough</span>
+              <Arrow />
+            </Link>
+            <Link className="btn btn--ghost-light btn--lg" to={spadework.to}>
+              See Spadework
             </Link>
           </Reveal>
         </div>
       </section>
 
-      <CtaBand />
+      {/* ---- Custom apps ---- */}
+      <section className="section section--cream">
+        <div className="container">
+          <Head
+            eyebrow="Custom apps"
+            title="Admin eating your week? We build the fix."
+          />
+          <div className="benefits">
+            {appExamples.map((item, i) => (
+              <Reveal className="benefit" key={item.title} delay={i * 70}>
+                <p className="benefit__num">0{i + 1}</p>
+                <h3>{item.title}</h3>
+                <p>{item.body}</p>
+              </Reveal>
+            ))}
+          </div>
+          <Reveal className="btn-row" style={{ marginTop: '3rem' }}>
+            <Link className="btn btn--lg" to="/contact?need=app">
+              <span>Tell us what slows you down</span>
+              <Arrow />
+            </Link>
+          </Reveal>
+        </div>
+      </section>
+
+      <CtaBand
+        title="Let’s talk."
+        body="Tell us what you need. We will tell you what it takes and what it costs."
+        secondary={{ to: '/packages', label: 'See prices' }}
+      />
     </>
   )
 }
