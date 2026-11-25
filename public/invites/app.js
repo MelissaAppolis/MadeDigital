@@ -5,7 +5,7 @@
 (function () {
   'use strict';
 
-  const KEY = 'invites-demo-v3', MINE = 'invites-mine-v3', VOTES = 'invites-votes-v3';
+  const KEY = 'invites-demo-v3', MINE = 'invites-mine-v3', VOTES = 'invites-votes-v3', SEEN = 'invites-seen-v3', BRING = 'invites-bring-v3', SEED_V = 4;
   const reduceMotion = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
   const app = document.getElementById('app');
 
@@ -46,8 +46,11 @@
     download: '<path d="M12 4v12M7 11l5 5 5-5M4 20h16"/>',
     arrow: '<path d="M5 12h14M13 6l6 6-6 6"/>',
     back: '<path d="M19 12H5M11 6l-6 6 6 6"/>',
+    trash: '<path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/>',
     copy: '<rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>',
     chat: '<path d="M4 20l1.5-4A8 8 0 1 1 9 19z"/>',
+    bolt: '<path d="M13 2 4 14h7l-1 8 9-12h-7z"/>',
+    megaphone: '<path d="M3 10v4h3l9 5V5l-9 5z"/><path d="M18.5 9a4 4 0 0 1 0 6M6 14l1.5 5h3L9 15.5"/>',
     palette: '<path d="M12 3a9 9 0 0 0 0 18c1.5 0 2-1 2-2 0-1.5-1.5-2 0-3.5 1-1 4-.5 5.5-1.5A9 9 0 0 0 12 3z"/><circle cx="7.5" cy="11" r="1"/><circle cx="10" cy="7" r="1"/><circle cx="15" cy="7.5" r="1"/>'
   };
   const icon = (name, cls) => `<svg class="ic${cls ? ' ' + cls : ''}" viewBox="0 0 24 24" aria-hidden="true">${ICONS[name] || ''}</svg>`;
@@ -57,14 +60,17 @@
     cormorant: 'Cormorant+Garamond:ital,wght@0,500;0,600;1,500', pinyon: 'Pinyon+Script', playfair: 'Playfair+Display:ital,wght@0,600;1,500',
     unbounded: 'Unbounded:wght@700;900', dmserif: 'DM+Serif+Display:ital@0;1', fredoka: 'Fredoka:wght@500;700', caveat: 'Caveat:wght@700',
     amiri: 'Amiri', fraunces: 'Fraunces:ital,opsz,wght@0,9..144,600;1,9..144,500', syne: 'Syne:wght@700;800', manrope: 'Manrope:wght@400;600;700',
-    bricolage: 'Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800', quicksand: 'Quicksand:wght@600;700', outfit: 'Outfit:wght@400;600;700', jost: 'Jost:wght@400;500;600'
+    bricolage: 'Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800', quicksand: 'Quicksand:wght@600;700', outfit: 'Outfit:wght@400;600;700', jost: 'Jost:wght@400;500;600',
+    anton: 'Anton', instrument: 'Instrument+Serif:ital@0;1', dmsans: 'DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700', dela: 'Dela+Gothic+One', spacegrotesk: 'Space+Grotesk:wght@400;500;700'
   };
   const FAMILY = {
     cormorant: "'Cormorant Garamond', Georgia, serif", pinyon: "'Pinyon Script', cursive", playfair: "'Playfair Display', Georgia, serif",
     unbounded: "'Unbounded', system-ui, sans-serif", dmserif: "'DM Serif Display', Georgia, serif", fredoka: "'Fredoka', system-ui, sans-serif",
     caveat: "'Caveat', cursive", amiri: "'Amiri', serif", fraunces: "'Fraunces', Georgia, serif", syne: "'Syne', system-ui, sans-serif",
     manrope: "'Manrope', system-ui, sans-serif", bricolage: "'Bricolage Grotesque', system-ui, sans-serif", quicksand: "'Quicksand', system-ui, sans-serif",
-    outfit: "'Outfit', system-ui, sans-serif", jost: "'Jost', system-ui, sans-serif"
+    outfit: "'Outfit', system-ui, sans-serif", jost: "'Jost', system-ui, sans-serif",
+    anton: "'Anton', Impact, sans-serif", instrument: "'Instrument Serif', Georgia, serif", dmsans: "'DM Sans', system-ui, sans-serif", dela: "'Dela Gothic One', system-ui, sans-serif",
+    spacegrotesk: "'Space Grotesk', system-ui, sans-serif"
   };
   const loadedFonts = {};
   function loadFonts(keys) {
@@ -139,6 +145,17 @@
       name: 'Garden Party', mood: 'Long tables, greenery and string lights', photo: 'garden', layout: 'overlap', ornament: 'none', opening: 'envelope', ambient: 'petals',
       display: 'fraunces', script: 'fraunces', body: 'outfit', fx: ['#4a6636', '#b89a4e', '#cfdcae', '#fbf9f2'],
       c: { backdrop: 'linear-gradient(180deg, #dfe7d3, #f3efe4)', card: '#fbf9f2', ink: '#22311f', muted: '#52604c', accent: '#4a6636', accentInk: '#fbf9f2', soft: '#edf0e2', line: 'rgba(34,49,31,.15)', gold: '#b89a4e', petal: '#8fae6d' }
+    },
+    /* The key stays "power" so events already saved with this theme keep it. */
+    power: {
+      name: 'Pink Power', mood: 'Ballet pink and lilac on plum, with a heartbeat', photo: 'power', layout: 'poster', ornament: 'lanes', opening: 'start', ambient: 'pulse',
+      display: 'anton', script: 'instrument', body: 'dmsans', fx: ['#f5b8c9', '#d9c2f0', '#fbeef1', '#f08fae'], dark: true,
+      c: { backdrop: 'radial-gradient(circle at 30% 0, #3a2430, #120c0f 70%)', card: '#1e1519', ink: '#fbeef1', muted: '#cdb6bd', accent: '#f5b8c9', accentInk: '#1e1519', soft: 'rgba(245,184,201,.09)', line: 'rgba(251,238,241,.16)', gold: '#d9c2f0', petal: '#f5b8c9' }
+    },
+    drop: {
+      name: 'Pop-Up', mood: 'Cobalt, hot pink and a sticker on everything', photo: 'drop', layout: 'overlap', ornament: 'sticker', opening: 'pass', ambient: 'marquee',
+      display: 'dela', script: 'dela', body: 'spacegrotesk', fx: ['#2f3ff0', '#ff4f9a', '#ffd23f', '#15163a'],
+      c: { backdrop: 'linear-gradient(160deg, #2f3ff0, #ff4f9a)', card: '#f7f2e8', ink: '#15163a', muted: '#4d4f72', accent: '#2f3ff0', accentInk: '#f7f2e8', soft: '#e9e8fb', line: 'rgba(21,22,58,.18)', gold: '#ff4f9a', petal: '#ffd23f' }
     }
   };
 
@@ -168,7 +185,9 @@
     love: [['💍', 'Ring'], ['🌸', 'Flower'], ['💌', 'Love letter'], ['🎂', 'Cake'], ['🕊️', 'Dove'], ['💐', 'Bouquet']],
     party: [['🎈', 'Balloon'], ['🎂', 'Cake'], ['🎁', 'Gift'], ['🎉', 'Party popper'], ['🍰', 'Slice of cake'], ['🎵', 'Music note']],
     baby: [['🍼', 'Bottle'], ['🧸', 'Teddy bear'], ['⭐', 'Star'], ['🌙', 'Moon'], ['🎀', 'Ribbon'], ['🐣', 'Chick']],
-    work: [['📅', 'Calendar'], ['🤝', 'Handshake'], ['☕', 'Coffee'], ['🎤', 'Microphone'], ['🏆', 'Trophy'], ['💼', 'Briefcase']]
+    work: [['📅', 'Calendar'], ['🤝', 'Handshake'], ['☕', 'Coffee'], ['🎤', 'Microphone'], ['🏆', 'Trophy'], ['💼', 'Briefcase']],
+    fit: [['🎀', 'Bow'], ['🧘‍♀️', 'Pilates'], ['🍓', 'Strawberry'], ['💧', 'Water'], ['💗', 'Pink heart'], ['🥤', 'Smoothie']],
+    drop: [['🥤', 'Drink'], ['📸', 'Camera'], ['🎧', 'Headphones'], ['🛍️', 'Shopping bag'], ['✨', 'Sparkles'], ['🎟️', 'Ticket']]
   };
   const NIKAH_WORDS = [['Nikah', 'The marriage contract'], ['Walima', 'The wedding feast'], ['Mahr', "The groom's gift to the bride"], ['Barakah', 'Blessing'], ['Du\'a', 'A personal prayer']];
   const FAITH_WORDS = [['Barakah', 'Blessing'], ['Du\'a', 'A personal prayer'], ['Sadaqah', 'Voluntary charity'], ['Shukr', 'Gratitude'], ['Sabr', 'Patience']];
@@ -221,7 +240,19 @@
       moment: null, reward: 'card', quiz: 'Who knows the family?', memory: 'baby' },
     reunion: { label: 'Family day or reunion', icon: 'home', blurb: 'Reunions, family days and picnics', theme: 'garden', kicker: 'You are invited to', namesLabel: 'Name of the gathering', ph: 'The Abrahams family reunion',
       wording: 'Bring your appetite and your best stories', fn1: 'Family day', fn2: 'Dinner', prog: 'Arrive and catch up\nLunch\nGames for the kids\nFamily photo', dress: 'Comfortable.',
-      moment: 'balloons', secrets: ['Granny is bringing her famous pudding.', 'There is a family photo at three.', 'Someone found the old home videos.'], reward: 'pass', quiz: 'Family trivia', memory: 'party' }
+      moment: 'balloons', secrets: ['Granny is bringing her famous pudding.', 'There is a family photo at three.', 'Someone found the old home videos.'], reward: 'pass', quiz: 'Family trivia', memory: 'party' },
+    fitness: { label: 'Fitness event', icon: 'bolt', blurb: 'Open days, classes and challenges', theme: 'power', kicker: 'You are invited to', namesLabel: 'Name of the event', ph: 'Bring a Friend Day',
+      wording: 'Bring your bestie, take a class with us, then stay for smoothies and selfies', fn1: 'The class', fn2: 'Smoothie bar', two: true,
+      prog: 'Check-in\nThe class\nSmoothies and selfies', dress: 'Your favourite set and grip socks. Bring a water bottle.', notes: 'Mats and towels are provided.',
+      moment: 'poll', poll: { q: 'Which class should we do together?', options: ['Reformer', 'Mat pilates', 'Barre'] }, reward: 'ticket', quiz: 'Pilates trivia', memory: 'fit',
+      /* Studios take bookings in their own app, so this invitation starts after the booking. */
+      booking: { offer: "Your friend's first class is on us.", code: 'BESTIE',
+        bring: 'Grip socks\nA water bottle\nYour favourite set\nA hair tie',
+        tips: 'Arrive ten minutes early so we can set you up\nTell your instructor about any injuries\nEvery move has an easier option. Take it whenever you like' } },
+    activation: { label: 'Brand activation', icon: 'megaphone', blurb: 'Pop-ups, sampling and launch days', theme: 'drop', kicker: "You're on the list for", namesLabel: 'Name of the activation', ph: 'Sunbird Soda Pop-Up',
+      wording: 'Be the first to taste it. Bring a friend and your best photo face.', fn1: 'The pop-up', fn2: 'Second session',
+      prog: 'Doors open\nTastings\nPhoto wall\nGoodie bags', dress: 'Come as you are. Bring your phone for the photo wall.',
+      moment: 'poll', poll: { q: 'Which flavour should we launch first?', options: ['Mango and chilli', 'Rooibos and peach', 'Lime and mint'] }, reward: 'ticket', quiz: 'Brand trivia', memory: 'drop' }
   };
   const isFaith = (ev) => !!(TYPES[ev.type] || {}).faith;
   const typeOf = (ev) => TYPES[ev.type] || TYPES.wedding;
@@ -233,7 +264,15 @@
     d.fns[0].name = t.fn1; d.fns[1].name = t.fn2; d.two = !!t.two;
     d.bismillah = !!t.faith; d.separate = !!t.separate; d.accent = '';
     d.secret = t.secret || ''; d.secrets = (t.secrets || []).slice(); d.poll = t.poll ? { q: t.poll.q, options: t.poll.options.slice() } : null;
+    const keep = d.booking || {};
+    d.booked = !!t.booking;
+    d.booking = Object.assign(emptyBooking(), t.booking || {}, { url: keep.url || '', handle: keep.handle || '' });
   }
+  const emptyBooking = () => ({ url: '', offer: '', code: '', handle: '', bring: '', tips: '' });
+  const isBooked = (ev) => !!(ev.booked && ev.booking);
+  const lines = (s) => String(s || '').split('\n').map((x) => x.trim()).filter(Boolean);
+  /* ?from= is the member who sent a bring-your-bestie link; the page then speaks to their friend. */
+  const friendOf = () => (new URLSearchParams(location.search).get('from') || '').trim().slice(0, 40);
 
   /* ---------- Sample data ---------- */
   function seed() {
@@ -241,7 +280,8 @@
     const mw = (id, name, fns, men, women, kids, diet, msg) => ({ id, name, going: !!fns.length, fns, men, women, adults: 0, kids, diet: diet || '', msg: msg || '' });
     const base = (o) => Object.assign({ wording: TYPES[o.type].wording, prog: TYPES[o.type].prog, dress: TYPES[o.type].dress, notes: TYPES[o.type].notes || '', bismillah: !!TYPES[o.type].faith,
       separate: false, diet: true, games: true, accent: '', photo: '', secret: TYPES[o.type].secret || '', secrets: (TYPES[o.type].secrets || []).slice(),
-      poll: TYPES[o.type].poll ? JSON.parse(JSON.stringify(TYPES[o.type].poll)) : null, votes: [0, 0, 0], quiz: [], expected: [], replies: [], scores: [] }, o);
+      poll: TYPES[o.type].poll ? JSON.parse(JSON.stringify(TYPES[o.type].poll)) : null, votes: [0, 0, 0], quiz: [], expected: [], replies: [], scores: [],
+      booked: false, booking: null, sent: 0, stories: 0, refs: [] }, o);
     return {
       venue: { name: 'The Jasmine Hall', address: 'Sample Road, Cape Town' },
       events: [
@@ -296,8 +336,28 @@
         base({
           id: 'excellence-awards', type: 'gala', theme: 'blacktie', names: 'Annual Excellence Awards',
           fns: [{ name: 'Gala dinner', date: '2027-03-19', time: '18:30', place: 'The Jasmine Hall ballroom' }], prog: '18:30 Arrivals\n19:15 Welcome\n19:30 Dinner\n21:00 The awards', closes: '2027-03-01', votes: [3, 6, 2]
+        }),
+        base({
+          id: 'bring-a-friend-day', type: 'fitness', theme: 'power', names: 'Bring a Friend Day',
+          fns: [{ name: 'The class', date: '2027-01-16', time: '09:00', place: 'The reformer studio' }, { name: 'Smoothie bar', date: '2027-01-16', time: '10:00', place: 'The terrace' }],
+          prog: '08:45 Check-in\n09:00 The class\n10:00 Smoothies and selfies', closes: '2027-01-12', votes: [6, 3, 4],
+          quiz: [
+            { q: 'What is a reformer?', options: ['A pilates machine', 'A very strict teacher', 'A New Year\'s resolution'], answer: 0 },
+            { q: 'Which of these is a real pilates move?', options: ['The hundred', 'The thousand', 'The million'], answer: 0 }
+          ],
+          booked: true, booking: Object.assign(emptyBooking(), TYPES.fitness.booking, { handle: '@yourstudio' }), sent: 23, stories: 14,
+          refs: ['Aisha', 'Aisha', 'Aisha', 'Lerato', 'Lerato', 'Zoë', 'Kim'].map((from, i) => ({ from, at: '2027-01-0' + (i + 2) })),
+          scores: [{ name: 'Aisha', score: 2 }]
+        }),
+        base({
+          id: 'sunbird-pop-up', type: 'activation', theme: 'drop', names: 'Sunbird Soda Pop-Up',
+          fns: [{ name: 'The pop-up', date: '2027-02-27', time: '11:00', place: 'The Jasmine Hall courtyard' }],
+          prog: '11:00 Doors open\n11:15 Tastings start\n12:30 Live DJ set\n14:00 Goodie bags', notes: 'Free tastings, and a goodie bag for every guest on the list.', closes: '2027-02-20', votes: [7, 4, 6],
+          expected: ['Creator list', 'Media list'],
+          replies: [ad('s1', 'Kayla Jacobs', [0], 1, 0, '', 'Can I bring my camera?'), ad('s2', 'Ziyaad Hendricks', [0], 2, 0), ad('s3', 'Bongi Dlamini', [0], 1, 0, 'Vegan')]
         })
-      ]
+      ],
+      v: SEED_V
     };
   }
 
@@ -305,7 +365,16 @@
   let db;
   function load() {
     try { db = JSON.parse(localStorage.getItem(KEY)); } catch (e) { db = null; }
-    if (!db || !db.events) { db = seed(); save(); }
+    if (!db || !db.events) { db = seed(); save(); return; }
+    /* Samples added after someone first opened the demo still appear for them. */
+    if ((db.v || 1) < SEED_V) {
+      const have = db.events.map((e) => e.id), fresh = seed().events;
+      fresh.forEach((e) => { if (have.indexOf(e.id) < 0) db.events.push(e); });
+      /* Samples rewritten since (fitness: versions 3 and 4): swap the old copy for the new one. */
+      if ((db.v || 1) < 4) ['bring-a-friend-day'].forEach((id) => { const i = db.events.findIndex((e) => e.id === id), f = fresh.find((e) => e.id === id); if (i > -1 && f) db.events[i] = f; });
+      db.v = SEED_V;
+      save();
+    }
   }
   function save() {
     try { localStorage.setItem(KEY, JSON.stringify(db)); return true; }
@@ -373,10 +442,13 @@
   function shell(body, opts) {
     opts = opts || {};
     const here = location.pathname;
-    const nav = opts.nav === false ? '' :
+    /* opts.bar replaces the venue's nav: the host's page must not offer the venue's events. */
+    const nav = opts.nav === false ? '' : opts.bar != null ? opts.bar :
       `<nav class="ui-nav" aria-label="Main"><a href="/invites/venue"${here === '/invites/venue' ? ' aria-current="page"' : ''}>Events</a>` +
-      `<a class="ui-nav__new" href="/invites/venue/new">${icon('plus')}<span>New event</span></a></nav>`;
-    return `<div class="ui"><header class="ui-bar"><a class="ui-brand" href="/invites/">${icon('sparkle', 'ui-brand__mark')}<span class="ui-brand__name">Invitations<small>${esc(db.venue.name)}</small></span></a>${nav}</header>` +
+      `<a class="btn btn--sm btn--dark" href="/invites/venue/new" aria-label="New event">${icon('plus')}<span>New event</span></a></nav>`;
+    const ctx = opts.ctx != null ? opts.ctx : db.venue.name;
+    return `<div class="ui"><header class="ui-bar"><div class="ui-bar__in"><a class="ui-brand" href="/invites/"><span class="ui-brand__mark">${icon('sparkle')}</span>Invitations</a>` +
+      `<span class="ui-ctx">${ctx ? `<span>${esc(ctx)}</span>` : ''}</span>${nav}</div></header>` +
       `<main class="ui-main${opts.narrow ? ' ui-main--narrow' : ''}">${body}</main>` +
       `<footer class="ui-foot">Prototype by Made Digital. The venue, names and replies are samples, saved on this device only. <button type="button" data-act="reset">Reset the demo</button></footer></div>`;
   }
@@ -391,12 +463,12 @@
         `<span class="sample__type">${esc(typeOf(ev).label)} · ${esc(th.name)}</span><strong style="font-family:${FAMILY[th.display]}">${esc(ev.names)}</strong></a></li>`;
     }).join('');
     app.innerHTML = shell(
-      `<section class="home-hero"><p class="eyebrow">For venues and event companies</p><h1>Invitations your guests will remember</h1>` +
-      `<p class="lede">You choose the occasion and the theme. The host manages the RSVPs. Guests open a link on WhatsApp, with no app and no login.</p>` +
+      `<section class="home-hero"><h1>Invitations your guests will <em>remember</em></h1>` +
+      `<p class="lede">Choose your occasion and a theme, send one link on WhatsApp, and watch the RSVPs come in. Your guests need no app and no login.</p>` +
       `<div class="btn-row"><a class="btn btn--dark" href="/invites/venue/new">${icon('plus')}Create an invitation</a><a class="btn btn--line" href="/invites/venue">See your events</a></div></section>` +
       `<section class="home-sec"><div class="sec-head"><h2>Open a sample invitation</h2><p class="small">Each one opens differently. Try them on your phone.</p></div><ul class="samples">${samples}</ul></section>` +
       `<section class="home-sec"><div class="sec-head"><h2>Then see the other side</h2></div><div class="duo">` +
-      `<a class="duo__card" href="/invites/venue">${icon('cal', 'duo__ic')}<span class="eyebrow">Your business</span><strong>Every event in one place</strong><span class="small">Choose from ${Object.keys(TYPES).length} occasions and ${Object.keys(THEMES).length} themes, and see the final numbers for each event.</span></a>` +
+      `<a class="duo__card" href="/invites/venue">${icon('cal', 'duo__ic')}<span class="eyebrow">Your dashboard</span><strong>Every event in one place</strong><span class="small">Choose from ${Object.keys(TYPES).length} occasions and ${Object.keys(THEMES).length} themes, and see the final numbers for each event.</span></a>` +
       `<a class="duo__card" href="/invites/host/lerato-daniel">${icon('users', 'duo__ic')}<span class="eyebrow">The host</span><strong>RSVPs without the chasing</strong><span class="small">Who is coming, who still has to reply, dietary needs, and a reminder on WhatsApp.</span></a>` +
       `</div></section>`, { nav: true });
   }
@@ -407,21 +479,30 @@
     const today = new Date().toISOString().slice(0, 10);
     const sorted = db.events.slice().sort((a, b) => (a.fns[0].date || '').localeCompare(b.fns[0].date || ''));
     const upcoming = sorted.filter((e) => (e.fns[e.fns.length - 1].date || '') >= today);
+    const past = sorted.filter((e) => upcoming.indexOf(e) < 0).reverse();
     const confirmed = upcoming.reduce((s, e) => s + peak(e), 0);
     const toReply = upcoming.reduce((s, e) => s + waiting(e).length, 0);
-    const list = sorted.map((ev) => {
-      const t = typeOf(ev), th = THEMES[ev.theme] || THEMES.blush;
+    /* One row per event. The title is a stretched link to the RSVPs, which is what a venue opens most. */
+    const row = (ev, isPast) => {
+      const t = typeOf(ev), id = esc(ev.id), name = esc(ev.names), booked = isBooked(ev);
       const dated = ev.fns.map((f) => fmtDate(f.date, { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' })).filter(Boolean).filter((v, i, a) => a.indexOf(v) === i).join(' and ');
       const diet = ev.replies.filter((r) => r.going && r.diet).length;
-      return `<li class="evc"><a class="evc__img" href="/invites/${esc(ev.id)}" aria-label="Open the invitation for ${esc(ev.names)}"><img src="${esc(photoOf(ev, true))}" alt="" loading="lazy" width="360" height="450" /></a>` +
-        `<div class="evc__body"><p class="evc__type">${icon(t.icon)}${esc(t.label)}<span aria-hidden="true">·</span>${esc(th.name)}</p><h2>${esc(ev.names)}</h2><p class="small">${esc(dated)}</p>` +
-        `<dl class="evc__nums"><div><dt>Confirmed</dt><dd>${peak(ev)}</dd></div><div><dt>To reply</dt><dd>${waiting(ev).length}</dd></div><div><dt>Dietary notes</dt><dd>${diet}</dd></div></dl>` +
-        `<div class="evc__acts"><a class="btn btn--sm btn--line" href="/invites/${esc(ev.id)}">${icon('eye')}Invitation</a><a class="btn btn--sm btn--line" href="/invites/host/${esc(ev.id)}">${icon('users')}Host view</a><a class="btn btn--sm btn--ghost" href="/invites/venue/edit/${esc(ev.id)}">${icon('edit')}Edit</a></div></div></li>`;
-    }).join('');
+      const nums = booked ? [['Invites sent', ev.sent || 0], ['Passes claimed', (ev.refs || []).length], ['Story cards', ev.stories || 0]]
+        : [['Coming', peak(ev)], ['To reply', waiting(ev).length], ['Dietary', diet]];
+      return `<li class="evr${isPast ? ' is-past' : ''}"><span class="evr__img"><img src="${esc(photoOf(ev, true))}" alt="" loading="lazy" width="360" height="450" /></span>` +
+        `<div class="evr__main"><p class="evr__meta">${icon(t.icon)}${esc(t.label)}<span aria-hidden="true">·</span>${esc(dated || 'No date yet')}</p><h2><a class="evr__link" href="/invites/host/${id}">${name}</a></h2></div>` +
+        `<div class="evr__side"><dl class="evr__nums">${nums.map((x) => `<div><dt>${x[0]}</dt><dd>${x[1]}</dd></div>`).join('')}</dl>` +
+        `<div class="evr__acts"><a class="icon-btn" href="/invites/${id}" title="Open the invitation" aria-label="Open the invitation for ${name}">${icon('eye')}</a>` +
+        `<a class="icon-btn" href="/invites/venue/edit/${id}" title="Edit" aria-label="Edit ${name}">${icon('edit')}</a>` +
+        `<a class="btn btn--sm btn--line" href="/invites/host/${id}">${booked ? 'Results' : 'RSVPs'}${icon('arrow')}</a></div></div></li>`;
+    };
+    const list = (upcoming.length ? `<ul class="evs">${upcoming.map((e) => row(e)).join('')}</ul>`
+      : `<div class="panel empty"><p>No upcoming events.</p><p style="margin-top:1rem"><a class="btn btn--dark" href="/invites/venue/new">${icon('plus')}Create an invitation</a></p></div>`) +
+      (past.length ? `<h2 class="sec-label">Past events</h2><ul class="evs">${past.map((e) => row(e, true)).join('')}</ul>` : '');
     app.innerHTML = shell(
-      `<div class="page-head"><div><p class="eyebrow">${esc(db.venue.name)}</p><h1>Your events</h1><p class="lede">Everything coming up, with the final numbers you need.</p></div><a class="btn btn--dark" href="/invites/venue/new">${icon('plus')}New event</a></div>` +
-      `<dl class="stats"><div><dt>Upcoming events</dt><dd>${upcoming.length}</dd></div><div><dt>Guests confirmed</dt><dd>${confirmed}</dd></div><div><dt>Still to reply</dt><dd>${toReply}</dd></div></dl>` +
-      `<ul class="evs">${list}</ul>` +
+      `<div class="page-head"><div><h1>Your events</h1><p class="lede">Everything coming up, with the final numbers you need.</p></div><a class="btn btn--dark" href="/invites/venue/new">${icon('plus')}New event</a></div>` +
+      `<dl class="stats"><div><dt>Upcoming events</dt><dd>${upcoming.length}</dd></div><div><dt>Guests coming</dt><dd>${confirmed}</dd></div><div><dt>Still to reply</dt><dd>${toReply}</dd></div></dl>` +
+      list +
       `<section class="panel settings"><h2>Your business</h2><p class="small">This appears at the bottom of every invitation.</p><div class="settings__grid">` +
       `<label class="field"><span>Business or venue name</span><input data-venue="name" value="${esc(db.venue.name)}" /></label>` +
       `<label class="field"><span>Address</span><input data-venue="address" value="${esc(db.venue.address)}" /></label></div></section>`);
@@ -433,7 +514,8 @@
   function newDraft() {
     const d = { type: 'wedding', theme: 'blush', names: '', wording: '', two: true, bismillah: false,
       fns: [{ name: '', date: '', time: '', place: db.venue.name }, { name: '', date: '', time: '', place: db.venue.name }],
-      prog: '', dress: '', notes: '', closes: '', separate: false, diet: true, games: true, accent: '', photo: '', secret: '', secrets: [], poll: null };
+      prog: '', dress: '', notes: '', closes: '', separate: false, diet: true, games: true, accent: '', photo: '', secret: '', secrets: [], poll: null,
+      booked: false, booking: emptyBooking() };
     applyType(d);
     return d;
   }
@@ -442,6 +524,7 @@
     if (ev) {
       const d = JSON.parse(JSON.stringify(ev));
       d.two = d.fns.length > 1;
+      d.booking = Object.assign(emptyBooking(), d.booking || {});
       if (!d.two) d.fns.push({ name: typeOf(d).fn2, date: '', time: '', place: db.venue.name });
       wiz = { step: 1, editing: id, draft: d, error: '' };
     } else {
@@ -491,10 +574,21 @@
     if (t.moment === 'scratch') moment = `<div class="panel panel--inset"><h3>${icon('sparkle')}Scratch card</h3><p class="small">Guests scratch to reveal this. A date, a surprise, or "It's a girl!"</p>${field('secret', 'Hidden message', d.secret)}</div>`;
     if (t.moment === 'balloons') moment = `<div class="panel panel--inset"><h3>${icon('balloon')}Pop a balloon</h3><p class="small">Each balloon hides one of these little secrets.</p>${area('secrets', 'Secrets, one per line', (d.secrets || []).join('\n'))}</div>`;
     if (t.moment === 'poll') moment = `<div class="panel panel--inset"><h3>${icon('chat')}Guest poll</h3><p class="small">Guests vote once, and you see the results on the host page.</p><div class="stack">${field('poll.q', 'Question', d.poll.q)}${field('poll.options.0', 'Option 1', d.poll.options[0])}${field('poll.options.1', 'Option 2', d.poll.options[1])}${field('poll.options.2', 'Option 3', d.poll.options[2])}</div></div>`;
-    return `<div class="step-head"><h2>RSVP and extras</h2><p class="small">Set how guests reply, then make it yours.</p></div><div class="stack">` +
-      field('closes', 'RSVP closes on', d.closes, 'Set this before your final numbers are due.', ' type="date"') +
-      toggle('separate', d.separate, 'Count men and women separately', 'Guests give a number for men, women and children. Useful for separate seating.') +
-      toggle('diet', d.diet, 'Ask about dietary needs', 'The host and the venue see the answers.') +
+    const b = d.booking;
+    const bookingPanel = `<div class="panel panel--inset"><h3>${icon('cal')}Bookings</h3>` +
+      toggle('booked', d.booked, 'Guests book in your own booking app', 'For studios and classes. The RSVP becomes a "you\'re booked" page, a bring-your-bestie invite and an Instagram Story card.', true) +
+      (d.booked ? '<div class="stack" style="margin-top:1rem">' +
+        field('booking.url', 'Link to your booking page', b.url, '"Manage my booking" and "Book with my code" open this.', ' type="url" inputmode="url" placeholder="https://"') +
+        field('booking.offer', 'Offer for a friend', b.offer, "For example: Your friend's first class is on us.") +
+        field('booking.code', 'Code for friends to book with', b.code, 'Set up the same code in your booking app.') +
+        field('booking.handle', 'Your Instagram', b.handle, 'Shown on the Story card. For example: @yourstudio') +
+        area('booking.bring', 'What to bring, one per line', b.bring, 'Guests tick these off as they pack.') +
+        area('booking.tips', 'First-timer tips, one per line', b.tips) + '</div>' : '') + '</div>';
+    return `<div class="step-head"><h2>${d.booked ? 'Bookings and extras' : 'RSVP and extras'}</h2><p class="small">${d.booked ? 'Connect your booking app, then make it yours.' : 'Set how guests reply, then make it yours.'}</p></div><div class="stack">` +
+      bookingPanel +
+      (d.booked ? '' : field('closes', 'RSVP closes on', d.closes, 'Set this before your final numbers are due.', ' type="date"') +
+        toggle('separate', d.separate, 'Count men and women separately', 'Guests give a number for men, women and children. Useful for separate seating.') +
+        toggle('diet', d.diet, 'Ask about dietary needs', 'The host and the venue see the answers.')) +
       toggle('games', d.games, 'Include games for guests', 'A memory game, plus a quiz if the host writes one.') +
       moment +
       `<div class="panel panel--inset"><h3>${icon('palette')}Your colour</h3><p class="small">Use the client's own colour for buttons and highlights. Good for company events.</p>` +
@@ -554,12 +648,12 @@
     delete ev.two;
     if (wiz.editing) {
       const old = getEvent(wiz.editing);
-      Object.assign(ev, { id: old.id, quiz: old.quiz, expected: old.expected, replies: old.replies, scores: old.scores, votes: old.votes || [0, 0, 0] });
+      Object.assign(ev, { id: old.id, quiz: old.quiz, expected: old.expected, replies: old.replies, scores: old.scores, votes: old.votes || [0, 0, 0], sent: old.sent || 0, stories: old.stories || 0, refs: old.refs || [] });
       db.events[db.events.indexOf(old)] = ev;
       if (save()) { go('/invites/venue'); toast('Changes saved'); }
       return;
     }
-    Object.assign(ev, { id: slug(ev.names), quiz: [], expected: [], replies: [], scores: [], votes: [0, 0, 0] });
+    Object.assign(ev, { id: slug(ev.names), quiz: [], expected: [], replies: [], scores: [], votes: [0, 0, 0], sent: 0, stories: 0, refs: [] });
     db.events.push(ev);
     if (save()) go('/invites/venue/done/' + ev.id);
     else db.events.pop();
@@ -590,22 +684,23 @@
     const host = linkTo('/invites/host/' + ev.id), guest = linkTo('/invites/' + ev.id);
     app.innerHTML = shell(
       `<div class="done"><div class="done__img"><img src="${esc(photoOf(ev, true))}" alt="" width="360" height="450" /></div><div>` +
-      `<p class="eyebrow">${esc(typeOf(ev).label)} · ${esc((THEMES[ev.theme] || THEMES.blush).name)}</p><h1>${esc(ev.names)} is ready</h1>` +
+      `<p class="done__ok">${icon('check')}Ready to send</p><p class="eyebrow">${esc(typeOf(ev).label)} · ${esc((THEMES[ev.theme] || THEMES.blush).name)}</p><h1>${esc(ev.names)} is ready</h1>` +
       `<p class="lede">Send the host their link. From here the RSVPs are theirs to manage, and you see the numbers.</p>` +
       `<div class="stack" style="margin-top:1.5rem">` +
       `<section class="panel link-box"><h2>For the host</h2><p class="small">Their private page for managing RSVPs.</p><code>${esc(host)}</code><div class="btn-row"><a class="btn btn--sm btn--dark" target="_blank" rel="noopener" href="${esc(wa('Your invitation for ' + ev.names + ' is ready. Manage your RSVPs here: ' + host))}">${icon('share')}Send on WhatsApp</a><button type="button" class="btn btn--sm btn--line" data-act="copy" data-text="${esc(host)}">${icon('copy')}Copy link</button><a class="btn btn--sm btn--ghost" href="/invites/host/${esc(ev.id)}">Open</a></div></section>` +
-      `<section class="panel link-box"><h2>For the guests</h2><p class="small">The host forwards this to everyone.</p><code>${esc(guest)}</code><div class="btn-row"><a class="btn btn--sm btn--line" href="/invites/${esc(ev.id)}">${icon('eye')}Open the invitation</a><button type="button" class="btn btn--sm btn--line" data-act="copy" data-text="${esc(guest)}">${icon('copy')}Copy link</button></div></section>` +
+      `<section class="panel link-box">${isBooked(ev) ? '<h2>For your booking confirmation</h2><p class="small">Put this in the confirmation your booking app sends. Add the member\'s first name, like ?to=Aisha, so it greets them by name.</p>' : '<h2>For the guests</h2><p class="small">The host forwards this to everyone.</p>'}<code>${esc(guest)}</code><div class="btn-row"><a class="btn btn--sm btn--line" href="/invites/${esc(ev.id)}">${icon('eye')}Open the invitation</a><button type="button" class="btn btn--sm btn--line" data-act="copy" data-text="${esc(guest)}">${icon('copy')}Copy link</button></div></section>` +
       `<a class="btn btn--ghost" href="/invites/venue">${icon('back')}Back to your events</a></div></div></div>`);
   }
 
   /* ---------- Guest invitation ---------- */
   let cdTimer = null, revealer = null;
   function titleHTML(ev) {
-    return esc(ev.names).replace(/ &amp; /g, ' <span class="amp">&amp;</span> ');
+    /* A hyphenated word stays whole, so "Pop-Up" never splits into "Pop-" and "Up". */
+    return esc(ev.names).replace(/ &amp; /g, ' <span class="amp">&amp;</span> ').replace(/(^|\s)([^\s<>]+-[^\s<>]+)/g, '$1<span class="nw">$2</span>');
   }
   /* Shrinks the title until its longest word fits on one line, so "Thandi's" never breaks mid-word.
      Widths are each display font's average letter width in em. */
-  const FONT_WIDTH = { cormorant: 0.46, playfair: 0.56, unbounded: 0.86, dmserif: 0.55, fredoka: 0.58, fraunces: 0.6, syne: 0.8, bricolage: 0.6, quicksand: 0.6 };
+  const FONT_WIDTH = { cormorant: 0.46, playfair: 0.56, unbounded: 0.86, dmserif: 0.55, fredoka: 0.58, fraunces: 0.6, syne: 0.8, bricolage: 0.6, quicksand: 0.6, anton: 0.5, dela: 0.85 };
   function titleSize(ev, th) {
     const room = { poster: 86, arch: 84, type: 88, overlap: 74 }[th.layout], base = { poster: 17, arch: 13.5, type: 19, overlap: 12.5 }[th.layout];
     const longest = Math.max(4, ...String(ev.names).split(/\s+/).map((w) => w.length));
@@ -617,13 +712,16 @@
     const H = o.preview ? 'p' : 'h1';
     const photo = `<img src="${esc(photoOf(ev))}" alt="" width="900" height="1125"${o.preview ? '' : ' fetchpriority="high"'} />`;
     const bism = ev.bismillah ? '<p class="hv__bism" lang="ar" dir="rtl">بسم الله الرحمن الرحيم</p>' : '';
-    const kicker = `<p class="hv__kicker">${esc(t.kicker)}</p>`;
+    const from = o.preview ? '' : friendOf(), to = o.preview ? '' : guestName();
+    let kickText = t.kicker, ctaText = ev.closes ? 'RSVP by ' + fmtDate(ev.closes, { day: 'numeric', month: 'long' }) : 'RSVP', ctaTo = 'rsvp';
+    if (isBooked(ev) && from) { kickText = from + ' invited you to'; ctaText = 'Claim your guest pass'; ctaTo = 'pass'; }
+    else if (isBooked(ev)) { kickText = to ? to + ", you're booked for" : "You're booked for"; ctaText = 'Get ready'; ctaTo = 'ready'; }
+    const kicker = `<p class="hv__kicker">${esc(kickText)}</p>`;
     const title = `<${H} class="hv__title" style="font-size:${titleSize(ev, th)}cqi"${o.preview ? '' : ' tabindex="-1"'}>${titleHTML(ev)}</${H}>`;
     const line = `<p class="hv__line">${esc(ev.wording)}</p>`;
     const chips = `<p class="chips"><span>${esc(fmtDate(f.date, { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' }))}</span>${f.time ? `<span>${esc(f.time)}</span>` : ''}<span>${esc(f.place || db.venue.name)}</span></p>`;
-    const ctaText = ev.closes ? 'RSVP by ' + fmtDate(ev.closes, { day: 'numeric', month: 'long' }) : 'RSVP';
-    const cta = o.preview ? `<span class="iv-btn hv__cta">${esc(ctaText)}</span>` : `<button type="button" class="iv-btn hv__cta" data-act="scroll" data-to="rsvp">${esc(ctaText)}</button>`;
-    const amb = ambientHTML(th.ambient, th), orn = ornamentHTML(th.ornament);
+    const cta = o.preview ? `<span class="iv-btn hv__cta">${esc(ctaText)}</span>` : `<button type="button" class="iv-btn hv__cta" data-act="scroll" data-to="${ctaTo}">${esc(ctaText)}</button>`;
+    const amb = ambientHTML(th.ambient, th, ev), orn = ornamentHTML(th.ornament);
     const text = bism + kicker + title + line + chips + cta;
     if (th.layout === 'poster') return `<header class="hv hv--poster"><div class="hv__bg">${photo}</div><div class="hv__shade"></div>${orn}${amb}<div class="hv__body">${text}</div></header>`;
     if (th.layout === 'arch') return `<header class="hv hv--arch">${orn}${amb}<div class="hv__arch">${photo}</div><div class="hv__body">${text}</div></header>`;
@@ -636,9 +734,14 @@
     if (kind === 'pattern') return '<div class="orn orn--pattern" aria-hidden="true"></div>';
     if (kind === 'wave') return '<div class="orn orn--wave" aria-hidden="true"><svg viewBox="0 0 400 40" preserveAspectRatio="none"><path d="M0 22c50-16 100-16 150 0s100 16 150 0 70-12 100-4v22H0z"/></svg></div>';
     if (kind === 'dots') return '<div class="orn orn--dots" aria-hidden="true"></div>';
+    /* Three track-lane stripes slashed across the corner of the photo */
+    if (kind === 'lanes') return '<div class="orn orn--lanes" aria-hidden="true"><i></i><i></i><i></i></div>';
+    /* A round "invite only" sticker, slapped on the corner of the photo */
+    if (kind === 'sticker') return '<div class="orn orn--sticker" aria-hidden="true"><svg viewBox="0 0 100 100"><defs><path id="stk-path" d="M50 50m-37 0a37 37 0 1 1 74 0a37 37 0 1 1-74 0"/></defs>' +
+      '<circle cx="50" cy="50" r="49"/><text textLength="228" lengthAdjust="spacing"><textPath href="#stk-path">INVITE ONLY ✦ INVITE ONLY ✦</textPath></text></svg><b>✦</b></div>';
     return '';
   }
-  function ambientHTML(kind, th) {
+  function ambientHTML(kind, th, ev) {
     let out = '', i;
     const fx = th.fx;
     if (kind === 'petals') for (i = 0; i < 9; i++) out += `<i class="petal" style="left:${4 + i * 11}%;animation-delay:-${i * 1.7}s;animation-duration:${11 + (i % 4) * 2}s"></i>`;
@@ -650,6 +753,11 @@
     else if (kind === 'lanterns') {
       for (i = 0; i < 3; i++) out += `<button type="button" class="hang is-lit" data-act="lantern" tabindex="-1" aria-hidden="true" style="left:${8 + i * 36}%;--h:${28 + (i % 2) * 34}px;animation-delay:-${(i * 0.9).toFixed(1)}s"><span></span></button>`;
       for (i = 0; i < 10; i++) out += `<i class="spk spk--sm" style="left:${(i * 41) % 96}%;top:${(i * 31) % 60}%;animation-delay:-${(i * 0.5).toFixed(1)}s"></i>`;
+    } else if (kind === 'pulse') {
+      out = '<svg class="ecg" viewBox="0 0 400 80" preserveAspectRatio="none"><path class="ecg__base" d="M0 50H120l12-30 14 52 14-64 12 42H260l8-16 10 26 8-10H400"/><path class="ecg__run" pathLength="100" d="M0 50H120l12-30 14 52 14-64 12 42H260l8-16 10 26 8-10H400"/></svg>';
+    } else if (kind === 'marquee') {
+      const words = ((ev && ev.names) || 'You are invited') + ' ✦ Invite only ✦ ';
+      out = `<div class="tape"><span>${esc(words + words)}</span><span>${esc(words + words)}</span></div>`;
     } else if (kind === 'festoon') {
       out = '<svg class="fest" viewBox="0 0 400 60" preserveAspectRatio="none" aria-hidden="true"><path d="M0 6 Q100 46 200 10 T400 8"/></svg>';
       for (i = 0; i < 11; i++) { const x = 2 + i * 9.6, y = 8 + Math.sin((i / 10) * Math.PI * 2 - 0.3) * -14 + 14; out += `<i class="bulb" style="left:${x}%;top:${y.toFixed(1)}px;animation-delay:-${(i * 0.37).toFixed(2)}s"></i>`; }
@@ -709,6 +817,124 @@
       return m ? `<li><time>${esc(m[1])}</time> ${esc(m[2])}</li>` : `<li>${esc(x)}</li>`;
     }).join('') + '</ol>';
   }
+  /* Everything below the countdown. An RSVP event asks for replies; a booked event (a studio class)
+     is the page after the booking: get ready, bring your bestie, post your Story. */
+  function bodyHTML(ev, o, parts) {
+    const details = `<section class="iv-pad"><p class="iv-kicker rv">The details</p><h2 class="iv-h2 rv">Everything you need</h2>${parts}${factsHTML(ev)}${timelineHTML(ev)}` +
+      `<div class="iv-actions rv"><button type="button" class="iv-btn iv-btn--ghost" data-act="ics" data-id="${esc(ev.id)}">${icon('cal')}Calendar</button><a class="iv-btn iv-btn--ghost" href="${esc(wa(ev.names + ': here is the invitation. ' + linkTo('/invites/' + ev.id)))}" target="_blank" rel="noopener">${icon('share')}Share</a></div></section>`;
+    const games = ev.games ? `<section class="iv-pad" id="games"><p class="iv-kicker rv">While you wait</p><h2 class="iv-h2 rv">A little fun</h2><div id="game-area">${gameMenu(ev)}</div></section>` : '';
+    if (!isBooked(ev)) {
+      return momentHTML(ev) + details +
+        `<section class="iv-pad iv-pad--rsvp" id="rsvp"><p class="iv-kicker rv">${ev.closes ? 'Please reply by ' + esc(fmtDate(ev.closes, { day: 'numeric', month: 'long' })) : 'RSVP'}</p><h2 class="iv-h2 rv">Will you join us?</h2><div id="rsvp-area">${rsvpArea(ev)}</div></section>` + games;
+    }
+    const from = o.preview ? '' : friendOf();
+    return from ? friendHTML(ev, from, details) : memberHTML(ev, o, details, games);
+  }
+  function bringHTML(ev, interactive) {
+    const items = lines(ev.booking.bring);
+    if (!items.length) return '';
+    const got = readMap(BRING)[ev.id] || [];
+    return `<h3 class="iv-h3 rv">What to bring</h3><ul class="pack rv">` + items.map((x, i) => (interactive
+      ? `<li><label class="pack__item"><input type="checkbox" data-pack="${esc(ev.id)}" value="${i}"${got.indexOf(i) > -1 ? ' checked' : ''} /><span class="pack__box" aria-hidden="true">${icon('check')}</span><span>${esc(x)}</span></label></li>`
+      : `<li class="pack__item"><span class="pack__box is-static" aria-hidden="true">${icon('check')}</span><span>${esc(x)}</span></li>`)).join('') + '</ul>' +
+      (interactive ? `<p class="iv-note pack__msg" id="pack-msg" role="status">${got.length >= items.length ? 'All packed. See you there!' : 'Tick things off as you pack.'}</p>` : '');
+  }
+  function tipsHTML(ev, title) {
+    const items = lines(ev.booking.tips);
+    return items.length ? `<h3 class="iv-h3 rv">${esc(title)}</h3><ol class="tips rv">${items.map((x) => `<li>${esc(x)}</li>`).join('')}</ol>` : '';
+  }
+  function memberHTML(ev, o, details, games) {
+    const b = ev.booking, to = o.preview ? '' : guestName();
+    const ready = `<section class="iv-pad" id="ready"><p class="iv-kicker rv">Get ready</p><h2 class="iv-h2 rv">${to ? esc(to) + ", you're in!" : "You're in!"}</h2>` +
+      `<p class="iv-note rv">Your spot is saved in the ${esc(db.venue.name)} booking app. Here's everything else you need.</p>${bringHTML(ev, !o.preview)}${tipsHTML(ev, 'First time? Good to know')}</section>`;
+    const bestie = `<section class="iv-pad iv-pad--rsvp" id="bestie"><p class="iv-kicker rv">Bring your bestie</p><h2 class="iv-h2 rv">Don't come alone</h2>` +
+      (b.offer ? `<p class="bestie__offer rv">${icon('gift')}<span>${esc(b.offer)}</span></p>` : '') +
+      `<form class="iv-form rv" id="bestie-form" data-id="${esc(ev.id)}" novalidate><label class="iv-field"><span>Your first name</span><input name="from" autocomplete="given-name" value="${esc(to)}" /><small>Your friend sees this on their invitation.</small></label>` +
+      `<p class="err" role="alert" id="bestie-err"></p><div class="iv-actions"><button type="submit" class="iv-btn" data-how="wa">${icon('share')}Send on WhatsApp</button><button type="submit" class="iv-btn iv-btn--ghost" data-how="copy">${icon('copy')}Copy link</button></div></form></section>`;
+    const story = `<section class="iv-pad" id="story"><p class="iv-kicker rv">Share the excitement</p><h2 class="iv-h2 rv">Post it to your Story</h2>` +
+      `<div class="story rv"><canvas class="story__cv" width="1080" height="1920" data-story="${esc(ev.id)}" role="img" aria-label="Your Story card: booked for ${esc(ev.names)}"></canvas></div>` +
+      `<div class="iv-actions rv"><button type="button" class="iv-btn" data-act="story-share" data-id="${esc(ev.id)}">${icon('share')}Share to Stories</button><button type="button" class="iv-btn iv-btn--ghost" data-act="story-save" data-id="${esc(ev.id)}">${icon('download')}Save image</button></div>` +
+      (b.handle ? `<p class="iv-note story__tag rv">Tag ${esc(b.handle)} so we can repost you.</p>` : '') + '</section>';
+    const change = `<section class="iv-pad iv-pad--change"><p class="iv-note">Need to change or cancel? Your booking lives in the ${esc(db.venue.name)} app.</p>` +
+      `<button type="button" class="iv-btn iv-btn--ghost" data-act="book" data-id="${esc(ev.id)}">${icon('cal')}Manage my booking</button></section>`;
+    return ready + details + bestie + story + momentHTML(ev) + games + change;
+  }
+  function friendHTML(ev, from, details) {
+    const b = ev.booking, f = ev.fns[0];
+    const pass = `<section class="iv-pad iv-pad--rsvp" id="pass"><p class="iv-kicker rv">From ${esc(from)}, with love</p><h2 class="iv-h2 rv">Your guest pass</h2>` +
+      `<div class="rw rw--ticket gpass"><div class="rw__top"><p class="rw__kicker">${esc(ev.names)} · Guest pass</p><p class="rw__name">Guest of ${esc(from)}</p>${b.offer ? `<span class="rw__tier">${esc(b.offer)}</span>` : ''}</div>` +
+      `<div class="rw__cut" aria-hidden="true"></div><div class="rw__bottom"><p class="rw__meta">${b.code ? `Book with code<strong>${esc(b.code)}</strong>` : ''}${esc(fmtDate(f.date, { weekday: 'short', day: 'numeric', month: 'short' }))} · ${esc(f.time)}<br />${esc(f.place)}</p></div></div>` +
+      `<button type="button" class="iv-btn" data-act="book" data-id="${esc(ev.id)}" data-from="${esc(from)}">${icon('arrow')}Book with my code</button>` +
+      `<p class="iv-note gpass__note">This opens the ${esc(db.venue.name)} booking app${b.code ? ' and copies your code' : ''}. Classes fill up, so book soon.</p></section>`;
+    return pass + details + `<section class="iv-pad">${tipsHTML(ev, 'Your first class: what to expect')}${bringHTML(ev, false)}</section>`;
+  }
+
+  /* The Story card: a 1080 x 1920 image in the event's own theme, drawn on a canvas. */
+  const rgba = (hex, a) => (validHex(hex) ? `rgba(${parseInt(hex.substr(1, 2), 16)},${parseInt(hex.substr(3, 2), 16)},${parseInt(hex.substr(5, 2), 16)},${a})` : 'transparent');
+  async function drawStory(cv, ev) {
+    const page = cv.closest('.iv-page'), css = getComputedStyle(page), th = THEMES[ev.theme] || THEMES.blush;
+    const v = (k, d) => css.getPropertyValue(k).trim() || d;
+    const card = v('--card', '#fbf8f3'), ink = v('--ink', '#1b1a17'), muted = v('--muted', '#666'), accent = v('--accent', '#a8435b'), accentInk = v('--accent-ink', '#fbf8f3'), gold = v('--gold', '#c9a46a');
+    const disp = FAMILY[th.display], scr = FAMILY[th.script || th.display], body = FAMILY[th.body];
+    const titleEl = page.querySelector('.hv__title'), upper = titleEl && getComputedStyle(titleEl).textTransform === 'uppercase';
+    try { await Promise.all([document.fonts.load(`400 120px ${disp}`), document.fonts.load(`italic 400 90px ${scr}`), document.fonts.load(`700 40px ${body}`)]); } catch (e) { /* draw with fallbacks */ }
+    const img = await new Promise((res) => { const i = new Image(); i.onload = () => res(i); i.onerror = () => res(null); i.src = photoOf(ev); });
+    const c = cv.getContext('2d'), W = 1080, H = 1920, PH = 1240;
+    c.clearRect(0, 0, W, H);
+    c.fillStyle = card; c.fillRect(0, 0, W, H);
+    if (img) {
+      const s = Math.max(W / img.width, PH / img.height), w = img.width * s, h = img.height * s;
+      c.save(); c.beginPath(); c.rect(0, 0, W, PH); c.clip(); c.drawImage(img, (W - w) / 2, (PH - h) * 0.3, w, h); c.restore();
+    }
+    const g = c.createLinearGradient(0, PH * 0.42, 0, PH);
+    g.addColorStop(0, rgba(card, 0)); g.addColorStop(1, card);
+    c.fillStyle = g; c.fillRect(0, 0, W, PH + 2);
+    c.save(); c.transform(1, 0, -0.32, 1, 0, 0);
+    [[accent, 1], [gold, 0.8], [gold, 0.35]].forEach(([col, a], i) => { c.globalAlpha = a; c.fillStyle = col; c.fillRect(W - 120 + i * 50, 0, 32, 560); });
+    c.restore(); c.globalAlpha = 1;
+    const pill = (text, x, y, fill, color, font) => {
+      c.font = font; const w = c.measureText(text).width + 64;
+      c.fillStyle = fill; c.beginPath(); if (c.roundRect) c.roundRect(x, y, w, 84, 42); else c.rect(x, y, w, 84); c.fill();
+      c.fillStyle = color; c.textBaseline = 'middle'; c.fillText(text, x + 32, y + 44); c.textBaseline = 'alphabetic';
+    };
+    pill("I'M BOOKED ✓", 72, 96, accent, accentInk, `700 38px ${body}`);
+    /* Laid out from the bottom up, so a long title can never run into the date or the handle. */
+    const f = ev.fns[0], fit = (text, max) => { let t = String(text); while (t.length > 3 && c.measureText(t).width > max) t = t.slice(0, -2); return t === String(text) ? t : t + '…'; };
+    c.font = `600 40px ${body}`; c.fillStyle = muted; c.fillText(fit((ev.booking && ev.booking.handle) || db.venue.name, 936), 72, H - 100);
+    pill("Who's coming with me?", 72, H - 250, rgba(accent, 0.16) === 'transparent' ? gold : rgba(accent, 0.16), ink, `700 40px ${body}`);
+    c.font = `400 40px ${body}`; c.fillStyle = muted; c.fillText(fit(f.place || db.venue.name, 936), 72, H - 300);
+    c.font = `700 46px ${body}`; c.fillStyle = ink; c.fillText(`${fmtDate(f.date, { weekday: 'short', day: 'numeric', month: 'short' })} · ${f.time}`, 72, H - 360);
+    const words = String(upper ? ev.names.toUpperCase() : ev.names).split(/\s+/), bottom = H - 450, room = 520;
+    let size = 200, rows = [];
+    for (; size >= 80; size -= 10) {
+      c.font = `400 ${size}px ${disp}`; rows = []; let line = '';
+      words.forEach((w) => { const t = line ? line + ' ' + w : w; if (c.measureText(t).width > 936 && line) { rows.push(line); line = w; } else line = t; });
+      rows.push(line);
+      if (rows.length <= 3 && rows.every((r) => c.measureText(r).width <= 936) && (rows.length - 1) * size * 0.92 + size * 0.8 <= room) break;
+    }
+    c.fillStyle = ink;
+    rows.forEach((r, i) => c.fillText(r, 72, bottom - (rows.length - 1 - i) * size * 0.92));
+    const top = bottom - (rows.length - 1) * size * 0.92 - size * 0.8;
+    c.fillStyle = accent; c.font = `italic 400 92px ${scr}`; c.fillText("I'm booked for", 72, top - 40);
+  }
+  function drawStories(root) { root.querySelectorAll('[data-story]').forEach((cv) => { const ev = getEvent(cv.dataset.story) || (wiz ? previewEvent() : null); if (ev) drawStory(cv, ev); }); }
+  function storyOut(b, share) {
+    const ev = getEvent(b.dataset.id), cv = document.querySelector(`[data-story="${b.dataset.id}"]`);
+    if (!ev || !cv) return;
+    cv.toBlob(async (blob) => {
+      if (!blob) { toast('That image could not be made.'); return; }
+      ev.stories = (ev.stories || 0) + 1; save();
+      const file = new File([blob], slug(ev.names + ' story') + '.png', { type: 'image/png' });
+      if (share && navigator.canShare && navigator.canShare({ files: [file] })) {
+        try { await navigator.share({ files: [file], text: ev.names }); return; } catch (e) { if (e.name === 'AbortError') return; }
+      }
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob); a.download = file.name;
+      document.body.appendChild(a); a.click(); a.remove();
+      toast(share ? 'Saved. Add it to your Story from your photos.' : 'Image saved');
+    }, 'image/png');
+  }
+
   function inviteHTML(ev, o) {
     o = o || {};
     const th = THEMES[ev.theme] || THEMES.blush;
@@ -717,11 +943,7 @@
     const parts = ev.fns.length > 1 ? `<ul class="iv-parts rv">${ev.fns.map((f) => `<li><span class="iv-kicker">${esc(f.name)}</span><strong>${esc(fmtDate(f.date, { weekday: 'long', day: 'numeric', month: 'long' }))}</strong><small>${esc(f.time)} · ${esc(f.place)}</small></li>`).join('')}</ul>` : '';
     return `<div class="iv-page th-${esc(ev.theme)} lay-${th.layout}${th.dark ? ' is-dark' : ''}" style="${themeVars(ev)}">` +
       (o.preview ? '' : `<p class="iv-concept">Invitation concept by Made Digital · a sample event at ${esc(db.venue.name)} · <a href="/invites/">see all samples</a></p>`) +
-      gate + `<main class="iv"${o.preview || o.gate ? ' inert' : ''}>` + heroHTML(ev, o) + countdownHTML(ev) + momentHTML(ev) +
-      `<section class="iv-pad"><p class="iv-kicker rv">The details</p><h2 class="iv-h2 rv">Everything you need</h2>${parts}${factsHTML(ev)}${timelineHTML(ev)}` +
-      `<div class="iv-actions rv"><button type="button" class="iv-btn iv-btn--ghost" data-act="ics" data-id="${esc(ev.id)}">${icon('cal')}Calendar</button><a class="iv-btn iv-btn--ghost" href="${esc(wa(ev.names + ': here is the invitation. ' + linkTo('/invites/' + ev.id)))}" target="_blank" rel="noopener">${icon('share')}Share</a></div></section>` +
-      `<section class="iv-pad iv-pad--rsvp" id="rsvp"><p class="iv-kicker rv">${ev.closes ? 'Please reply by ' + esc(fmtDate(ev.closes, { day: 'numeric', month: 'long' })) : 'RSVP'}</p><h2 class="iv-h2 rv">Will you join us?</h2><div id="rsvp-area">${rsvpArea(ev)}</div></section>` +
-      (ev.games ? `<section class="iv-pad" id="games"><p class="iv-kicker rv">While you wait</p><h2 class="iv-h2 rv">A little fun</h2><div id="game-area">${gameMenu(ev)}</div></section>` : '') +
+      gate + `<main class="iv"${o.preview || o.gate ? ' inert' : ''}>` + heroHTML(ev, o) + countdownHTML(ev) + bodyHTML(ev, o, parts) +
       `<footer class="iv-foot">Invitation by <strong>${esc(db.venue.name)}</strong><small>Concept prototype by Made Digital. This event is fictional.</small>${o.preview || reduceMotion ? '' : `<button type="button" class="linkish" data-act="gate-again" data-id="${esc(ev.id)}">See the opening again</button>`}</footer></main></div>`;
   }
 
@@ -734,11 +956,17 @@
       gift: '<span class="gift"><span class="gift__lid"></span><span class="gift__box"></span><span class="gift__ribbon"></span></span>',
       ticket: `<span class="tkt"><span class="tkt__main"><small>Admit</small><b>${esc(to || 'One guest')}</b></span><span class="tkt__stub">Tear</span></span>`,
       lantern: '<span class="lamp"><span class="lamp__glow"></span><span class="lamp__hook"></span><span class="lamp__cap"></span><span class="lamp__body"><span class="lamp__flame"></span></span></span>',
-      curtain: '<span class="curt-tassel">Open</span>'
+      curtain: '<span class="curt-tassel">Open</span>',
+      start: '<span class="go"><span class="go__ring"></span><b class="go__t go__t--s">Start</b><b class="go__t go__t--n" data-n="3">3</b><b class="go__t go__t--n" data-n="2">2</b><b class="go__t go__t--n" data-n="1">1</b><b class="go__t go__t--go">Go!</b></span>',
+      pass: `<span class="vip"><span class="vip__strap"></span><span class="vip__card"><span class="vip__hole"></span><small>All access</small><b>${esc(to || 'VIP guest')}</b><span class="vip__bars"></span><span class="vip__scan"></span><span class="vip__ok">Access granted</span></span></span>`
     }[th.opening];
-    const hint = { envelope: 'Tap the seal to open', gift: 'Tap the gift to open', ticket: 'Tap to tear your ticket', lantern: 'Tap the lantern to light it', curtain: 'Tap to raise the curtain' }[th.opening];
-    return `<div class="gate gate--${th.opening}" data-fx="${esc(ev.theme)}">` + (th.opening === 'curtain' ? '<span class="curt curt--l" aria-hidden="true"></span><span class="curt curt--r" aria-hidden="true"></span>' : '') +
-      `<p class="gate__hello">${to ? 'Dear ' + esc(to) : 'You have an invitation'}</p>` +
+    const hint = { envelope: 'Tap the seal to open', gift: 'Tap the gift to open', ticket: 'Tap to tear your ticket', lantern: 'Tap the lantern to light it', curtain: 'Tap to raise the curtain',
+      start: 'Tap to start', pass: 'Tap to scan your pass' }[th.opening];
+    const from = ev.id === 'preview' ? '' : friendOf();
+    let hello = to ? 'Dear ' + esc(to) : 'You have an invitation';
+    if (isBooked(ev)) hello = from ? esc(from) + ' invited you' : (to ? esc(to) + ", you're booked!" : "You're booked!");
+    return `<div class="gate gate--${th.opening}" data-fx="${esc(ev.theme)}" data-seen="${esc(ev.id + (from ? ':friend' : ''))}">` + (th.opening === 'curtain' ? '<span class="curt curt--l" aria-hidden="true"></span><span class="curt curt--r" aria-hidden="true"></span>' : '') +
+      `<p class="gate__hello">${hello}</p>` +
       `<button type="button" class="gate__btn" data-act="gate-open" aria-label="Open your invitation">${art}</button><p class="gate__hint">${esc(hint)}</p></div>`;
   }
   function closeGate(g) {
@@ -757,7 +985,8 @@
     const ev = getEvent(id);
     if (!ev) return notFound();
     document.title = ev.names + ': your invitation';
-    const gate = !reduceMotion && (again || !mineGet(ev.id));
+    const seenKey = ev.id + (isBooked(ev) && friendOf() ? ':friend' : '');
+    const gate = !reduceMotion && (again || (isBooked(ev) ? !readMap(SEEN)[seenKey] : !mineGet(ev.id)));
     app.innerHTML = inviteHTML(ev, { gate });
     if (!gate) app.querySelector('.iv-page').classList.add('play');
     document.body.classList.toggle('gate-up', gate);
@@ -765,7 +994,7 @@
     startCountdown(ev);
     startReveals();
   }
-  function afterInvite(root) { initScratch(root); }
+  function afterInvite(root) { initScratch(root); drawStories(root); }
 
   function startCountdown(ev) {
     clearInterval(cdTimer);
@@ -903,7 +1132,7 @@
     if (closed && ev.id !== 'preview') return '<p class="iv-note">RSVPs have closed. Please contact the host directly.</p>';
     const going = mine ? mine.going : true;
     return `<form class="iv-form rv" id="rsvp-form" data-id="${esc(ev.id)}" novalidate>` +
-      `<label class="iv-field"><span>${ev.type === 'corporate' || ev.type === 'gala' || ev.type === 'launch' ? 'Your name' : 'Your name, or your family\'s name'}</span><input name="name" autocomplete="name" value="${esc(mine ? mine.name : guestName())}" /></label>` +
+      `<label class="iv-field"><span>${['corporate', 'gala', 'launch', 'fitness', 'activation'].indexOf(ev.type) > -1 ? 'Your name' : 'Your name, or your family\'s name'}</span><input name="name" autocomplete="name" value="${esc(mine ? mine.name : guestName())}" /></label>` +
       `<fieldset><legend class="iv-legend">Can you make it?</legend><div class="iv-choices iv-choices--row">` +
       `<label class="iv-choice"><input type="radio" name="going" value="yes"${going ? ' checked' : ''} /><span><strong>${isFaith(ev) ? 'Yes, in shaa Allah' : 'Yes, I\'ll be there'}</strong></span></label>` +
       `<label class="iv-choice"><input type="radio" name="going" value="no"${going ? '' : ' checked'} /><span><strong>Sadly not</strong></span></label></div></fieldset>` +
@@ -938,6 +1167,17 @@
     done.scrollIntoView({ block: 'center' });
     if (going) setTimeout(() => burstAt(ev.theme, done.querySelector('.rw') || done), 250);
     play = null;
+  }
+  /* Bring your bestie: the member's own link, which tells their friend who invited them. */
+  function sendBestie(form, btn) {
+    const ev = getEvent(form.dataset.id), name = form.elements.from.value.trim(), err = form.querySelector('#bestie-err');
+    err.textContent = '';
+    if (!ev) return;
+    if (!name) { err.textContent = 'Please add your first name, so your friend knows who it is from.'; form.elements.from.focus(); return; }
+    const link = linkTo('/invites/' + ev.id + '?from=' + encodeURIComponent(name));
+    ev.sent = (ev.sent || 0) + 1; save();
+    if (btn && btn.dataset.how === 'copy') { copy(link); return; }
+    window.open(wa(`${name} invited you to ${ev.names}! ${ev.booking.offer || ''} Claim your guest pass here: ${link}`.replace(/\s+/g, ' ')), '_blank', 'noopener');
   }
   function makeIcs(ev) {
     const stamp = (dt) => dt.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
@@ -1042,23 +1282,71 @@
   function viewHost(id) {
     const ev = getEvent(id);
     if (!ev) return notFound();
+    if (isBooked(ev)) return viewHostBooked(ev);
     document.title = 'RSVPs: ' + ev.names;
     const all = totals(ev), declined = ev.replies.filter((r) => !r.going).length, chase = waiting(ev), t = typeOf(ev);
-    const split = ev.separate ? `<div><dt>Men</dt><dd>${all.men}</dd></div><div><dt>Women</dt><dd>${all.women}</dd></div>` : `<div><dt>Adults</dt><dd>${all.adults}</dd></div>`;
-    const parts = ev.fns.length > 1 ? `<div class="fn-totals">${ev.fns.map((f, i) => { const x = totals(ev, i); return `<div class="fn-total"><strong>${esc(f.name)}</strong><span>${x.total} guests</span><span class="small">${esc(countWords(x).join(', ') || 'No one yet')}</span></div>`; }).join('')}</div>` : '';
-    const tab = (k, label) => `<button type="button" role="tab" aria-selected="${hostTab === k}" data-act="host-tab" data-k="${k}" data-id="${esc(ev.id)}">${label}</button>`;
+    const replied = ev.replies.length, invited = replied + chase.length, pct = invited ? Math.round((replied / invited) * 100) : 0;
+    const parts = ev.fns.length > 1 ? `<div class="fn-totals">${ev.fns.map((f, i) => { const x = totals(ev, i); return `<div class="fn-total"><strong>${esc(f.name)}</strong><span>${x.total} ${x.total === 1 ? 'guest' : 'guests'}</span><span class="small">${esc(countWords(x).join(', ') || 'No one yet')}</span></div>`; }).join('')}</div>` : '';
+    const tab = (k, label, count) => `<button type="button" role="tab" aria-selected="${hostTab === k}" data-act="host-tab" data-k="${k}" data-id="${esc(ev.id)}">${label}${count != null ? ` <b>${count}</b>` : ''}</button>`;
     app.innerHTML = shell(
-      `<div class="host-head"><div class="host-head__img"><img src="${esc(photoOf(ev, true))}" alt="" width="360" height="450" /></div><div class="host-head__text"><p class="eyebrow">${esc(t.label)} · RSVPs</p><h1>${esc(ev.names)}</h1>` +
-      `<p class="lede">${ev.closes ? 'RSVPs close on ' + esc(shortDate(ev.closes)) + '.' : 'No closing date set.'}</p>` +
-      `<div class="btn-row"><a class="btn btn--sm btn--dark" target="_blank" rel="noopener" href="${esc(wa(inviteMessage(ev)))}">${icon('share')}Share on WhatsApp</a><a class="btn btn--sm btn--line" href="/invites/${esc(ev.id)}">${icon('eye')}See the invitation</a></div></div></div>` +
-      `<dl class="stats stats--host"><div class="stats__lead"><dt>Guests confirmed</dt><dd>${all.total}</dd><span>${comingTo(ev).length} replies coming · ${declined} can't make it</span></div>${split}<div><dt>Children</dt><dd>${all.kids}</dd></div><div><dt>Still to reply</dt><dd>${chase.length}</dd></div></dl>${parts}` +
-      `<div class="tabs" role="tablist">${tab('replies', `Replies (${ev.replies.length})`)}${tab('chase', `Still to reply (${chase.length})`)}${ev.poll && t.moment === 'poll' ? tab('poll', 'Poll') : ''}${ev.games ? tab('games', 'Games') : ''}</div>` +
-      `<div id="host-panel" role="tabpanel">${hostPanel(ev, chase)}</div><dialog id="reply-dlg"></dialog>`);
+      hostHead(ev, t.label,
+        `<a class="btn btn--dark" target="_blank" rel="noopener" href="${esc(wa(inviteMessage(ev)))}">${icon('share')}Share on WhatsApp</a>` +
+        `<button type="button" class="btn btn--line" data-act="copy" data-text="${esc(linkTo('/invites/' + ev.id))}">${icon('copy')}Copy link</button>`,
+        ev.closes ? `<span class="chip chip--warn">${icon('clock')}RSVPs close ${esc(shortDate(ev.closes))}</span>` : '') +
+      `<dl class="kpis"><div class="kpi kpi--lead stats__lead"><dt>Guests coming</dt><dd>${all.total}</dd><dd class="kpi__sub">${esc(countWords(all).join(' · ') || 'No one yet')}</dd>` +
+      `<dd class="meter" aria-hidden="true"><i style="width:${pct}%"></i></dd><dd class="kpi__foot">${invited ? `${replied} of ${invited} on your list replied` : 'No replies yet'}</dd></div>` +
+      `<div class="kpi"><dt>Said yes</dt><dd>${comingTo(ev).length}</dd><dd class="kpi__sub">${comingTo(ev).length === 1 ? 'reply' : 'replies'}</dd></div>` +
+      `<div class="kpi"><dt>Can't make it</dt><dd>${declined}</dd><dd class="kpi__sub">${declined === 1 ? 'reply' : 'replies'}</dd></div>` +
+      `<div class="kpi"><dt>Still to reply</dt><dd>${chase.length}</dd><dd class="kpi__sub">on your list</dd></div></dl>${parts}` +
+      `<div class="tabs" role="tablist" aria-label="RSVPs">${tab('replies', 'Replies', ev.replies.length)}${tab('chase', 'Still to reply', chase.length)}${ev.poll && t.moment === 'poll' ? tab('poll', 'Poll') : ''}${ev.games ? tab('games', 'Games') : ''}</div>` +
+      `<div id="host-panel" role="tabpanel">${hostPanel(ev, chase)}</div><dialog id="reply-dlg"></dialog>`, hostShell(ev));
+  }
+  /* The host's own bar: no venue nav, just the way back to their invitation. */
+  const hostShell = (ev) => ({ ctx: isBooked(ev) ? 'Results' : 'Your RSVPs',
+    bar: `<nav class="ui-nav" aria-label="Event"><a class="btn btn--sm btn--line" href="/invites/${esc(ev.id)}" aria-label="View the invitation">${icon('eye')}<span>View invitation</span></a></nav>` });
+  function hostHead(ev, label, acts, extra) {
+    const f = ev.fns[0], when = [fmtDate(f.date, { weekday: 'short', day: 'numeric', month: 'long', year: 'numeric' }), f.time].filter(Boolean).join(', ');
+    return `<section class="hh"><div class="hh__img"><img src="${esc(photoOf(ev, true))}" alt="" width="360" height="450" /></div>` +
+      `<div><p class="eyebrow">${esc(label)}</p><h1>${esc(ev.names)}</h1><p class="hh__meta">${when ? `<span>${icon('cal')}${esc(when)}</span>` : ''}${f.place ? `<span>${icon('pin')}${esc(f.place)}</span>` : ''}${extra || ''}</p></div>` +
+      `<div class="hh__acts btn-row">${acts}</div></section>`;
+  }
+  const initials = (s) => s.split(/[\s&]+/).filter(Boolean).slice(0, 2).map((w) => [...w][0]).join('').toUpperCase();
+  const avatar = (name, kind) => `<span class="r__av${kind ? ' r__av--' + kind : ''}" aria-hidden="true">${esc(initials(name))}</span>`;
+  /* A booked event has no RSVPs: the studio sees how far its members spread the word. */
+  function viewHostBooked(ev) {
+    document.title = 'Results: ' + ev.names;
+    const refs = ev.refs || [], board = {}, t = typeOf(ev);
+    refs.forEach((r) => { board[r.from] = (board[r.from] || 0) + 1; });
+    const top = Object.keys(board).sort((a, b) => board[b] - board[a]);
+    const votes = (ev.votes || []).reduce((a, b) => a + b, 0);
+    if (['besties', 'poll', 'games'].indexOf(hostTab) < 0) hostTab = 'besties';
+    const tab = (k, label) => `<button type="button" role="tab" aria-selected="${hostTab === k}" data-act="host-tab" data-k="${k}" data-id="${esc(ev.id)}">${label}</button>`;
+    const member = linkTo('/invites/' + ev.id + '?to=');
+    let panel;
+    if (hostTab === 'poll' && ev.poll) panel = hostPanel(ev, []);
+    else if (hostTab === 'games' && ev.games) panel = hostGames(ev);
+    else {
+      panel = top.length
+        ? `<ol class="rlist">${top.map((name, i) => `<li class="r"><span class="r__av${i === 0 ? ' r__av--yes' : ''}" aria-hidden="true">${i + 1}</span><div class="r__body"><div class="r__head"><span class="r__name"><span class="sr">${i + 1}. </span>${esc(name)}</span>${i === 0 ? '<span class="pill pill--yes">Top bestie</span>' : ''}</div><p class="r__meta">${board[name]} ${board[name] === 1 ? 'friend' : 'friends'} claimed a guest pass</p></div></li>`).join('')}</ol>`
+        : '<p class="panel empty">No guest passes claimed yet. Members can send their bestie a link from their booked page.</p>';
+      panel = `<p class="small" style="margin-bottom:1rem">Members who bring the most friends. A reward for the top bestie each month keeps the invites coming.</p>` + panel;
+    }
+    app.innerHTML = shell(
+      hostHead(ev, t.label + ' · Results',
+        `<a class="btn btn--line" href="/invites/${esc(ev.id)}">${icon('eye')}The booked page</a><a class="btn btn--line" href="/invites/${esc(ev.id)}?from=Aisha">${icon('gift')}A friend’s invite</a>`) +
+      `<p class="small" style="margin:-.5rem 0 1.25rem">Bookings stay in your booking app. This is what happens after: members getting ready, inviting friends and posting about you.</p>` +
+      `<dl class="kpis"><div class="kpi kpi--lead stats__lead"><dt>Guest passes claimed</dt><dd>${refs.length}</dd><dd class="kpi__foot">New people booking through a member’s link</dd></div>` +
+      `<div class="kpi"><dt>Bestie invites sent</dt><dd>${ev.sent || 0}</dd></div><div class="kpi"><dt>Story cards made</dt><dd>${ev.stories || 0}</dd></div><div class="kpi"><dt>Poll votes</dt><dd>${votes}</dd></div></dl>` +
+      `<section class="panel link-box" style="margin:1.5rem 0"><h2>Link for your booking confirmation</h2><p class="small">Add this to the confirmation your booking app sends, with the member's first name at the end.</p><code>${esc(member)}Aisha</code><div class="btn-row"><button type="button" class="btn btn--sm btn--line" data-act="copy" data-text="${esc(member)}">${icon('copy')}Copy link</button></div></section>` +
+      `<div class="tabs" role="tablist">${tab('besties', 'Bestie leaderboard')}${ev.poll && t.moment === 'poll' ? tab('poll', 'Poll') : ''}${ev.games ? tab('games', 'Games') : ''}</div>` +
+      `<div id="host-panel" role="tabpanel">${panel}</div><dialog id="reply-dlg"></dialog>`, hostShell(ev));
   }
   function hostPanel(ev, chase) {
     if (hostTab === 'chase') {
       return `<form class="add-row" id="add-expected" data-id="${esc(ev.id)}"><label class="field"><span>Add someone you're expecting</span><input name="who" /></label><button class="btn btn--dark" type="submit">${icon('plus')}Add</button></form>` +
-        (chase.length ? `<ul class="rlist">${chase.map((who) => `<li class="r"><div class="r__head"><span class="r__name">${esc(who)}</span><span class="pill pill--wait">Waiting</span></div><div class="r__acts"><a class="btn btn--sm btn--dark" target="_blank" rel="noopener" href="${esc(wa(reminder(ev, who)))}">${icon('share')}Remind on WhatsApp</a><button type="button" class="btn btn--sm btn--line" data-act="reply-add" data-id="${esc(ev.id)}" data-name="${esc(who)}">They told me</button><button type="button" class="btn btn--sm btn--danger" data-act="expected-remove" data-id="${esc(ev.id)}" data-name="${esc(who)}">Remove</button></div></li>`).join('')}</ul>` : '<p class="panel empty">Everyone on your list has replied.</p>');
+        (chase.length ? `<ul class="rlist">${chase.map((who) => `<li class="r">${avatar(who, 'wait')}<div class="r__body"><div class="r__head"><span class="r__name">${esc(who)}</span><span class="pill pill--wait">Waiting</span></div></div>` +
+          `<div class="r__acts"><a class="btn btn--sm btn--dark" target="_blank" rel="noopener" href="${esc(wa(reminder(ev, who)))}">${icon('share')}Remind</a><button type="button" class="btn btn--sm btn--line" data-act="reply-add" data-id="${esc(ev.id)}" data-name="${esc(who)}">They told me</button>` +
+          `<button type="button" class="icon-btn icon-btn--danger" data-act="expected-remove" data-id="${esc(ev.id)}" data-name="${esc(who)}" title="Remove" aria-label="Remove ${esc(who)} from your list">${icon('trash')}</button></div></li>`).join('')}</ul>` : '<p class="panel empty">Everyone on your list has replied.</p>');
     }
     if (hostTab === 'poll' && ev.poll) {
       const votes = ev.votes || [0, 0, 0], total = votes.reduce((a, b) => a + b, 0);
@@ -1067,16 +1355,16 @@
     if (hostTab === 'games' && ev.games) return hostGames(ev);
     const rows = ev.replies.map((r) => {
       const fnNames = r.going && ev.fns.length > 1 ? r.fns.map((i) => (ev.fns[i] ? ev.fns[i].name : '')).filter(Boolean).join(' and ') : '';
-      return `<li class="r"><div class="r__head"><span class="r__name">${esc(r.name)}</span><span class="pill ${r.going ? 'pill--yes' : 'pill--no'}">${r.going ? 'Coming' : "Can't make it"}</span></div>` +
+      return `<li class="r">${avatar(r.name, r.going ? 'yes' : 'no')}<div class="r__body"><div class="r__head"><span class="r__name">${esc(r.name)}</span><span class="pill ${r.going ? 'pill--yes' : 'pill--no'}">${r.going ? 'Coming' : "Can't make it"}</span></div>` +
         (r.going ? `<p class="r__meta">${esc(countWords(r).join(', '))}${fnNames ? ' · ' + esc(fnNames) : ''} · code ${rsvpCode(ev, r)}</p>` : '') +
         (r.diet ? `<p class="r__meta"><strong>Dietary:</strong> ${esc(r.diet)}</p>` : '') + (r.msg ? `<p class="r__msg">“${esc(r.msg)}”</p>` : '') +
-        `<div class="r__acts"><button type="button" class="btn btn--sm btn--line" data-act="reply-edit" data-id="${esc(ev.id)}" data-r="${esc(r.id)}" aria-label="Edit reply from ${esc(r.name)}">${icon('edit')}Edit</button><button type="button" class="btn btn--sm btn--danger" data-act="reply-del" data-id="${esc(ev.id)}" data-r="${esc(r.id)}" aria-label="Remove reply from ${esc(r.name)}">Remove</button></div></li>`;
+        `</div><div class="r__acts"><button type="button" class="icon-btn" data-act="reply-edit" data-id="${esc(ev.id)}" data-r="${esc(r.id)}" title="Edit" aria-label="Edit reply from ${esc(r.name)}">${icon('edit')}</button><button type="button" class="icon-btn icon-btn--danger" data-act="reply-del" data-id="${esc(ev.id)}" data-r="${esc(r.id)}" title="Remove" aria-label="Remove reply from ${esc(r.name)}">${icon('trash')}</button></div></li>`;
     }).join('');
-    return `<div class="btn-row panel-tools"><button type="button" class="btn btn--sm btn--dark" data-act="reply-add" data-id="${esc(ev.id)}">${icon('plus')}Add a reply</button><button type="button" class="btn btn--sm btn--line" data-act="csv" data-id="${esc(ev.id)}">${icon('download')}Download the list</button></div>` +
+    return `<div class="panel-tools"><button type="button" class="btn btn--sm btn--dark" data-act="reply-add" data-id="${esc(ev.id)}">${icon('plus')}Add a reply</button><button type="button" class="btn btn--sm btn--ghost" data-act="csv" data-id="${esc(ev.id)}">${icon('download')}Download the list</button></div>` +
       (rows ? `<ul class="rlist">${rows}</ul>` : '<p class="panel empty">No replies yet. Share the invitation to get started.</p>');
   }
   function hostGames(ev) {
-    const list = ev.quiz.map((q, i) => `<li class="r"><p class="r__name">${esc(q.q)}</p><p class="r__meta">Answer: ${esc(q.options[q.answer])}</p><div class="r__acts"><button type="button" class="btn btn--sm btn--danger" data-act="quiz-del" data-id="${esc(ev.id)}" data-i="${i}">Remove</button></div></li>`).join('');
+    const list = ev.quiz.map((q, i) => `<li class="r r--plain"><div class="r__body"><p class="r__name">${esc(q.q)}</p><p class="r__meta">Answer: ${esc(q.options[q.answer])}</p></div><div class="r__acts"><button type="button" class="icon-btn icon-btn--danger" data-act="quiz-del" data-id="${esc(ev.id)}" data-i="${i}" title="Remove" aria-label="Remove this question">${icon('trash')}</button></div></li>`).join('');
     const opt = (i) => `<label class="quiz-opt"><input type="radio" name="answer" value="${i}"${i === 0 ? ' checked' : ''} aria-label="Answer ${i + 1} is correct" /><input name="o${i}" aria-label="Answer ${i + 1}" placeholder="Answer ${i + 1}" /></label>`;
     return `<p class="small" style="margin-bottom:1rem">Memory match is ready to go. Add your own questions to switch on the quiz.</p>${list ? `<ul class="rlist" style="margin-bottom:1rem">${list}</ul>` : ''}` +
       `<form class="panel stack" id="quiz-add" data-id="${esc(ev.id)}"><h2>Add a question</h2><label class="field"><span>Question</span><input name="q" /></label><span class="small">Mark the correct answer.</span>${opt(0)}${opt(1)}${opt(2)}<p class="err" role="alert" id="quiz-add-err"></p><button class="btn btn--dark" type="submit">${icon('plus')}Add the question</button></form>`;
@@ -1143,7 +1431,7 @@
 
   /* ---------- Events ---------- */
   const actions = {
-    reset() { if (window.confirm('Reset the demo to its sample events?')) { [KEY, MINE, VOTES].forEach((k) => { try { localStorage.removeItem(k); } catch (e) { /* fine */ } }); load(); go('/invites/'); } },
+    reset() { if (window.confirm('Reset the demo to its sample events?')) { [KEY, MINE, VOTES, SEEN, BRING].forEach((k) => { try { localStorage.removeItem(k); } catch (e) { /* fine */ } }); load(); go('/invites/'); } },
     scroll(b) { const t = document.getElementById(b.dataset.to); if (t) t.scrollIntoView({ block: 'start' }); },
     copy(b) { copy(b.dataset.text); },
     ics(b) { const ev = getEvent(b.dataset.id); if (ev) makeIcs(ev); },
@@ -1151,7 +1439,19 @@
     'wiz-back'() { wiz.error = ''; wiz.step--; viewWizard(); window.scrollTo(0, 0); },
     'accent-reset'() { wiz.draft.accent = ''; viewWizard(); },
     'photo-reset'() { wiz.draft.photo = ''; viewWizard(); },
-    'gate-open'(b) { const g = b.closest('.gate'); if (g.classList.contains('is-open')) return; g.classList.add('is-open'); closeGate(g); },
+    'gate-open'(b) { const g = b.closest('.gate'); if (g.classList.contains('is-open')) return; g.classList.add('is-open'); if (!g.closest('#preview') && g.dataset.seen) writeMap(SEEN, g.dataset.seen, 1); closeGate(g); },
+    /* Opens the studio's own booking app. A friend's tap is counted as a claimed guest pass. */
+    book(b) {
+      const ev = getEvent(b.dataset.id);
+      if (!ev || !ev.booking) return;
+      const code = ev.booking.code, url = ev.booking.url;
+      if (b.dataset.from) { ev.refs = ev.refs || []; ev.refs.push({ from: b.dataset.from, at: new Date().toISOString().slice(0, 10) }); save(); burstAt(ev.theme, b, 30); }
+      if (b.dataset.from && code && navigator.clipboard) navigator.clipboard.writeText(code).catch(() => {});
+      if (/^https?:\/\//i.test(url)) { window.open(url, '_blank', 'noopener'); if (b.dataset.from && code) toast('Code ' + code + ' copied'); }
+      else toast((b.dataset.from && code ? 'Code ' + code + ' copied. ' : '') + "In the real version, this opens the studio's booking app.");
+    },
+    'story-share'(b) { storyOut(b, true); },
+    'story-save'(b) { storyOut(b, false); },
     'gate-again'(b) { window.scrollTo(0, 0); viewInvite(b.dataset.id, true); },
     'gate-replay'() {
       if (reduceMotion) return;
@@ -1259,6 +1559,15 @@
   document.addEventListener('change', (e) => {
     const el = e.target;
     if (el.id === 'photo-in') return readPhoto(el.files[0]);
+    if (el.dataset.pack) {
+      const ev = getEvent(el.dataset.pack), boxes = [...document.querySelectorAll(`[data-pack="${el.dataset.pack}"]`)];
+      const got = boxes.filter((x) => x.checked).map((x) => +x.value);
+      writeMap(BRING, el.dataset.pack, got);
+      const done = got.length === boxes.length, msg = document.getElementById('pack-msg');
+      if (msg) msg.textContent = done ? 'All packed. See you there!' : `${got.length} of ${boxes.length} packed.`;
+      if (done && ev) burstAt(ev.theme, msg || el, 40);
+      return;
+    }
     if (el.dataset.f && wiz && (el.type === 'checkbox' || el.type === 'radio')) setDraft(el);
     if (el.name === 'going' && el.form && el.form.id === 'rsvp-form') document.getElementById('rsvp-yes').hidden = el.value !== 'yes';
   });
@@ -1268,6 +1577,7 @@
     if (f.closest('#preview')) return;
     if (f.id === 'wiz-form') return wizardNext();
     if (f.id === 'rsvp-form') return submitRsvp(f);
+    if (f.id === 'bestie-form') return sendBestie(f, e.submitter);
     if (f.id === 'reply-form') return saveReply(f);
     if (f.id === 'quiz-name') {
       const who = f.elements.player.value.trim();
