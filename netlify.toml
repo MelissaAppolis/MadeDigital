@@ -5,6 +5,12 @@
 [build.environment]
   NODE_VERSION = "20"
 
+# The invitations are their own static app and must come before the SPA fallback.
+[[redirects]]
+  from = "/invites/*"
+  to = "/invites/index.html"
+  status = 200
+
 # SPA fallback — every route serves index.html so refreshing /work/studio-olive
 # does not 404. Netlify Forms POSTs are handled before this rule.
 [[redirects]]

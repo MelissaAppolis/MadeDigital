@@ -22,6 +22,13 @@ IntersectionObserver; head tags are a 60-line hook.
 
 Static SPA on Netlify. No backend, no server-side rendering, no CMS.
 
+`public/invites/` is separate: a static, vanilla JS venue-invitation prototype at
+`/invites/`, outside React. Its rule must stay above the catch-all in both
+`public/_redirects`, `netlify.toml` and `public/.htaccess` (for the planned move to
+Afrihost), or every invitation link opens the React 404. Its pricing notes live in
+`outreach/venue-invites/`; anything in `public/` is published. Netlify Forms won't work
+on Afrihost, so replace `useFormSubmit` before moving the site.
+
 ```bash
 npm run dev          # localhost:5173
 npm run build        # → dist/

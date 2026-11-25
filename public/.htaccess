@@ -1,0 +1,40 @@
+# Afrihost (Apache) routing. Does the same job as public/_redirects on Netlify.
+# Rule order matters: real files first, then invitations, then the React site.
+
+Options -MultiViews -Indexes
+DirectoryIndex index.html
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Always HTTPS, and no www
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP:X-Forwarded-Proto} !=https
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+  RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
+
+  # Anything that really exists is served as it is, including the
+  # certificate check under /.well-known/
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # Every invitation address opens the invitations app
+  RewriteRule ^invites/ /invites/index.html [L]
+
+  # Everything else opens the React site, which shows its own 404
+  RewriteRule ^ /index.html [L]
+</IfModule>
+
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set X-Frame-Options "SAMEORIGIN"
+
+  # Vite puts a content hash in these filenames, so they can be cached for a year
+  <If "%{REQUEST_URI} =~ m#^/assets/[^/]+-[A-Za-z0-9_-]{8}\.(js|css)$#">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </If>
+</IfModule>
